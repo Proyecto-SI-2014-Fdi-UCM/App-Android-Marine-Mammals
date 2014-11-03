@@ -56,31 +56,42 @@ public final class R {
         public static final int activity_vertical_margin=0x7f050001;
     }
     public static final class drawable {
-        public static final int combined_search=0x7f020000;
-        public static final int five_last_searched=0x7f020001;
-        public static final int fondo8=0x7f020002;
-        public static final int ic_launcher=0x7f020003;
-        public static final int listview_selector=0x7f020004;
-        public static final int single_search=0x7f020005;
+        public static final int adobe_reader=0x7f020000;
+        public static final int combined_search=0x7f020001;
+        public static final int five_last_searched=0x7f020002;
+        public static final int fondo8=0x7f020003;
+        public static final int ic_launcher=0x7f020004;
+        public static final int listview_selector=0x7f020005;
+        public static final int single_search=0x7f020006;
     }
     public static final class id {
-        public static final int action_settings=0x7f090008;
-        public static final int frag_about=0x7f090000;
-        public static final int frag_calculator=0x7f090001;
-        public static final int frag_report=0x7f090003;
-        public static final int imageItem=0x7f090004;
-        public static final int listViewTypeSearch=0x7f090002;
-        public static final int textSearch=0x7f090005;
-        public static final int title=0x7f090007;
-        public static final int vp_mainmenu=0x7f090006;
+        public static final int action_settings=0x7f09000d;
+        public static final int editTextDialogUserInput=0x7f090002;
+        public static final int expandableAbout=0x7f090003;
+        public static final int frag_about=0x7f090004;
+        public static final int frag_calculator=0x7f090005;
+        public static final int frag_report=0x7f090007;
+        public static final int imageItem=0x7f090009;
+        public static final int layout_root=0x7f090000;
+        public static final int listViewTypeSearch=0x7f090006;
+        public static final int textSearch=0x7f09000a;
+        public static final int textView=0x7f090001;
+        public static final int textViewProductsList=0x7f090008;
+        public static final int title=0x7f09000c;
+        public static final int vp_mainmenu=0x7f09000b;
     }
     public static final class layout {
-        public static final int fragment_about=0x7f030000;
-        public static final int fragment_calculator=0x7f030001;
-        public static final int fragment_formulary=0x7f030002;
-        public static final int fragment_report=0x7f030003;
-        public static final int item_with_image_formulary=0x7f030004;
-        public static final int viewpager_mainmenu=0x7f030005;
+        public static final int combined_search=0x7f030000;
+        public static final int dialog_single_search=0x7f030001;
+        public static final int fragment_about=0x7f030002;
+        public static final int fragment_calculator=0x7f030003;
+        public static final int fragment_formulary=0x7f030004;
+        public static final int fragment_report=0x7f030005;
+        public static final int header_expandable_listview=0x7f030006;
+        public static final int item_with_image=0x7f030007;
+        public static final int item_with_image_formulary=0x7f030008;
+        public static final int results_search=0x7f030009;
+        public static final int viewpager_mainmenu=0x7f03000a;
     }
     public static final class menu {
         public static final int combined_search=0x7f080000;

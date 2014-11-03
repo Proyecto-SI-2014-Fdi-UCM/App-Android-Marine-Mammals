@@ -36,7 +36,26 @@ public class Fragment_Formulary extends Fragment {
 		list.setOnItemClickListener(new OnItemClickListener(){	 
 		    @Override
 		    public void onItemClick(AdapterView<?> arg0, View arg1, int position, long id) {
-
+		    	
+		    	switch(position){
+	    		
+		    		// Single Search
+		    		case 0: open_dialog();
+		        			break;
+		        
+		        	// Combined Search	        		
+		    		case 1: Intent intent = new Intent(getActivity(),Combined_Search.class);
+        					startActivity(intent);
+        					break;
+		        
+        			// Five Last Searched    	
+		    		case 2: Intent intentResults = new Intent(getActivity(),Results_Search.class);
+		        			startActivity(intentResults);
+		        			break;
+		        		
+		    		default:
+		        			break;
+		    	}
 		    	
 		    }
 		});
@@ -48,6 +67,41 @@ public class Fragment_Formulary extends Fragment {
 		options.add(new ItemWithImage(R.drawable.single_search,"Single Search"));
 		options.add(new ItemWithImage(R.drawable.combined_search,"Combined Search"));
 		options.add(new ItemWithImage(R.drawable.five_last_searched,"Five Last Searched"));
+	}
+	
+	public void open_dialog() {
+
+		LayoutInflater li = LayoutInflater.from(getActivity());
+		View promptsView = li.inflate(R.layout.dialog_single_search, null);
+
+		AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getActivity());
+
+		// set prompts.xml to alertdialog builder
+		alertDialogBuilder.setView(promptsView);
+
+		EditText userInput = (EditText) promptsView.findViewById(R.id.editTextDialogUserInput);
+		userInput.setTypeface(Typeface.SANS_SERIF);
+		userInput.setHint("Enter name of drug");
+        
+		// set dialog message
+		alertDialogBuilder.setCancelable(false).setPositiveButton("Search",new DialogInterface.OnClickListener() {
+					    public void onClick(DialogInterface dialog,int id) {
+					    	Intent intent = new Intent(getActivity(),Results_Search.class);
+					    	startActivity(intent);
+					    	
+					    }
+				})
+					.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+						public void onClick(DialogInterface dialog,int id) {
+			    	dialog.cancel();
+						}
+					});
+
+		// create alert dialog
+		AlertDialog alertDialog = alertDialogBuilder.create();
+
+		// show it
+		alertDialog.show();
 	}
 	
 		
