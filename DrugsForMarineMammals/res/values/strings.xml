@@ -11,5 +11,7 @@
 	<string name="promptAnatomicalTarget">Choose an Anatomical Target</string>
 	<string name="promptTherapeuticTarget">Choose an Therapeutic Target</string>
 	<string name="promptAnimals">Choose an Animal</string>
-    
+    <string name="go">Go</string>
+	<string name="urlAtcVet">http://www.whocc.no/atcvet/atcvet_index/</string>
+	<string name="Enter_Therapeutic_Class">Enter an Therapeutic Class</string>
 </resources>
