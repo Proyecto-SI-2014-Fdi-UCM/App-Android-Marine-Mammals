@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    
+    <string-array name="AnatomicalTarget">
+        <item >None </item>
+        <item >Alimentary tract and metabolism </item>
+        <item >Blood and blood forming organs  </item>
+        <item >Cardiovascular system </item>
+        <item >Dermatologicals </item>
+        <item >Genito urinary system and sex hormones </item>
+        <item >Systemic hormonal preparations, excl. sex hormones and insulins </item>
+        <item >Immunologicals </item>
+        <item >Antiinfectives for systemic use </item>
+        <item >Antineoplastic and immunomodulating agents </item>
+        <item >Musculo-skeletal system </item>
+        <item >Nervous system </item>
+        <item >Antiparasitic products, insecticides and repellents </item>
+        <item >Respiratory system </item>
+        <item >Sensory organs </item>
+        <item >Various </item>
+    </string-array>
+    
+    <string-array name="TherapeuticTarget">
+        <item >None </item>
+        <item >Diuretics </item>
+        <item >Antidiarrheals, intestinal anti-inflammatory/antiinfective agents </item>
+        <item >Antibiotics and chemotherapeutics for dermatological use </item>
+        <item >Gynecological antiinfectives and antiseptics </item>
+        <item >Antiinfectives and antiseptics for intrauterine use </item>
+        <item >Antibacterials for sistemic use </item>
+        <item >Antibacterials for intrammary use </item>
+        <item >Ophtalmologicals </item>
+        <item >Otologicals </item>
+        <item >Ophtalmologicals and otologicals preparations </item>
+        <item >Add new group </item>
+    </string-array>
+    
+    <string-array name="Animals">
+        <item >None </item>
+        <item >Cetaceans </item>
+        <item >Pinnipeds </item>
+        <item >Others MM </item>
+    </string-array>
+</resources>

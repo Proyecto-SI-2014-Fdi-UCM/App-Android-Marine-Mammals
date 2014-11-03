@@ -4,14 +4,14 @@
 		    xmlns:android="http://schemas.android.com/apk/res/android"
 	       	android:id="@+id/listViewTypeSearch"
 	       	android:layout_width="wrap_content"
-	       	android:layout_height="wrap_content" 
-	       	android:paddingTop="80sp"
-	       	android:paddingLeft="30sp"
-	       	android:paddingRight="30sp"
+	       	android:layout_height="wrap_content"
+	       	android:paddingTop="150sp" 
+	       	android:paddingLeft="270sp"
+	       	android:paddingRight="270sp"
 	       	android:background="@android:color/transparent"
 	       	android:cacheColorHint="@android:color/transparent"
 	       	android:divider="@android:color/transparent"
-	       	android:dividerHeight="60sp" 
-	       	android:scrollbarStyle="outsideOverlay">
-			        
+	       	android:dividerHeight="150sp"
+	       	android:scrollbarStyle="outsideOverlay"	>	
+	       		        
 	    </ListView>

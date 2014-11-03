@@ -30,8 +30,8 @@
 	 
 	 <color name="background">#ececec</color>
 	
-	    <!--  <drawable name="highlight_pressed">#98dff3</drawable>
-	    <drawable name="highlight_focused">#b9e6f3</drawable> -->
+	 <color name="highlight_pressed">#98dff3</color>
+	 <color name="highlight_focused">#b9e6f3</color>
 	 
 	  <color name="button_normal">#929392</color>
 	  <color name="button_pressed">#c0c1c0</color>
