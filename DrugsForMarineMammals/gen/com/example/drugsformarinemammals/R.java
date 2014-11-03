@@ -16,17 +16,16 @@ public final class R {
         public static final int background=0x7f040016;
         public static final int black=0x7f04000d;
         public static final int blue=0x7f04000b;
-        /**   <drawable name="highlight_pressed">#98dff3</drawable>
-	    <drawable name="highlight_focused">#b9e6f3</drawable> 
-         */
-        public static final int button_normal=0x7f040017;
-        public static final int button_pressed=0x7f040018;
+        public static final int button_normal=0x7f040019;
+        public static final int button_pressed=0x7f04001a;
         public static final int celeste=0x7f04000e;
         public static final int darkGray=0x7f040013;
         public static final int darkGreen=0x7f040011;
-        public static final int dialog_divider=0x7f040019;
+        public static final int dialog_divider=0x7f04001b;
         public static final int fuchsia=0x7f04000f;
         public static final int green=0x7f04000a;
+        public static final int highlight_focused=0x7f040018;
+        public static final int highlight_pressed=0x7f040017;
         public static final int lightGray=0x7f040014;
         public static final int lightGreen=0x7f040012;
         public static final int lime=0x7f040008;
@@ -57,38 +56,43 @@ public final class R {
         public static final int activity_vertical_margin=0x7f050001;
     }
     public static final class drawable {
-        public static final int adobe_reader=0x7f020000;
-        public static final int ic_launcher=0x7f020001;
+        public static final int combined_search=0x7f020000;
+        public static final int five_last_searched=0x7f020001;
+        public static final int fondo8=0x7f020002;
+        public static final int ic_launcher=0x7f020003;
+        public static final int listview_selector=0x7f020004;
+        public static final int single_search=0x7f020005;
     }
     public static final class id {
-        public static final int action_settings=0x7f090009;
-        public static final int expandableAbout=0x7f090000;
+        public static final int action_settings=0x7f090008;
+        public static final int frag_about=0x7f090000;
         public static final int frag_calculator=0x7f090001;
-        public static final int frag_formulary=0x7f090002;
         public static final int frag_report=0x7f090003;
-        public static final int imageItem=0x7f090005;
-        public static final int textSearch=0x7f090006;
-        public static final int textViewProductsList=0x7f090004;
-        public static final int title=0x7f090008;
-        public static final int vp_mainmenu=0x7f090007;
+        public static final int imageItem=0x7f090004;
+        public static final int listViewTypeSearch=0x7f090002;
+        public static final int textSearch=0x7f090005;
+        public static final int title=0x7f090007;
+        public static final int vp_mainmenu=0x7f090006;
     }
     public static final class layout {
-        public static final int activity_main=0x7f030000;
-        public static final int fragment_about=0x7f030001;
-        public static final int fragment_calculator=0x7f030002;
-        public static final int fragment_formulary=0x7f030003;
-        public static final int fragment_report=0x7f030004;
-        public static final int header_expandable_listview=0x7f030005;
-        public static final int item_with_image=0x7f030006;
-        public static final int viewpager_mainmenu=0x7f030007;
+        public static final int fragment_about=0x7f030000;
+        public static final int fragment_calculator=0x7f030001;
+        public static final int fragment_formulary=0x7f030002;
+        public static final int fragment_report=0x7f030003;
+        public static final int item_with_image_formulary=0x7f030004;
+        public static final int viewpager_mainmenu=0x7f030005;
     }
     public static final class menu {
-        public static final int main=0x7f080000;
+        public static final int combined_search=0x7f080000;
+        public static final int main=0x7f080001;
+        public static final int results_search=0x7f080002;
     }
     public static final class string {
         public static final int action_settings=0x7f060002;
         public static final int app_name=0x7f060000;
         public static final int hello_world=0x7f060001;
+        public static final int title_activity_combined__search=0x7f060004;
+        public static final int title_activity_results__search=0x7f060003;
     }
     public static final class style {
         /** 

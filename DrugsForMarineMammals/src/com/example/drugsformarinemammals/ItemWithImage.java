@@ -4,7 +4,6 @@ public class ItemWithImage {
 	private String image;
 	private int imageId;
 	private String title;
-	//private String url;
 
 	public ItemWithImage() {
 		super();
