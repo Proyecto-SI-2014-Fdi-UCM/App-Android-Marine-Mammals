@@ -45,7 +45,9 @@ public class Combined_Search extends Activity implements OnItemClickListener, On
 
 		     public void onItemSelected(AdapterView<?> parent, View arg1,int arg2, long arg3) {
 		    	 userEntryTherapeuticTarget = parent.getSelectedItem().toString();
-		    	 
+		    	 if (userEntryTherapeuticTarget.equals("Add new group")){
+		    		 open_Dialog();
+		    	 }
 		    	 //String tmp=searchFilter;	    	 
 		     }
 
@@ -73,9 +75,7 @@ public class Combined_Search extends Activity implements OnItemClickListener, On
 	@Override
 	public void onClick(View v) {
 		// TODO Auto-generated method stub
-		if(userEntryTherapeuticTarget.equals("Add new group")){
-	   		 open_Dialog();
-		}
+		
 	}
 
 	
