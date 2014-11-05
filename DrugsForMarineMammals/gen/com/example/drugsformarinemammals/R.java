@@ -10,6 +10,38 @@ package com.example.drugsformarinemammals;
 public final class R {
     public static final class attr {
     }
+    public static final class color {
+        public static final int androidGreen=0x7f040015;
+        public static final int aqua=0x7f040007;
+        public static final int background=0x7f040016;
+        public static final int black=0x7f04000d;
+        public static final int blue=0x7f04000b;
+        public static final int button_normal=0x7f040017;
+        public static final int button_pressed=0x7f040018;
+        public static final int celeste=0x7f04000e;
+        public static final int darkGray=0x7f040013;
+        public static final int darkGreen=0x7f040011;
+        public static final int dialog_divider=0x7f040019;
+        public static final int fuchsia=0x7f04000f;
+        public static final int green=0x7f04000a;
+        public static final int lightGray=0x7f040014;
+        public static final int lightGreen=0x7f040012;
+        public static final int lime=0x7f040008;
+        public static final int maroon=0x7f040006;
+        public static final int navy=0x7f04000c;
+        /**  color name="gray">#808080</color> 
+         */
+        public static final int olive=0x7f040004;
+        public static final int pink=0x7f040010;
+        public static final int purple=0x7f040005;
+        public static final int red=0x7f040002;
+        public static final int silver=0x7f040003;
+        public static final int teal=0x7f040009;
+        public static final int white=0x7f040000;
+        /** <color name="fuchsia">#FF00FF</color>  
+         */
+        public static final int yellow=0x7f040001;
+    }
     public static final class dimen {
         /**  Default screen margins, per the Android Design guidelines. 
 
@@ -18,25 +50,44 @@ public final class R {
          would include 7" and 10" devices in landscape (~960dp and ~1280dp respectively).
     
          */
-        public static final int activity_horizontal_margin=0x7f040000;
-        public static final int activity_vertical_margin=0x7f040001;
+        public static final int activity_horizontal_margin=0x7f050000;
+        public static final int activity_vertical_margin=0x7f050001;
     }
     public static final class drawable {
-        public static final int ic_launcher=0x7f020000;
+        public static final int background=0x7f020000;
+        public static final int highlight_focused=0x7f020004;
+        public static final int highlight_pressed=0x7f020003;
+        public static final int ic_launcher=0x7f020001;
+        public static final int listview_selector=0x7f020002;
     }
     public static final class id {
-        public static final int action_settings=0x7f080000;
+        public static final int action_settings=0x7f090008;
+        public static final int drugsresult=0x7f090005;
+        public static final int frag_about=0x7f090000;
+        public static final int frag_calculator=0x7f090001;
+        public static final int frag_formulary=0x7f090002;
+        public static final int frag_report=0x7f090003;
+        public static final int textView_drugs=0x7f090004;
+        public static final int title=0x7f090007;
+        public static final int vp_mainmenu=0x7f090006;
     }
     public static final class layout {
         public static final int activity_main=0x7f030000;
+        public static final int fragment_about=0x7f030001;
+        public static final int fragment_calculator=0x7f030002;
+        public static final int fragment_formulary=0x7f030003;
+        public static final int fragment_report=0x7f030004;
+        public static final int item_drugresults=0x7f030005;
+        public static final int listview_drugresults=0x7f030006;
+        public static final int viewpager_mainmenu=0x7f030007;
     }
     public static final class menu {
-        public static final int main=0x7f070000;
+        public static final int main=0x7f080000;
     }
     public static final class string {
-        public static final int action_settings=0x7f050002;
-        public static final int app_name=0x7f050000;
-        public static final int hello_world=0x7f050001;
+        public static final int action_settings=0x7f060002;
+        public static final int app_name=0x7f060000;
+        public static final int hello_world=0x7f060001;
     }
     public static final class style {
         /** 
@@ -60,10 +111,10 @@ public final class R {
     
  API 14 theme customizations can go here. 
          */
-        public static final int AppBaseTheme=0x7f060000;
+        public static final int AppBaseTheme=0x7f070000;
         /**  Application theme. 
  All customizations that are NOT specific to a particular API-level can go here. 
          */
-        public static final int AppTheme=0x7f060001;
+        public static final int AppTheme=0x7f070001;
     }
 }
