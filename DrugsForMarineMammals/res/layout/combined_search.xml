@@ -108,11 +108,11 @@
             android:orientation="horizontal" >
 
             <Button
-                android:id="@+id/goButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/go"
-                android:textSize="15sp" />
+                android:textSize="15sp"                
+                android:onClick="search" />
         </LinearLayout>
     </LinearLayout>
 

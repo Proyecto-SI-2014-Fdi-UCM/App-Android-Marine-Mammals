@@ -3,23 +3,27 @@ package com.example.drugsformarinemammals;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
+//import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
-public class Combined_Search extends Activity implements OnItemClickListener, OnClickListener{
+public class Combined_Search extends Activity {
 
-	String userEntryTherapeuticTarget;
+	private String userEntryAnatomicalTarget;
+	private String userEntryTherapeuticTarget;
+	private String userEntryAnimalTarget;
+
 	
 	@Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,28 +31,42 @@ public class Combined_Search extends Activity implements OnItemClickListener, On
         setContentView(R.layout.combined_search);
         
         Button go=(Button)findViewById(R.id.goButton);
-        go.setOnClickListener(this);
+        go.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				search();
+			}
+        	
+        });
         
         
         Spinner spinnerAnatomicalTarget = (Spinner)findViewById(R.id.SpinAnatomicalTarget);       
         ArrayAdapter<CharSequence> adapterAnatomicalTarget = ArrayAdapter.createFromResource(this, R.array.AnatomicalTarget, android.R.layout.simple_spinner_item);	     
 		adapterAnatomicalTarget.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 		spinnerAnatomicalTarget.setAdapter(adapterAnatomicalTarget);
-		
+		spinnerAnatomicalTarget.setOnItemSelectedListener(new OnItemSelectedListener() {
+
+		     public void onItemSelected(AdapterView<?> parent, View arg1,int arg2, long arg3) {
+		    	 userEntryAnatomicalTarget = parent.getSelectedItem().toString();    	 
+		     }
+
+		     public void onNothingSelected(AdapterView<?> arg0) {
+		                // TODO Auto-generated method stub
+		     }
+		     });
 
 		Spinner spinnerTherapeuticTarget = (Spinner)findViewById(R.id.SpinTherapeuticTarget);       
         ArrayAdapter<CharSequence> adapterTherapeuticTarget = ArrayAdapter.createFromResource(this, R.array.TherapeuticTarget, android.R.layout.simple_spinner_item);	     
 		adapterTherapeuticTarget.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 		spinnerTherapeuticTarget.setAdapter(adapterTherapeuticTarget);
-		
 		spinnerTherapeuticTarget.setOnItemSelectedListener(new OnItemSelectedListener() {
 
 		     public void onItemSelected(AdapterView<?> parent, View arg1,int arg2, long arg3) {
 		    	 userEntryTherapeuticTarget = parent.getSelectedItem().toString();
 		    	 if (userEntryTherapeuticTarget.equals("Add new group")){
 		    		 open_Dialog();
-		    	 }
-		    	 //String tmp=searchFilter;	    	 
+		    	 }   	 
 		     }
 
 		     public void onNothingSelected(AdapterView<?> arg0) {
@@ -61,22 +79,33 @@ public class Combined_Search extends Activity implements OnItemClickListener, On
         ArrayAdapter<CharSequence> adapterAnimals = ArrayAdapter.createFromResource(this, R.array.Animals, android.R.layout.simple_spinner_item);	     
 		adapterAnimals.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 		spinnerAnimals.setAdapter(adapterAnimals);
+		
+		spinnerAnimals.setOnItemSelectedListener(new OnItemSelectedListener() {
+
+			public void onItemSelected(AdapterView<?> parent, View arg1,int arg2, long arg3) {
+				userEntryAnimalTarget = parent.getSelectedItem().toString();	 
+		    }
+
+		    public void onNothingSelected(AdapterView<?> arg0) {
+		                // TODO Auto-generated method stub
+		    }
+		    });
     }
 
 	
-	@Override
-	public void onItemClick(AdapterView<?> parent, View view, int position,
-			long id) {
-		// TODO Auto-generated method stub
-		
-	}
+//	@Override
+//	public void onItemClick(AdapterView<?> parent, View view, int position,
+//			long id) {
+//		// TODO Auto-generated method stub
+//		
+//	}
 
 
-	@Override
-	public void onClick(View v) {
-		// TODO Auto-generated method stub
-		
-	}
+//	@Override
+//	public void onClick(View v) {
+//		// TODO Auto-generated method stub
+//		
+//	}
 
 	
 		public void open_Dialog() {
@@ -85,10 +114,17 @@ public class Combined_Search extends Activity implements OnItemClickListener, On
 			View promptsView = li.inflate(R.layout.dialog_therapeutic_class_combined_search, null);
 			TextView text= (TextView)promptsView.findViewById(R.id.Therapeutic_Class);
 			text.setText(R.string.Enter_Therapeutic_Class);
+			final EditText edittext = (EditText)promptsView.findViewById(R.id.editTextDialogUserInput);
 			
 			TextView url= (TextView)promptsView.findViewById(R.id.textViewUrl);
 			url.setText(R.string.urlAtcVet);
-			url.setOnClickListener(this);
+			url.setOnClickListener(new OnClickListener() {
+
+				@Override
+				public void onClick(View v) {
+					// TODO Auto-generated method stub
+					
+				}});
 			
 			AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
 
@@ -117,7 +153,7 @@ public class Combined_Search extends Activity implements OnItemClickListener, On
 						    	}*/
 						    	
 						    	//resto de opciones
-						    	
+						    	userEntryTherapeuticTarget = edittext.getText().toString();
 						    }
 					})
 			.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
@@ -131,5 +167,15 @@ public class Combined_Search extends Activity implements OnItemClickListener, On
 
 			// show it
 			alertDialog.show();
+		}
+		
+		public void search() {
+			String[] parameters = new String[3];
+			parameters[0] = userEntryAnatomicalTarget; 
+			parameters[1] = userEntryTherapeuticTarget;
+			parameters[2] = userEntryAnimalTarget;
+			Intent i = new Intent(this, Listview_DrugResults.class);
+			i.putExtra("parameters", parameters);
+			startActivity(i);
 		}
 }
