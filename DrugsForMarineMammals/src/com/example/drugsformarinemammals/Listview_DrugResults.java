@@ -39,6 +39,7 @@ public class Listview_DrugResults extends Activity {
 		Intent i = new Intent(this, General_Info_Drug.class);
 		i.putExtra("drugName", drugName);
 		startActivity(i);
+		finish();
 	}
 
 	private void loadDrugList() {

@@ -68,6 +68,7 @@ public final class R {
         public static final int ic_launcher=0x7f020004;
         public static final int listview_selector=0x7f020005;
         public static final int single_search=0x7f020006;
+        public static final int transitionscreen=0x7f020007;
     }
     public static final class id {
         public static final int AnatomicalTarget=0x7f0a0001;
@@ -78,7 +79,7 @@ public final class R {
         public static final int SpinTherapeuticTarget=0x7f0a0004;
         public static final int TherapeuticTarget=0x7f0a0003;
         public static final int Therapeutic_Class=0x7f0a000b;
-        public static final int action_settings=0x7f0a0018;
+        public static final int action_settings=0x7f0a0019;
         public static final int drugsresult=0x7f0a0015;
         public static final int editTextDialogUserInput=0x7f0a000a;
         public static final int expandableAbout=0x7f0a000d;
@@ -88,13 +89,14 @@ public final class R {
         public static final int imageItem=0x7f0a0013;
         public static final int layout_root=0x7f0a0008;
         public static final int listViewTypeSearch=0x7f0a000f;
+        public static final int progressBar1=0x7f0a0016;
         public static final int textSearch=0x7f0a0014;
         public static final int textView=0x7f0a0009;
         public static final int textViewProductsList=0x7f0a0011;
         public static final int textViewUrl=0x7f0a000c;
         public static final int textview_drugs=0x7f0a0012;
-        public static final int title=0x7f0a0017;
-        public static final int vp_mainmenu=0x7f0a0016;
+        public static final int title=0x7f0a0018;
+        public static final int vp_mainmenu=0x7f0a0017;
     }
     public static final class layout {
         public static final int combined_search=0x7f030000;
@@ -109,8 +111,9 @@ public final class R {
         public static final int item_with_image=0x7f030009;
         public static final int item_with_image_formulary=0x7f03000a;
         public static final int listview_drugresults=0x7f03000b;
-        public static final int results_search=0x7f03000c;
-        public static final int viewpager_mainmenu=0x7f03000d;
+        public static final int progressbar_transitionscreen=0x7f03000c;
+        public static final int results_search=0x7f03000d;
+        public static final int viewpager_mainmenu=0x7f03000e;
     }
     public static final class menu {
         public static final int combined_search=0x7f090000;

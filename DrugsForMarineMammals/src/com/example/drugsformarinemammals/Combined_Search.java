@@ -177,5 +177,6 @@ public class Combined_Search extends Activity {
 			Intent i = new Intent(this, Listview_DrugResults.class);
 			i.putExtra("parameters", parameters);
 			startActivity(i);
+			finish();
 		}
 }
