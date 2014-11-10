@@ -67,6 +67,15 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".Dose_Information"
+            android:label=" " >
+            <intent-filter>
+                <action android:name="com.example.drugsformarinemammals.Dose_Information" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>
