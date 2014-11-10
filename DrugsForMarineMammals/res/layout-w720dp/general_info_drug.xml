@@ -1,0 +1,206 @@
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+  	android:layout_width="fill_parent"
+  	android:layout_height="fill_parent"
+  	android:background="@drawable/background"
+ 	android:fillViewport="true" >
+	    
+	<LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical" >
+        
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical" >
+
+        <TextView
+            android:id="@+id/drugTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" 
+            android:textSize="30sp"
+            android:textStyle="bold"
+            android:layout_gravity="center_horizontal"/>
+
+        <TextView
+            android:id="@+id/headerBriefDescription"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:layout_marginTop="20dp"
+            android:text="@string/headerBriefDescription" />
+
+        <TextView
+            android:id="@+id/briefDescription"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"
+            android:layout_marginTop="20dp"/>
+        
+    </LinearLayout>
+    
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal" >
+        
+        <TextView
+            android:id="@+id/headerGenericDrug"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:text="@string/headerGenericDrug" />
+        
+        <ImageView
+            android:id="@+id/genericDrug"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" 
+            android:layout_gravity="center"
+            android:layout_marginLeft="40dp"
+            android:layout_marginTop="10dp"
+            />
+        
+        
+    </LinearLayout>
+    
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical" >
+    		<TextView
+            android:id="@+id/headerLicense"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:layout_marginTop="20dp"
+            android:text="@string/headerLicense" />
+    </LinearLayout>
+    		
+    <LinearLayout
+		        android:layout_width="fill_parent"
+		        android:layout_height="wrap_content"
+		        android:orientation="horizontal" >
+		        
+    				<ImageButton
+    				    android:layout_width="0dip"
+    				    android:layout_height="fill_parent"
+    				    android:layout_weight="1"
+    				    android:src="@drawable/food_and_drug" />
+    			
+    				<ImageButton
+    				    android:layout_width="0dip"
+    				    android:layout_height="fill_parent"
+    				    android:layout_weight="1"
+    				    android:src="@drawable/logo_aemps" />
+
+    				<ImageButton
+    				    android:layout_width="0dip"
+    				    android:layout_height="fill_parent"
+    				    android:layout_weight="1"
+    				    android:src="@drawable/european_medicines_agency" />
+ 			
+    </LinearLayout>
+    		
+    <LinearLayout
+		        android:layout_width="fill_parent"
+		        android:layout_height="wrap_content"
+		        android:orientation="horizontal" >
+    			
+    		    			<ImageView
+				    				    android:id="@+id/license1"
+				    				    android:layout_width="0dp"
+				    				    android:layout_height="fill_parent"
+				    				    android:layout_weight="1"
+				    				    android:src="@drawable/yeswhite" />
+				    
+				    		
+				    		<ImageView
+				    				    android:id="@+id/license2"
+				    				    android:layout_width="0dp"
+				    				    android:layout_height="fill_parent"
+				    				    android:layout_weight="1"
+				    				    android:src="@drawable/nowhite" />
+				   
+				   
+				    		<ImageView
+				    				    android:id="@+id/license3"
+				    				    android:layout_width="0dp"
+				    				    android:layout_height="fill_parent"
+				    				    android:layout_weight="1"
+				    				    android:src="@drawable/ndwhite" />
+				    		
+				    
+	</LinearLayout>
+		        
+    <LinearLayout
+	        android:layout_width="fill_parent"
+	        android:layout_height="wrap_content"
+	        android:orientation="vertical" >
+    		<TextView
+	            android:id="@+id/headerAction"
+	            android:layout_width="fill_parent"
+	            android:layout_height="wrap_content"
+	            android:textSize="20sp"
+            	android:textStyle="bold"
+	            android:text="@string/headerAction" />
+    		
+    		<TextView
+	            android:id="@+id/anatomicalGroup"
+	            android:layout_width="fill_parent"
+	            android:layout_height="wrap_content"
+	            android:layout_marginLeft="30dp"
+                android:layout_marginRight="30dp" />
+    		
+    		<TextView
+	            android:id="@+id/therapeuticGroup"
+	            android:layout_width="fill_parent"
+	            android:layout_height="wrap_content"
+	            android:layout_marginLeft="30dp"
+                android:layout_marginRight="30dp" />
+    		
+    </LinearLayout>
+    
+    <TextView
+	            android:id="@+id/headerATCvetCodes"
+	            android:layout_width="fill_parent"
+	            android:layout_height="wrap_content"
+	            android:textSize="20sp"
+            	android:textStyle="bold"
+            	android:layout_marginTop="20dp"
+	            android:text="@string/headerATCvetCodes" />
+    
+    <LinearLayout
+	        android:layout_width="fill_parent"
+	        android:layout_height="wrap_content"
+	        android:orientation="vertical" 
+	        android:id="@+id/buttonCodes"
+	        android:layout_gravity="center_horizontal">
+    
+    </LinearLayout>
+	
+    <TextView
+	            android:id="@+id/headerAnimals"
+	            android:layout_width="fill_parent"
+	            android:layout_height="wrap_content"
+	            android:textSize="20sp"
+            	android:textStyle="bold"
+            	android:layout_marginTop="20dp"
+	            android:text="@string/headerAnimals" />
+    
+    
+	<LinearLayout
+	        android:layout_width="fill_parent"
+	        android:layout_height="wrap_content"
+	        android:orientation="vertical" 
+	        android:id="@+id/buttonAnimals"
+	        android:layout_gravity="center_horizontal">
+    
+    </LinearLayout>
+    </LinearLayout>
+</ScrollView>

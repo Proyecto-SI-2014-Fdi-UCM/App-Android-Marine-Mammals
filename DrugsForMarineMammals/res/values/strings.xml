@@ -8,10 +8,13 @@
     <string name="title_activity_combined__search">Combined_Search</string>
     <string name="titleCombinedSearch">Combined Search</string>
     <string name="titleAnatomicalTarget">Anatomical Target</string>
-	<string name="promptAnatomicalTarget">Choose an Anatomical Target</string>
-	<string name="promptTherapeuticTarget">Choose a Therapeutic Target</string>
-	<string name="promptAnimals">Choose a Group or Family</string>
-    <string name="go">Go</string>
+	<string name="go">Go</string>
 	<string name="urlAtcVet">http://www.whocc.no/atcvet/atcvet_index/</string>
 	<string name="Enter_Therapeutic_Class">Enter a Therapeutic Class</string>
+	<string name="headerBriefDescription">BriefDescription</string>
+	<string name="headerGenericDrug">Avalaible as generic drug</string>
+	<string name="headerLicense">License for vet use</string>
+	<string name="headerAction">Action</string>
+	<string name="headerATCvetCodes">ATCvet Codes</string>
+	<string name="headerAnimals">Animals</string>
 </resources>
