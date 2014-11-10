@@ -41,7 +41,7 @@ public class Combined_Search extends Activity {
         });
         
         
-        Spinner spinnerAnatomicalTarget = (Spinner)findViewById(R.id.SpinAnatomicalTarget);       
+        Spinner spinnerAnatomicalTarget = (Spinner)findViewById(R.id.SpinAnatomicalTarget);  
         ArrayAdapter<CharSequence> adapterAnatomicalTarget = ArrayAdapter.createFromResource(this, R.array.AnatomicalTarget, android.R.layout.simple_spinner_item);	     
 		adapterAnatomicalTarget.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 		spinnerAnatomicalTarget.setAdapter(adapterAnatomicalTarget);
@@ -112,10 +112,9 @@ public class Combined_Search extends Activity {
 			
 			LayoutInflater li = LayoutInflater.from(this);
 			View promptsView = li.inflate(R.layout.dialog_therapeutic_class_combined_search, null);
-			TextView text= (TextView)promptsView.findViewById(R.id.Therapeutic_Class);
-			text.setText(R.string.Enter_Therapeutic_Class);
-			final EditText edittext = (EditText)promptsView.findViewById(R.id.editTextDialogUserInput);
 			
+			final EditText edittext = (EditText)promptsView.findViewById(R.id.editTextDialogUserInput);
+			edittext.setHint(R.string.Enter_Therapeutic_Class);
 			TextView url= (TextView)promptsView.findViewById(R.id.textViewUrl);
 			url.setText(R.string.urlAtcVet);
 			url.setOnClickListener(new OnClickListener() {
