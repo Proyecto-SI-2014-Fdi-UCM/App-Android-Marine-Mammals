@@ -3,6 +3,7 @@ package com.example.drugsformarinemammals;
 import java.util.ArrayList;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -55,40 +56,47 @@ public class General_Info_Drug extends Activity {
         	
         }
         
-        Button buttonAnimals1 = new Button(this);
-        buttonAnimals1.setText("CETACEANS");
-        buttonAnimals1.setOnClickListener(new OnClickListener() {
+        Button cetaceansButton = new Button(this);
+        cetaceansButton.setText("CETACEANS");
+        cetaceansButton.setOnClickListener(new OnClickListener() {
 
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
+				showDoseInformation();
 				
 			}});
         
-        Button buttonAnimals2 = new Button(this);
-        buttonAnimals2.setText("PINNIPEDS");
-        buttonAnimals2.setOnClickListener(new OnClickListener() {
+        Button pinnipedsButton = new Button(this);
+        pinnipedsButton.setText("PINNIPEDS");
+        pinnipedsButton.setOnClickListener(new OnClickListener() {
 
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				
+				showDoseInformation();
 			}});
         
-        Button buttonAnimals3 = new Button(this);
-        buttonAnimals3.setText("OTHER MM");
-        buttonAnimals3.setOnClickListener(new OnClickListener() {
+        Button otherButton = new Button(this);
+        otherButton.setText("OTHER MM");
+        otherButton.setOnClickListener(new OnClickListener() {
 
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				
+				showDoseInformation();
 			}});
         
     	LinearLayout layout = (LinearLayout)findViewById(R.id.buttonAnimals);
-    	layout.addView(buttonAnimals1);
-    	layout.addView(buttonAnimals2);
-    	layout.addView(buttonAnimals3);
+    	layout.addView(cetaceansButton);
+    	layout.addView(pinnipedsButton);
+    	layout.addView(otherButton);
+	}
+
+	public void showDoseInformation() {
+		// TODO Auto-generated method stub
+		Intent i = new Intent(this, Dose_Information.class);
+		startActivity(i);
 	}
 
 	

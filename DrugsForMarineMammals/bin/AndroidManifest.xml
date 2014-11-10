@@ -14,12 +14,21 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity
-            android:name=".ViewPager_MainMenu"
+            android:name=".ProgressBar_TransitionScreen"
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".ViewPager_MainMenu"
+            android:label=" " >
+            <intent-filter>
+                <action android:name="com.example.drugsformarinemammals.ViewPager_MainMenu" />
+
+                <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
         <activity
@@ -54,6 +63,15 @@
             android:label=" " >
             <intent-filter>
                 <action android:name="com.example.drugsformarinemammals.Listview_DrugResults" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".Dose_Information"
+            android:label=" " >
+            <intent-filter>
+                <action android:name="com.example.drugsformarinemammals.Dose_Information" />
 
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>

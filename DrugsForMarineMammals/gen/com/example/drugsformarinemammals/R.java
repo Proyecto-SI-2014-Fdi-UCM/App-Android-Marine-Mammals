@@ -74,14 +74,15 @@ public final class R {
         public static final int nowhite=0x7f02000a;
         public static final int single_search=0x7f02000b;
         public static final int tick_verde=0x7f02000c;
-        public static final int yeswhite=0x7f02000d;
+        public static final int transitionscreen=0x7f02000d;
+        public static final int yeswhite=0x7f02000e;
     }
     public static final class id {
         public static final int CombinedSearch=0x7f0a0000;
         public static final int SpinAnatomicalTarget=0x7f0a0001;
         public static final int SpinAnimals=0x7f0a0003;
         public static final int SpinTherapeuticTarget=0x7f0a0002;
-        public static final int action_settings=0x7f0a0024;
+        public static final int action_settings=0x7f0a0025;
         public static final int anatomicalGroup=0x7f0a0017;
         public static final int briefDescription=0x7f0a000f;
         public static final int buttonAnimals=0x7f0a001c;
@@ -106,31 +107,34 @@ public final class R {
         public static final int license2=0x7f0a0014;
         public static final int license3=0x7f0a0015;
         public static final int listViewTypeSearch=0x7f0a000b;
+        public static final int progressBar1=0x7f0a0022;
         public static final int textSearch=0x7f0a0020;
         public static final int textView=0x7f0a0006;
         public static final int textViewProductsList=0x7f0a001d;
         public static final int textViewUrl=0x7f0a0008;
         public static final int textview_drugs=0x7f0a001e;
         public static final int therapeuticGroup=0x7f0a0018;
-        public static final int title=0x7f0a0023;
-        public static final int vp_mainmenu=0x7f0a0022;
+        public static final int title=0x7f0a0024;
+        public static final int vp_mainmenu=0x7f0a0023;
     }
     public static final class layout {
         public static final int combined_search=0x7f030000;
         public static final int dialog_single_search=0x7f030001;
         public static final int dialog_therapeutic_class_combined_search=0x7f030002;
-        public static final int fragment_about=0x7f030003;
-        public static final int fragment_calculator=0x7f030004;
-        public static final int fragment_formulary=0x7f030005;
-        public static final int fragment_report=0x7f030006;
-        public static final int general_info_drug=0x7f030007;
-        public static final int header_expandable_listview=0x7f030008;
-        public static final int item_drugresult=0x7f030009;
-        public static final int item_with_image=0x7f03000a;
-        public static final int item_with_image_formulary=0x7f03000b;
-        public static final int listview_drugresults=0x7f03000c;
-        public static final int results_search=0x7f03000d;
-        public static final int viewpager_mainmenu=0x7f03000e;
+        public static final int empty_activity=0x7f030003;
+        public static final int fragment_about=0x7f030004;
+        public static final int fragment_calculator=0x7f030005;
+        public static final int fragment_formulary=0x7f030006;
+        public static final int fragment_report=0x7f030007;
+        public static final int general_info_drug=0x7f030008;
+        public static final int header_expandable_listview=0x7f030009;
+        public static final int item_drugresult=0x7f03000a;
+        public static final int item_with_image=0x7f03000b;
+        public static final int item_with_image_formulary=0x7f03000c;
+        public static final int listview_drugresults=0x7f03000d;
+        public static final int progressbar_transitionscreen=0x7f03000e;
+        public static final int results_search=0x7f03000f;
+        public static final int viewpager_mainmenu=0x7f030010;
     }
     public static final class menu {
         public static final int combined_search=0x7f090000;
