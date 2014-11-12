@@ -4,10 +4,12 @@ import java.util.ArrayList;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -34,6 +36,40 @@ public class General_Info_Drug extends Activity {
         
         ImageView genericDrug=(ImageView)findViewById(R.id.genericDrug);
         genericDrug.setImageResource(R.drawable.tick_verde);
+        
+        ImageButton food_and_drug=(ImageButton)findViewById(R.id.food_and_drug);
+        food_and_drug.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				Intent intent = new Intent(Intent.ACTION_VIEW);
+				intent.setData(Uri.parse("http://www.fda.gov/"));
+				startActivity(intent);
+			}});
+        
+        ImageButton logo_aemps=(ImageButton)findViewById(R.id.logo_aemps);
+        logo_aemps.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				Intent intent = new Intent(Intent.ACTION_VIEW);
+				intent.setData(Uri.parse("http://www.aemps.gob.es/"));
+				startActivity(intent);
+			}});
+
+        ImageButton european_medicines_agency=(ImageButton)findViewById(R.id.european_medicines_agency);
+        european_medicines_agency.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				Intent intent = new Intent(Intent.ACTION_VIEW);
+				intent.setData(Uri.parse("http://www.ema.europa.eu/ema/"));
+				startActivity(intent);
+			}});
+
         
         TextView anatomicalGroup=(TextView)findViewById(R.id.anatomicalGroup);
         anatomicalGroup.setText("Aquí va el grupo anatómico");
