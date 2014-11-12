@@ -11,7 +11,6 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.text.TextUtils;
-import static android.provider.BaseColumns._ID;
 
 public class Handler_Sqlite extends SQLiteOpenHelper{
 
@@ -31,23 +30,24 @@ public class Handler_Sqlite extends SQLiteOpenHelper{
 	@Override
 	//This method is called when the database is created for the first time.
 	public void onCreate(SQLiteDatabase db){
-		String query1 = "CREATE TABLE Drug ("+_ID+" INTEGER PRIMARY KEY AUTOINCREMENT, drug_name TEXT, description TEXT, available INTEGER, license_AEMPS TEXT, license_EMA TEXT, license_FDA TEXT)";
+		String query1 = "CREATE TABLE Drug (drug_name TEXT, description TEXT, available INTEGER, license_AEMPS TEXT, license_EMA TEXT, license_FDA TEXT, PRIMARY KEY (drug_name))";
 
-		String query2 = "CREATE TABLE Code("+_ID+" INTEGER PRIMARY KEY AUTOINCREMENT, code_number TEXT, anatomic_group TEXT, therapeutic_group TEXT, drug_name TEXT, FOREIGN KEY (drug_name) REFERENCES Drug(drug_name))";
+		String query2 = "CREATE TABLE Code(code_number TEXT, anatomic_group TEXT, therapeutic_group TEXT, drug_name TEXT, FOREIGN KEY (drug_name) REFERENCES Drug(drug_name), PRIMARY KEY (code_number))";
 		
-		String query3 = "CREATE TABLE Animal_Type ("+_ID+" INTEGER PRIMARY KEY AUTOINCREMENT, group_name TEXT)";
+		String query3 = "CREATE TABLE Animal_Type (group_name TEXT, PRIMARY KEY (group_name))";
 		
-		String query4 = "CREATE TABLE Drug_aplicated_to_Animal_Type ("+_ID+" INTEGER PRIMARY KEY AUTOINCREMENT, drug_name TEXT, group_name TEXT, general_note TEXT, FOREIGN KEY (drug_name) REFERENCES Drug(drug_name)," +
-					"FOREIGN KEY (group_name) REFERENCES Animal_Type(group_name))";
+		String query4 = "CREATE TABLE Drug_aplicated_to_Animal_Type (drug_name TEXT, group_name TEXT, general_note TEXT, FOREIGN KEY (drug_name) REFERENCES Drug(drug_name)," +
+					"FOREIGN KEY (group_name) REFERENCES Animal_Type(group_name), PRIMARY KEY (drug_name, group_name, general_note))";
 		
-		String query5 = "CREATE TABLE Animal ("+_ID+" INTEGER PRIMARY KEY AUTOINCREMENT, animal_name TEXT, family TEXT, group_name TEXT, drug_name TEXT, FOREIGN KEY (drug_name) REFERENCES Drug(drug_name), " +
-					"FOREIGN KEY (group_name) REFERENCES Animal_Type(group_name))";
+		String query5 = "CREATE TABLE Animal (animal_name TEXT, family TEXT, group_name TEXT, drug_name TEXT, FOREIGN KEY (drug_name) REFERENCES Drug(drug_name), " +
+					"FOREIGN KEY (group_name) REFERENCES Animal_Type(group_name), PRIMARY KEY (animal_name, family, group_name, drug_name))";
 		
-		String query6 = "CREATE TABLE Category ("+_ID+" INTEGER PRIMARY KEY AUTOINCREMENT, category_name TEXT)";
+		String query6 = "CREATE TABLE Category (category_name TEXT, PRIMARY KEY (category_name))";
 
-		String query7 = "CREATE TABLE Animal_has_Category ("+_ID+" INTEGER PRIMARY KEY AUTOINCREMENT, animal_name TEXT, family TEXT, group_name TEXT, drug_name TEXT, category_name TEXT," +
+		String query7 = "CREATE TABLE Animal_has_Category (animal_name TEXT, family TEXT, group_name TEXT, drug_name TEXT, category_name TEXT," +
 					"reference TEXT, specific_note TEXT, posology TEXT, route TEXT, dose TEXT, FOREIGN KEY (drug_name) REFERENCES Animal(drug_name), FOREIGN KEY (group_name) REFERENCES Animal(group_name)," +
-					"FOREIGN KEY (animal_name) REFERENCES Animal(animal_name), FOREIGN KEY (family) REFERENCES Animal(family), FOREIGN KEY (category_name) REFERENCES Category(category_name))";
+					"FOREIGN KEY (animal_name) REFERENCES Animal(animal_name), FOREIGN KEY (family) REFERENCES Animal(family), FOREIGN KEY (category_name) REFERENCES Category(category_name), PRIMARY KEY(animal_name, family, group_name, drug_name, category_name," +
+					"reference, specific_note, posology, route))";
 
 		db.execSQL(query1);	
 		db.execSQL(query2);
