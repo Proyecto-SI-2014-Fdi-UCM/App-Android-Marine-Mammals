@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -122,7 +123,9 @@ public class Combined_Search extends Activity {
 				@Override
 				public void onClick(View v) {
 					// TODO Auto-generated method stub
-					
+					Intent intent = new Intent(Intent.ACTION_VIEW);
+					intent.setData(Uri.parse("http://www.whocc.no/atcvet/atcvet_index/"));
+					startActivity(intent);
 				}});
 			
 			AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
