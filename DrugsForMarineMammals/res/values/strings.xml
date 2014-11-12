@@ -2,10 +2,7 @@
 <resources>
 
     <string name="app_name">Drugs for Marine Mammals</string>
-    <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
-    <string name="title_activity_results__search">Results_Search</string>
-    <string name="title_activity_combined__search">Combined_Search</string>
     <string name="titleCombinedSearch">Combined Search</string>
     <string name="titleAnatomicalTarget">Anatomical Target</string>
 	<string name="go">Go</string>

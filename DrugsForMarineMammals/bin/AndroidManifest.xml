@@ -17,9 +17,9 @@
             android:name=".ProgressBar_TransitionScreen"
             android:label="@string/app_name" >
             <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+                <action android:name="com.example.drugsformarinemammals.ViewPager_MainMenu" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
+                <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
         <activity
@@ -50,15 +50,30 @@
             </intent-filter>
         </activity>
         <activity
+<<<<<<< HEAD
+            android:name=".Dose_Information"
+            android:label="@string/app_name" >
+            <intent-filter>
+                <action android:name="com.example.drugsformarinemammals.Dose_Information" />
+=======
             android:name=".General_Info_Drug"
             android:label=" " >
             <intent-filter>
                 <action android:name="com.example.drugsformarinemammals.General_Info_Drug" />
+>>>>>>> a87bc221920e9a2fe7a28fd35b57911ab47d55c9
 
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
         <activity
+<<<<<<< HEAD
+            android:name=".BBDD_drugs"
+            android:label="@string/app_name" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+=======
             android:name=".Listview_DrugResults"
             android:label=" " >
             <intent-filter>
@@ -74,6 +89,7 @@
                 <action android:name="com.example.drugsformarinemammals.Dose_Information" />
 
                 <category android:name="android.intent.category.DEFAULT" />
+>>>>>>> a87bc221920e9a2fe7a28fd35b57911ab47d55c9
             </intent-filter>
         </activity>
     </application>

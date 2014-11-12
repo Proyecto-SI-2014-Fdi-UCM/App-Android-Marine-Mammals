@@ -15,7 +15,7 @@
         android:theme="@style/AppTheme" >
         <activity
             android:name=".ProgressBar_TransitionScreen"
-            android:label="@string/app_name" >
+            android:label=" " >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -27,15 +27,6 @@
             android:label=" " >
             <intent-filter>
                 <action android:name="com.example.drugsformarinemammals.ViewPager_MainMenu" />
-
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
-        </activity>
-        <activity
-            android:name=".Results_Search"
-            android:label=" " >
-            <intent-filter>
-                <action android:name="com.example.drugsformarinemammals.Results_Search" />
 
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>

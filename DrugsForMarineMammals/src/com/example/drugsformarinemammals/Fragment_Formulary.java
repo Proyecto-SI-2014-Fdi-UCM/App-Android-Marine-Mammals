@@ -49,7 +49,7 @@ public class Fragment_Formulary extends Fragment {
         					break;
 		        
         			// Five Last Searched    	
-		    		case 2: Intent intentResults = new Intent(getActivity(),Results_Search.class);
+		    		case 2: Intent intentResults = new Intent(getActivity(),Listview_DrugResults.class);
 		        			startActivity(intentResults);
 		        			break;
 		        		
@@ -76,24 +76,22 @@ public class Fragment_Formulary extends Fragment {
 
 		AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getActivity());
 
-		// set prompts.xml to alertdialog builder
 		alertDialogBuilder.setView(promptsView);
 
 		EditText userInput = (EditText) promptsView.findViewById(R.id.editTextDialogUserInput);
 		userInput.setTypeface(Typeface.SANS_SERIF);
 		userInput.setHint("Enter name of drug");
         
-		// set dialog message
 		alertDialogBuilder.setCancelable(false).setPositiveButton("Search",new DialogInterface.OnClickListener() {
 					    public void onClick(DialogInterface dialog,int id) {
-					    	Intent intent = new Intent(getActivity(),Results_Search.class);
+					    	Intent intent = new Intent(getActivity(),General_Info_Drug.class);
 					    	startActivity(intent);
 					    	
 					    }
 				})
 					.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
 						public void onClick(DialogInterface dialog,int id) {
-			    	dialog.cancel();
+							dialog.cancel();
 						}
 					});
 
