@@ -97,7 +97,7 @@ public class Handler_Sqlite extends SQLiteOpenHelper{
 		onCreate(db);
 	}
 	
-	/*public ArrayList<String> read_drugs_bbdd() {
+	public ArrayList<String> read_drugs_name() {
 		
 		ArrayList<String> result = new ArrayList<String>();
 		SQLiteDatabase db = this.getReadableDatabase();
@@ -110,5 +110,5 @@ public class Handler_Sqlite extends SQLiteOpenHelper{
 		}
 		
 		return result;
-	}*/
+	}
 }
