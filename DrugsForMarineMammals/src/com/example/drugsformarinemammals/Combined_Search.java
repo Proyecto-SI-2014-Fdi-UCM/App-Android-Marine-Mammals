@@ -1,5 +1,7 @@
 package com.example.drugsformarinemammals;
 
+import java.util.ArrayList;
+
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -13,10 +15,8 @@ import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
-//import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
 public class Combined_Search extends Activity {
 
@@ -29,7 +29,9 @@ public class Combined_Search extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.combined_search);
-        
+        userEntryAnatomicalTarget = "";
+    	userEntryTherapeuticTarget = "";
+    	userEntryAnimalTarget = "";
         Button go=(Button)findViewById(R.id.goButton);
         go.setOnClickListener(new OnClickListener() {
 
@@ -48,7 +50,7 @@ public class Combined_Search extends Activity {
 		spinnerAnatomicalTarget.setOnItemSelectedListener(new OnItemSelectedListener() {
 
 		     public void onItemSelected(AdapterView<?> parent, View arg1,int arg2, long arg3) {
-		    	 userEntryAnatomicalTarget = parent.getSelectedItem().toString();    	 
+		    	 userEntryAnatomicalTarget = parent.getSelectedItem().toString(); 	 
 		     }
 
 		     public void onNothingSelected(AdapterView<?> arg0) {
@@ -169,14 +171,29 @@ public class Combined_Search extends Activity {
 			alertDialog.show();
 		}
 		
-		public void search() {
-			String[] parameters = new String[3];
-			parameters[0] = userEntryAnatomicalTarget; 
-			parameters[1] = userEntryTherapeuticTarget;
-			parameters[2] = userEntryAnimalTarget;
+	public void search() {
+		Handler_Sqlite handler = new Handler_Sqlite(this);
+		String[] parameters = new String[3];
+		parameters[0] = userEntryAnatomicalTarget;
+		parameters[1] = userEntryTherapeuticTarget;
+		parameters[2] = userEntryAnimalTarget;
+		ArrayList<String> drugList = handler.combinedSearch(parameters);
+		if (drugList != null && !drugList.isEmpty()) {
 			Intent i = new Intent(this, Listview_DrugResults.class);
-			i.putExtra("parameters", parameters);
+			i.putExtra("drugList", drugList);
 			startActivity(i);
-			finish();
 		}
+		else {
+			new AlertDialog.Builder(this)
+			.setTitle("NOT FOUND")
+			.setMessage("Drugs haven't been found with the specified parameters")
+			.setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+				
+				@Override
+				public void onClick(DialogInterface dialog, int which) {}
+			})
+			.show();
+		}
+			
+	}
 }
