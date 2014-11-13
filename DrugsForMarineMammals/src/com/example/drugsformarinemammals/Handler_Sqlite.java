@@ -49,7 +49,7 @@ public class Handler_Sqlite extends SQLiteOpenHelper{
 					"FOREIGN KEY (animal_name) REFERENCES Animal(animal_name), FOREIGN KEY (family) REFERENCES Animal(family), FOREIGN KEY (category_name) REFERENCES Category(category_name), PRIMARY KEY(animal_name, family, group_name, drug_name, category_name," +
 					"reference, specific_note, posology, route))";
 
-		db.execSQL(query1);	
+		db.execSQL(query1);
 		db.execSQL(query2);
 		db.execSQL(query3);
 		db.execSQL(query4);
@@ -111,4 +111,69 @@ public class Handler_Sqlite extends SQLiteOpenHelper{
 		
 		return result;
 	}
+
+	public ArrayList<String> combinedSearch(String[] p) {
+		if (!p[0].equals("Choose an Anatomical Target") && !p[1].equals("Choose a Therapeutic Target")) {
+			String where = "anatomic_group=? and therapeutic_group=?";
+			String args[]= {p[0], p[1]};
+			return searchTables(p, where, args);
+		}
+		else if (!p[0].equals("Choose an Anatomical Target")) {
+			String where = "anatomic_group=?";
+			String args[]= {p[0]};
+			return searchTables(p, where, args);
+
+		}
+		else if (!p[1].equals("Choose a Therapeutic Target")) {
+			String where = "therapeutic_group=?";
+			String args[]= {p[1]};
+			return searchTables(p, where, args);
+		}
+		else if (!p[2].equals("Choose a Group")) {
+			String args[]= {p[2]};
+			return searchTDrugAplicatedAnimalType(args);
+		}
+		return null;
+	}
+
+	private ArrayList<String> searchTDrugAplicatedAnimalType(String[] a) {
+		SQLiteDatabase db = open();
+		ArrayList<String> drugsList = new ArrayList<String>();
+		String drug;
+		String column[] = {"drug_name"};
+		Cursor cc = db.query("Drug_aplicated_to_Animal_Type", column, "group_name=?", a, null, null, null);
+		if (cc.moveToFirst())
+			for (cc.moveToFirst();!cc.isAfterLast();cc.moveToNext()) {
+				drug = cc.getString(cc.getColumnIndex("drug_name"));
+				if (!drugsList.contains(drug))
+					drugsList.add(drug);
+			}
+		close();
+		return drugsList;
+	}
+
+	private ArrayList<String> searchTables(String[] p, String w, String[] a) {
+		SQLiteDatabase db = open();
+		ArrayList<String> drugsList = new ArrayList<String>();
+		String column[] = {"drug_name"};
+		Cursor cc = db.query("Code", column, w, a, null, null, null);
+		if (cc.moveToFirst())
+			for (cc.moveToFirst();!cc.isAfterLast();cc.moveToNext()) {
+				String drug = cc.getString(cc.getColumnIndex("drug_name"));
+				if (!drugsList.contains(drug))
+					if (!p[2].equals("Choose a Group")) {
+						String args[] = { drug, p[2] };
+						Cursor cs = db.query("Drug_aplicated_to_Animal_Type",
+								column, "drug_name=? and group_name=?", args, null, null, null);
+						if (cs.moveToFirst())
+							for (cs.moveToFirst(); !cs.isAfterLast(); cs.moveToNext())
+								if (!drugsList.contains(drug)) 
+									drugsList.add(cs.getString(cs.getColumnIndex("drug_name")));
+					} else
+						drugsList.add(drug);
+			}
+		close();
+		return drugsList;		
+	}
+
 }
