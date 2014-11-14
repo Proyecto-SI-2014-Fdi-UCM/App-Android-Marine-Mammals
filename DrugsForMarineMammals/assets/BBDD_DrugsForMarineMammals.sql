@@ -1,5 +1,5 @@
-INSERT INTO Drug (drug_name, description, available, license_AEMPS, license_EMA, license_FDA) VALUES ('Furosemide', 'Loop diuretic to treat fluid retention', 1, 'No', 'N.d.', 'Yes');
-INSERT INTO Drug (drug_name, description, available, license_AEMPS, license_EMA, license_FDA) VALUES ('Gentamicin', 'Aminoglycoside antibiotic to treat different infections mainly caused by Gram-', 1, 'Yes', 'Yes', 'Yes');
+INSERT INTO Drug (drug_name, description, available, license_AEMPS, license_EMA, license_FDA, priority) VALUES ('Furosemide', 'Loop diuretic to treat fluid retention', 1, 'No', 'N.d.', 'Yes', 2);
+INSERT INTO Drug (drug_name, description, available, license_AEMPS, license_EMA, license_FDA, priority) VALUES ('Gentamicin', 'Aminoglycoside antibiotic to treat different infections mainly caused by Gram-', 1, 'Yes', 'Yes', 'Yes', 1);
 INSERT INTO Code (code_number, anatomic_group, therapeutic_group, drug_name) VALUES ('QC03CA01', 'Cardiovascular system', 'Diuretics', 'Furosemide');
 INSERT INTO Code (code_number, anatomic_group, therapeutic_group, drug_name) VALUES ('QA07AA91', 'Alimentary tract and metabolism', 'Antidiarrheals, intestinal anti-inflammatory/antiinfective agents', 'Gentamicin');
 INSERT INTO Code (code_number, anatomic_group, therapeutic_group, drug_name) VALUES ('QD06AX07', 'Dermatologicals', 'Antibiotics and chemotherapeutics for dermatological use', 'Gentamicin');
