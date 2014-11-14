@@ -19,7 +19,7 @@ import android.widget.ListView;
 public class Listview_DrugResults extends Activity {
 	
 	private ArrayList<String> drugList;
-	public Handler_Sqlite helper;
+	private Handler_Sqlite helper;
 	
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);

@@ -29,7 +29,7 @@ public class General_Info_Drug extends Activity {
     	if (parameter!=null) {
     		String drug_name = parameter.getString("drugName");
 			Handler_Sqlite helper = new Handler_Sqlite(this);
-        
+    
 			TextView drugTitle=(TextView)findViewById(R.id.drugTitle);
 			//Aqui hay que leer de la BBDD
 			drugTitle.setText("Furosemide");
