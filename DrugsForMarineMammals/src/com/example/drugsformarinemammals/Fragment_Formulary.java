@@ -12,6 +12,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.AdapterView.OnItemClickListener;
@@ -21,6 +23,9 @@ public class Fragment_Formulary extends Fragment {
 	private ArrayList<ItemWithImage> options=new ArrayList<ItemWithImage>();
 	private ListView list;
 	private View rootView;
+	private Handler_Sqlite helper;
+	private ArrayAdapter<String> adapterDrugNames;
+	
 	
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		
@@ -77,10 +82,11 @@ public class Fragment_Formulary extends Fragment {
 		AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getActivity());
 
 		alertDialogBuilder.setView(promptsView);
-
-		EditText userInput = (EditText) promptsView.findViewById(R.id.editTextDialogUserInput);
-		userInput.setTypeface(Typeface.SANS_SERIF);
-		userInput.setHint("Enter name of drug");
+		
+		AutoCompleteTextView actv = (AutoCompleteTextView) promptsView.findViewById(R.id.autoCompleteTextView1);
+		actv.setTypeface(Typeface.SANS_SERIF);
+		actv.setHint("Enter name of drug");
+		initializeArrayWithDrugName();
         
 		alertDialogBuilder.setCancelable(false).setPositiveButton("Search",new DialogInterface.OnClickListener() {
 					    public void onClick(DialogInterface dialog,int id) {
@@ -97,10 +103,20 @@ public class Fragment_Formulary extends Fragment {
 
 		// create alert dialog
 		AlertDialog alertDialog = alertDialogBuilder.create();
-
+		actv.setAdapter(adapterDrugNames);
+		
 		// show it
 		alertDialog.show();
 	}
 	
+	public void initializeArrayWithDrugName() {
+		// TODO Auto-generated method stub
+		helper=new Handler_Sqlite(getActivity());
+		helper.open();
 		
+		ArrayList<String> drugNames=helper.read_drugs_name();
+		adapterDrugNames = new ArrayAdapter<String>(getActivity(),android.R.layout.simple_list_item_1,drugNames);
+
+		helper.close();
+	}	
 }

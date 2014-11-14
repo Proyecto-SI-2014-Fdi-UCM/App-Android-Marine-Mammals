@@ -25,6 +25,7 @@
 			android:padding="20dp" >	        
 				    <TextView
 				        android:id="@+id/textViewUrl"
+				        android:autoLink="web"
 				        android:layout_width="match_parent"
 				        android:layout_height="wrap_content"
 				        android:clickable="true"

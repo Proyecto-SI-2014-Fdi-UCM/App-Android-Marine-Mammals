@@ -88,18 +88,21 @@
 		        android:orientation="horizontal" >
 		        
     				<ImageButton
+    				    android:id="@+id/food_and_drug"
     				    android:layout_width="0dip"
     				    android:layout_height="fill_parent"
     				    android:layout_weight="1"
     				    android:src="@drawable/food_and_drug" />
     			
     				<ImageButton
+    				    android:id="@+id/logo_aemps"
     				    android:layout_width="0dip"
     				    android:layout_height="fill_parent"
     				    android:layout_weight="1"
     				    android:src="@drawable/logo_aemps" />
 
     				<ImageButton
+    				    android:id="@+id/european_medicines_agency"
     				    android:layout_width="0dip"
     				    android:layout_height="fill_parent"
     				    android:layout_weight="1"
