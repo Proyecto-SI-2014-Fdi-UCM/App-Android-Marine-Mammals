@@ -82,10 +82,6 @@ public class Fragment_Formulary extends Fragment {
 		AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getActivity());
 
 		alertDialogBuilder.setView(promptsView);
-
-		/*EditText userInput = (EditText) promptsView.findViewById(R.id.editTextDialogUserInput);
-		userInput.setTypeface(Typeface.SANS_SERIF);
-		userInput.setHint("Enter name of drug");*/
 		
 		AutoCompleteTextView actv = (AutoCompleteTextView) promptsView.findViewById(R.id.autoCompleteTextView1);
 		actv.setTypeface(Typeface.SANS_SERIF);

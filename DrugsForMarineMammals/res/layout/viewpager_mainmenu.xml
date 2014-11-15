@@ -2,24 +2,31 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#e2e6e7"  
     android:orientation="vertical"
-    android:background="@drawable/background">
+    >
 
     <android.support.v4.view.ViewPager
         android:id="@+id/vp_mainmenu"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        >
         
         <android.support.v4.view.PagerTabStrip
         android:id="@+id/title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@android:color/transparent"
+        android:background="#ffffff"
         android:layout_gravity="top"
         android:paddingBottom="4dp"
-        android:paddingTop="4dp" >
+        android:paddingTop="4dp" 
+        style="@style/tabstrip">
         
         </android.support.v4.view.PagerTabStrip>
         
     </android.support.v4.view.ViewPager>
 </LinearLayout>
+<!--android:background="@android:color/transparent" 
+#d5d8d5->gris claro  android:background="@drawable/tabs_background" 
+android:background="@drawable/background"
+android:background="#e3e7e8"-->

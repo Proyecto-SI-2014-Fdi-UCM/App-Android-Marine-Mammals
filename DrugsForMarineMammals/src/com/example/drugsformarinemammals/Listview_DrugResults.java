@@ -1,7 +1,10 @@
 package com.example.drugsformarinemammals;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
+import android.database.sqlite.SQLiteDatabase;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -15,35 +18,69 @@ import android.widget.ListView;
 
 public class Listview_DrugResults extends Activity {
 	
-	private List<String> drugList;
+	private ArrayList<String> drugList;
+	private Handler_Sqlite helper;
 	
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.listview_drugresults);
-		drugList = new ArrayList<String>(30);
-		loadDrugList();
+		helper = new Handler_Sqlite(this);
+		Bundle extra = this.getIntent().getExtras();
+		if (extra!=null) {
+			//option Combined Search
+			drugList = (ArrayList<String>) extra.get("drugList");
+		}
+		else {
+			//option Five Last Searched
+			List<Drug_Information> drugs_with_priority = new ArrayList<Drug_Information>();
+			SQLiteDatabase tmp = helper.open();
+			if (tmp!=null) {
+				drugs_with_priority = helper.read_drugs_database();
+				helper.close();
+			}
+			
+			//sort drugs by priority
+			Collections.sort(drugs_with_priority,new Comparator<Drug_Information>() {
+
+				@Override
+				public int compare(Drug_Information drug1, Drug_Information drug2) {
+					// TODO Auto-generated method stub
+					return drug1.getPriority().compareTo(drug2.getPriority());
+				}
+				
+			});
+			
+			drugList = new ArrayList<String>();
+			for (int i=0;i<drugs_with_priority.size();i++) {
+				drugList.add(drugs_with_priority.get(i).getName());
+			}
+		}
 		ListAdapter adapter = new ArrayAdapter<String>(this, R.layout.item_drugresult, drugList);
 		ListView listview = (ListView) findViewById(R.id.drugsresult);
-		listview.setOnItemClickListener(new OnItemClickListener(){
+		listview.setOnItemClickListener(new OnItemClickListener() {
 
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view,
 					int position, long id) {
 				String drugName = drugList.get(position);
 				startGralInfo(drugName);
-			}});
+			}
+		});
 		listview.setAdapter(adapter);
 	}
 	
+
 	public void startGralInfo(String drugName) {
 		Intent i = new Intent(this, General_Info_Drug.class);
 		i.putExtra("drugName", drugName);
 		startActivity(i);
 		finish();
 	}
-
-	private void loadDrugList() {
-		for (int i = 1; i < 20; i++) 
-			drugList.add("Furosemide");
+	
+	public void restartCombinedSearch() {
+		Intent i = new Intent(this, Combined_Search.class);
+		startActivity(i);
+		finish();
 	}
+	
 }
