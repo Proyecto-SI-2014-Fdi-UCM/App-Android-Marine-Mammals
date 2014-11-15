@@ -19,7 +19,7 @@ public class Handler_Sqlite extends SQLiteOpenHelper{
 
 	Context myContext;
 	public Handler_Sqlite(Context ctx){
-		super(ctx,nameBD, null,1);
+		super(ctx,nameBD, null,4);
 		myContext = ctx;
 	}
 	

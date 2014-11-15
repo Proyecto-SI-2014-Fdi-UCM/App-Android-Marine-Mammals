@@ -11,6 +11,10 @@
         android:drawable="@color/highlight_focused" />
   
     <item
-        android:drawable="@color/white" />
+        android:drawable="@drawable/rounded_corners" />
   
 </selector>
+
+
+
+
