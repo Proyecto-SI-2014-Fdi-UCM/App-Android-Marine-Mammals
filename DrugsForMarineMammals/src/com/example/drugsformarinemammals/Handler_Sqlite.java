@@ -240,5 +240,95 @@ public class Handler_Sqlite extends SQLiteOpenHelper{
 		this.getWritableDatabase().update("Drug", tmp, "drug_name=?", args);
 		
 	}
+	
+	//General Info Drug
+	public String getDescription(String drug_name){
+		SQLiteDatabase db=this.getReadableDatabase();
+		String args[]={drug_name};
+		String columns[]={"description"};
+		//Cursor c=this.getReadableDatabase().query("productos", columnas, null, null,null, null,null);
+		Cursor c=db.query("Drug", columns, "drug_name=?", args, null, null, null);
+		int indexDescription=c.getColumnIndex("description");
+		c.moveToFirst();
+		return c.getString(indexDescription);
+		
+	}
+
+	public boolean isAvalaible(String drug_name) {
+		// TODO Auto-generated method stub
+		SQLiteDatabase db=this.getReadableDatabase();
+		String args[]={drug_name};
+		String columns[]={"available"};
+		Cursor c=db.query("Drug", columns, "drug_name=?", args, null, null, null);
+		int indexAvalaible=c.getColumnIndex("available");
+		c.moveToFirst();
+		return c.getInt(indexAvalaible)==1;
+		
+	}
+	
+	public ArrayList<String> getCodes(String drug_name){
+		ArrayList<String> solution= new ArrayList<String>();
+		SQLiteDatabase db=this.getReadableDatabase();
+		String args[]={drug_name};
+		String columns[]={"code_number"};
+		Cursor c=db.query("Code", columns, "drug_name=?", args, null, null, null);
+		int indexCode=c.getColumnIndex("code_number");
+		for(c.moveToFirst();!c.isAfterLast();c.moveToNext()){
+			solution.add((c.getString(indexCode)));
+		}
+		return solution;
+	}
+
+	public String getAnatomicTarget(String drug_name, String code) {
+		// TODO Auto-generated method stub
+		SQLiteDatabase db=this.getReadableDatabase();
+		String args[]={drug_name,code};
+		String columns[]={"anatomic_group"};
+		Cursor c=db.query("Code", columns, "drug_name=? and code_number=?", args, null, null, null);
+		int indexAnatomic=c.getColumnIndex("anatomic_group");
+		c.moveToFirst();
+		return c.getString(indexAnatomic);
+	}
+	
+	public String getTherapeuticTarget(String drug_name, String code) {
+		// TODO Auto-generated method stub
+		SQLiteDatabase db=this.getReadableDatabase();
+		String args[]={drug_name,code};
+		String columns[]={"therapeutic_group"};
+		Cursor c=db.query("Code", columns, "drug_name=? and code_number=?", args, null, null, null);
+		int indexTherapeutic=c.getColumnIndex("therapeutic_group");
+		c.moveToFirst();
+		return c.getString(indexTherapeutic);
+	}
+	
+	public String getLicense_AEMPS(String drug_name){
+		SQLiteDatabase db=this.getReadableDatabase();
+		String args[]={drug_name};
+		String columns[]={"license_AEMPS"};
+		Cursor c=db.query("Drug", columns, "drug_name=?", args, null, null, null);
+		int indexLicense_AEMPS=c.getColumnIndex("license_AEMPS");
+		c.moveToFirst();
+		return c.getString(indexLicense_AEMPS);
+	}
+	
+	public String getLicense_EMA(String drug_name){
+		SQLiteDatabase db=this.getReadableDatabase();
+		String args[]={drug_name};
+		String columns[]={"license_EMA"};
+		Cursor c=db.query("Drug", columns, "drug_name=?", args, null, null, null);
+		int indexLicense_EMA=c.getColumnIndex("license_EMA");
+		c.moveToFirst();
+		return c.getString(indexLicense_EMA);
+	}
+	
+	public String getLicense_FDA(String drug_name){
+		SQLiteDatabase db=this.getReadableDatabase();
+		String args[]={drug_name};
+		String columns[]={"license_FDA"};
+		Cursor c=db.query("Drug", columns, "drug_name=?", args, null, null, null);
+		int indexLicense_FDA=c.getColumnIndex("license_FDA");
+		c.moveToFirst();
+		return c.getString(indexLicense_FDA);
+	}
 
 }
