@@ -62,3 +62,14 @@ INSERT INTO Animal_has_Category (animal_name, drug_name, family, group_name, cat
 INSERT INTO Animal_has_Category (animal_name, drug_name, family, group_name, category_name, reference, specific_note, posology, route, dose) VALUES ('Sea otters', 'Gentamicin', '', 'Other MM', 'General', 'CRC', 'Nephrotoxicity reported', 'BID', 'IM', '4.4 mg/kg');
 INSERT INTO Animal_has_Category (animal_name, drug_name, family, group_name, category_name, reference, specific_note, posology, route, dose) VALUES ('Sea otters', 'Gentamicin', '', 'Other MM', 'Pups', 'CRC', '', 'BID 5d', 'IM', '2.0 mg/kg');
 INSERT INTO Animal_has_Category (animal_name, drug_name, family, group_name, category_name, reference, specific_note, posology, route, dose) VALUES ('Sea otters', 'Gentamicin', '', 'Other MM', 'Adults', 'CRC', '', 'TID', 'IM', '2.0 mg/kg');
+INSERT INTO Therapeutic_Group (name) VALUES ('Choose a Therapeutic Target');
+INSERT INTO Therapeutic_Group (name) VALUES ('Diuretics');
+INSERT INTO Therapeutic_Group (name) VALUES ('Antidiarrheals, intestinal anti-inflammatory/antiinfective agents ');
+INSERT INTO Therapeutic_Group (name) VALUES ('Antibiotics and chemotherapeutics for dermatological use ');
+INSERT INTO Therapeutic_Group (name) VALUES ('Gynecological antiinfectives and antiseptics ');
+INSERT INTO Therapeutic_Group (name) VALUES ('Antiinfectives and antiseptics for intrauterine use ');
+INSERT INTO Therapeutic_Group (name) VALUES ('Antibacterials for sistemic use ');
+INSERT INTO Therapeutic_Group (name) VALUES ('Ophtalmologicals');
+INSERT INTO Therapeutic_Group (name) VALUES ('Otologicals');
+INSERT INTO Therapeutic_Group (name) VALUES ('Ophtalmologicals and otologicals preparations');
+INSERT INTO Therapeutic_Group (name) VALUES ('Add new group');
