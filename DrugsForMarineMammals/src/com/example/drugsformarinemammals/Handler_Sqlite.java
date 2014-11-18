@@ -19,7 +19,7 @@ public class Handler_Sqlite extends SQLiteOpenHelper{
 
 	Context myContext;
 	public Handler_Sqlite(Context ctx){
-		super(ctx,nameBD, null,4);
+		super(ctx,nameBD, null,6);
 		myContext = ctx;
 	}
 	
@@ -49,6 +49,7 @@ public class Handler_Sqlite extends SQLiteOpenHelper{
 					"reference TEXT, specific_note TEXT, posology TEXT, route TEXT, dose TEXT, FOREIGN KEY (drug_name) REFERENCES Animal(drug_name), FOREIGN KEY (group_name) REFERENCES Animal(group_name)," +
 					"FOREIGN KEY (animal_name) REFERENCES Animal(animal_name), FOREIGN KEY (family) REFERENCES Animal(family), FOREIGN KEY (category_name) REFERENCES Category(category_name), PRIMARY KEY(animal_name, family, group_name, drug_name, category_name," +
 					"reference, specific_note, posology, route))";
+		String query8 = "CREATE TABLE Therapeutic_Group (name TEXT, PRIMARY KEY (name))";
 
 		db.execSQL(query1);
 		db.execSQL(query2);
@@ -57,6 +58,7 @@ public class Handler_Sqlite extends SQLiteOpenHelper{
 		db.execSQL(query5);
 		db.execSQL(query6);
 		db.execSQL(query7);
+		db.execSQL(query8);
 		
 		 InputStream is = null;
 		    try {
@@ -95,6 +97,7 @@ public class Handler_Sqlite extends SQLiteOpenHelper{
 		db.execSQL("DROP TABLE IF EXISTS Animal");
 		db.execSQL("DROP TABLE IF EXISTS Category");
 		db.execSQL("DROP TABLE IF EXISTS Animal_has_Category");
+		db.execSQL("DROP TABLE IF EXISTS Therapeutic_Group");
 		onCreate(db);
 	}
 	
@@ -329,6 +332,33 @@ public class Handler_Sqlite extends SQLiteOpenHelper{
 		int indexLicense_FDA=c.getColumnIndex("license_FDA");
 		c.moveToFirst();
 		return c.getString(indexLicense_FDA);
+	}
+	
+	public ArrayList<String> getAllTherapeuticGroup(){
+		ArrayList<String> solution=new ArrayList<String>();
+		SQLiteDatabase db=this.getReadableDatabase();
+		String columns[]={"name"};
+		Cursor c=db.query("Therapeutic_Group", columns, null, null, null, null, null);
+		int indexName=c.getColumnIndex("name");
+		for(c.moveToFirst();!c.isAfterLast();c.moveToNext()){
+			solution.add((c.getString(indexName)));
+		}
+		return solution;
+		
+	}
+
+	public void deleteTherapeuticGroup(String name){
+		
+		SQLiteDatabase db = getWritableDatabase();
+	    db.delete("Therapeutic_Group", "name="+"'"+name+"'", null);
+	    
+		
+	}
+	
+	public void insertTherapeuticGroup(String name){
+		ContentValues registro=new ContentValues();
+		registro.put("name", name);
+		this.getWritableDatabase().insert("Therapeutic_Group", null, registro);
 	}
 
 }

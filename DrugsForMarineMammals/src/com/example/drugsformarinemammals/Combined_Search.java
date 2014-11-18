@@ -24,7 +24,9 @@ public class Combined_Search extends Activity {
 	private String userEntryAnatomicalTarget;
 	private String userEntryTherapeuticTarget;
 	private String userEntryAnimalTarget;
-
+	private ArrayAdapter<String> adapterTherapeuticTarget;
+	private Spinner spinnerTherapeuticTarget;
+	private Handler_Sqlite helper;
 	
 	@Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,6 +35,8 @@ public class Combined_Search extends Activity {
         userEntryAnatomicalTarget = "";
     	userEntryTherapeuticTarget = "";
     	userEntryAnimalTarget = "";
+    	helper=new Handler_Sqlite(this);
+    	helper.open();
         Button go=(Button)findViewById(R.id.goButton);
         go.setOnClickListener(new OnClickListener() {
 
@@ -45,7 +49,7 @@ public class Combined_Search extends Activity {
         
         
         Spinner spinnerAnatomicalTarget = (Spinner)findViewById(R.id.SpinAnatomicalTarget);  
-        ArrayAdapter<CharSequence> adapterAnatomicalTarget = ArrayAdapter.createFromResource(this, R.array.AnatomicalTarget, android.R.layout.simple_spinner_item);	     
+        ArrayAdapter<CharSequence> adapterAnatomicalTarget = ArrayAdapter.createFromResource(this,R.array.AnatomicalTarget, android.R.layout.simple_spinner_item);	     
 		adapterAnatomicalTarget.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 		spinnerAnatomicalTarget.setAdapter(adapterAnatomicalTarget);
 		spinnerAnatomicalTarget.setOnItemSelectedListener(new OnItemSelectedListener() {
@@ -59,12 +63,14 @@ public class Combined_Search extends Activity {
 		     }
 		     });
 
-		Spinner spinnerTherapeuticTarget = (Spinner)findViewById(R.id.SpinTherapeuticTarget);       
-        ArrayAdapter<CharSequence> adapterTherapeuticTarget = ArrayAdapter.createFromResource(this, R.array.TherapeuticTarget, android.R.layout.simple_spinner_item);	     
+		spinnerTherapeuticTarget = (Spinner)findViewById(R.id.SpinTherapeuticTarget);       
+        
+        
+		adapterTherapeuticTarget = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item,helper.getAllTherapeuticGroup());	     
 		adapterTherapeuticTarget.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 		spinnerTherapeuticTarget.setAdapter(adapterTherapeuticTarget);
 		spinnerTherapeuticTarget.setOnItemSelectedListener(new OnItemSelectedListener() {
-
+			
 		     public void onItemSelected(AdapterView<?> parent, View arg1,int arg2, long arg3) {
 		    	 userEntryTherapeuticTarget = parent.getSelectedItem().toString();
 		    	 if (userEntryTherapeuticTarget.equals("Add new group")){
@@ -93,22 +99,11 @@ public class Combined_Search extends Activity {
 		                // TODO Auto-generated method stub
 		    }
 		    });
+		
+		helper.close();
     }
 
 	
-//	@Override
-//	public void onItemClick(AdapterView<?> parent, View view, int position,
-//			long id) {
-//		// TODO Auto-generated method stub
-//		
-//	}
-
-
-//	@Override
-//	public void onClick(View v) {
-//		// TODO Auto-generated method stub
-//		
-//	}
 
 	
 		public void open_Dialog() {
@@ -148,6 +143,7 @@ public class Combined_Search extends Activity {
 			// set dialog message
 			alertDialogBuilder.setCancelable(false).setPositiveButton("OK",new DialogInterface.OnClickListener() {
 						    public void onClick(DialogInterface dialog,int id) {
+						    	
 						    	/*switch (position){
 						    	case 0: new GetTitleImageByIngredient().execute();			    
 						    			break;
@@ -156,8 +152,19 @@ public class Combined_Search extends Activity {
 						    			break;
 						    	}*/
 						    	
-						    	//resto de opciones
+						    
 						    	userEntryTherapeuticTarget = edittext.getText().toString();
+						    	
+						    	adapterTherapeuticTarget.remove("Add new group");
+						    	helper.deleteTherapeuticGroup("Add new group");
+						    	adapterTherapeuticTarget.add(userEntryTherapeuticTarget);
+						    	helper.insertTherapeuticGroup(userEntryTherapeuticTarget);
+						    	//adapterTherapeuticTarget.add("Add new group");
+						    	adapterTherapeuticTarget.notifyDataSetChanged();
+						    	//spinnerTherapeuticTarget.bringToFront();
+						    	spinnerTherapeuticTarget.setSelection(spinnerTherapeuticTarget.getCount()-1);
+						    	adapterTherapeuticTarget.add("Add new group");
+						    	helper.insertTherapeuticGroup("Add new group");
 						    }
 					})
 			.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
@@ -198,4 +205,6 @@ public class Combined_Search extends Activity {
 		}
 			
 	}
+	
+	
 }
