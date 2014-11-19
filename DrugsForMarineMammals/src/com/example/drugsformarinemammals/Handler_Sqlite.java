@@ -15,11 +15,11 @@ import android.text.TextUtils;
 
 public class Handler_Sqlite extends SQLiteOpenHelper{
 
-	private static final String nameBD = "DrugsForMarineMammals-DataBase";
+	private static final String nameBD = "DrugsForMarineMammals-DataBase1";
 
 	Context myContext;
 	public Handler_Sqlite(Context ctx){
-		super(ctx,nameBD, null,6);
+		super(ctx,nameBD, null,1);
 		myContext = ctx;
 	}
 	

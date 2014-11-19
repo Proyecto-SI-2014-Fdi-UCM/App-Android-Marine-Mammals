@@ -77,10 +77,10 @@ public class Listview_DrugResults extends Activity {
 		finish();
 	}
 	
-	public void restartCombinedSearch() {
+	/*public void restartCombinedSearch() {
 		Intent i = new Intent(this, Combined_Search.class);
 		startActivity(i);
 		finish();
-	}
+	}*/
 	
 }
