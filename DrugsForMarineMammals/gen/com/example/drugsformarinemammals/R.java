@@ -145,11 +145,13 @@ public final class R {
         public static final int general_info_drug=0x7f030008;
         public static final int header_expandable_listview=0x7f030009;
         public static final int item_drugresult=0x7f03000a;
-        public static final int item_with_image=0x7f03000b;
-        public static final int item_with_image_formulary=0x7f03000c;
-        public static final int listview_drugresults=0x7f03000d;
-        public static final int progressbar_transitionscreen=0x7f03000e;
-        public static final int viewpager_mainmenu=0x7f03000f;
+        public static final int item_spinner=0x7f03000b;
+        public static final int item_with_image=0x7f03000c;
+        public static final int item_with_image_formulary=0x7f03000d;
+        public static final int listview_drugresults=0x7f03000e;
+        public static final int progressbar_transitionscreen=0x7f03000f;
+        public static final int spinner_dropdown_item=0x7f030010;
+        public static final int viewpager_mainmenu=0x7f030011;
     }
     public static final class menu {
         public static final int combined_search=0x7f090000;

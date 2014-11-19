@@ -1,17 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout 
+	    xmlns:android="http://schemas.android.com/apk/res/android"
+	    android:layout_width="fill_parent"
+	    android:layout_height="fill_parent">
 		    
 		<ListView
-		    xmlns:android="http://schemas.android.com/apk/res/android"
-	       	android:id="@+id/listViewTypeSearch"
+		    android:id="@+id/listViewTypeSearch"
 	       	android:layout_width="wrap_content"
 	       	android:layout_height="wrap_content"
-	       	android:paddingTop="150sp" 
-	       	android:paddingLeft="270sp"
-	       	android:paddingRight="270sp"
+	       	android:paddingLeft="100dp"
+	       	android:paddingRight="100dp"
 	       	android:background="@android:color/transparent"
 	       	android:cacheColorHint="@android:color/transparent"
 	       	android:divider="@android:color/transparent"
-	       	android:dividerHeight="150sp"
-	       	android:scrollbarStyle="outsideOverlay"	>	
+	       	android:dividerHeight="100dp"
+	       	android:scrollbarStyle="outsideOverlay"	
+	       	android:layout_centerInParent="true" >	
 	       		        
 	    </ListView>
+
+</RelativeLayout>

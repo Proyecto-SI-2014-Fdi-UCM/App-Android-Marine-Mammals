@@ -49,8 +49,8 @@ public class Combined_Search extends Activity {
         
         
         Spinner spinnerAnatomicalTarget = (Spinner)findViewById(R.id.SpinAnatomicalTarget);  
-        ArrayAdapter<CharSequence> adapterAnatomicalTarget = ArrayAdapter.createFromResource(this,R.array.AnatomicalTarget, android.R.layout.simple_spinner_item);	     
-		adapterAnatomicalTarget.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        ArrayAdapter<CharSequence> adapterAnatomicalTarget = ArrayAdapter.createFromResource(this,R.array.AnatomicalTarget, R.layout.item_spinner);	     
+		adapterAnatomicalTarget.setDropDownViewResource(R.layout.spinner_dropdown_item);
 		spinnerAnatomicalTarget.setAdapter(adapterAnatomicalTarget);
 		spinnerAnatomicalTarget.setOnItemSelectedListener(new OnItemSelectedListener() {
 
@@ -66,8 +66,8 @@ public class Combined_Search extends Activity {
 		spinnerTherapeuticTarget = (Spinner)findViewById(R.id.SpinTherapeuticTarget);       
         
         
-		adapterTherapeuticTarget = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item,helper.getAllTherapeuticGroup());	     
-		adapterTherapeuticTarget.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+		adapterTherapeuticTarget = new ArrayAdapter<String>(this, R.layout.item_spinner,helper.getAllTherapeuticGroup());	     
+		adapterTherapeuticTarget.setDropDownViewResource(R.layout.spinner_dropdown_item);
 		spinnerTherapeuticTarget.setAdapter(adapterTherapeuticTarget);
 		spinnerTherapeuticTarget.setOnItemSelectedListener(new OnItemSelectedListener() {
 			
@@ -85,8 +85,8 @@ public class Combined_Search extends Activity {
 		
 		
 		Spinner spinnerAnimals = (Spinner)findViewById(R.id.SpinAnimals);       
-        ArrayAdapter<CharSequence> adapterAnimals = ArrayAdapter.createFromResource(this, R.array.Animals, android.R.layout.simple_spinner_item);	     
-		adapterAnimals.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        ArrayAdapter<CharSequence> adapterAnimals = ArrayAdapter.createFromResource(this, R.array.Animals, R.layout.item_spinner);	     
+		adapterAnimals.setDropDownViewResource(R.layout.spinner_dropdown_item);
 		spinnerAnimals.setAdapter(adapterAnimals);
 		
 		spinnerAnimals.setOnItemSelectedListener(new OnItemSelectedListener() {
