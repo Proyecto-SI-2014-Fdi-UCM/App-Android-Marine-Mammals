@@ -169,6 +169,7 @@ public final class R {
         public static final int headerBriefDescription=0x7f070007;
         public static final int headerGenericDrug=0x7f070008;
         public static final int headerLicense=0x7f070009;
+        public static final int ok=0x7f07000e;
         public static final int titleAnatomicalTarget=0x7f070003;
         public static final int titleCombinedSearch=0x7f070002;
         public static final int urlAtcVet=0x7f070005;

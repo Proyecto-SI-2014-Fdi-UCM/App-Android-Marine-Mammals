@@ -196,7 +196,7 @@ public class Combined_Search extends Activity {
 			new AlertDialog.Builder(this)
 			.setTitle("NOT FOUND")
 			.setMessage("Drugs haven't been found with the specified parameters")
-			.setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+			.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
 				
 				@Override
 				public void onClick(DialogInterface dialog, int which) {}
