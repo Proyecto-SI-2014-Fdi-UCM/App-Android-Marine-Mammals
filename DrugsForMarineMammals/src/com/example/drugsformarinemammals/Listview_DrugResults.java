@@ -75,5 +75,5 @@ public class Listview_DrugResults extends Activity {
 		i.putExtra("drugName", drugName);
 		startActivity(i);
 	}
-	
+
 }
