@@ -12,16 +12,12 @@
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge" />
  
-    <EditText
-        android:id="@+id/editTextDialogUserInput"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" 
-	    android:textColorHint="@color/black"
-	    android:textSize="20sp"> 	    
-	 
- 
-        <requestFocus />
- 
-    </EditText>
+    <AutoCompleteTextView
+	      android:id="@+id/autoCompleteTextView1"
+	      android:layout_width="wrap_content"
+	      android:layout_height="wrap_content" > 
+	         
+		   <requestFocus />
+   </AutoCompleteTextView>
  
 </LinearLayout>

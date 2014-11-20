@@ -15,7 +15,7 @@ import android.text.TextUtils;
 
 public class Handler_Sqlite extends SQLiteOpenHelper{
 
-	private static final String nameBD = "DrugsForMarineMammals-DataBase";
+	private static final String nameBD = "DrugsForMarineMammals-DataBase1";
 
 	Context myContext;
 	public Handler_Sqlite(Context ctx){
@@ -49,6 +49,7 @@ public class Handler_Sqlite extends SQLiteOpenHelper{
 					"reference TEXT, specific_note TEXT, posology TEXT, route TEXT, dose TEXT, FOREIGN KEY (drug_name) REFERENCES Animal(drug_name), FOREIGN KEY (group_name) REFERENCES Animal(group_name)," +
 					"FOREIGN KEY (animal_name) REFERENCES Animal(animal_name), FOREIGN KEY (family) REFERENCES Animal(family), FOREIGN KEY (category_name) REFERENCES Category(category_name), PRIMARY KEY(animal_name, family, group_name, drug_name, category_name," +
 					"reference, specific_note, posology, route))";
+		String query8 = "CREATE TABLE Therapeutic_Group (name TEXT, PRIMARY KEY (name))";
 
 		db.execSQL(query1);
 		db.execSQL(query2);
@@ -57,6 +58,7 @@ public class Handler_Sqlite extends SQLiteOpenHelper{
 		db.execSQL(query5);
 		db.execSQL(query6);
 		db.execSQL(query7);
+		db.execSQL(query8);
 		
 		 InputStream is = null;
 		    try {
@@ -95,6 +97,7 @@ public class Handler_Sqlite extends SQLiteOpenHelper{
 		db.execSQL("DROP TABLE IF EXISTS Animal");
 		db.execSQL("DROP TABLE IF EXISTS Category");
 		db.execSQL("DROP TABLE IF EXISTS Animal_has_Category");
+		db.execSQL("DROP TABLE IF EXISTS Therapeutic_Group");
 		onCreate(db);
 	}
 	
@@ -240,5 +243,240 @@ public class Handler_Sqlite extends SQLiteOpenHelper{
 		this.getWritableDatabase().update("Drug", tmp, "drug_name=?", args);
 		
 	}
+	
+	//General Info Drug
+	public String getDescription(String drug_name){
+		SQLiteDatabase db=this.getReadableDatabase();
+		String args[]={drug_name};
+		String columns[]={"description"};
+		//Cursor c=this.getReadableDatabase().query("productos", columnas, null, null,null, null,null);
+		Cursor c=db.query("Drug", columns, "drug_name=?", args, null, null, null);
+		int indexDescription=c.getColumnIndex("description");
+		c.moveToFirst();
+		return c.getString(indexDescription);
+		
+	}
+
+	public boolean isAvalaible(String drug_name) {
+		// TODO Auto-generated method stub
+		SQLiteDatabase db=this.getReadableDatabase();
+		String args[]={drug_name};
+		String columns[]={"available"};
+		Cursor c=db.query("Drug", columns, "drug_name=?", args, null, null, null);
+		int indexAvalaible=c.getColumnIndex("available");
+		c.moveToFirst();
+		return c.getInt(indexAvalaible)==1;
+		
+	}
+	
+	public ArrayList<String> getCodes(String drug_name){
+		ArrayList<String> solution= new ArrayList<String>();
+		SQLiteDatabase db=this.getReadableDatabase();
+		String args[]={drug_name};
+		String columns[]={"code_number"};
+		Cursor c=db.query("Code", columns, "drug_name=?", args, null, null, null);
+		int indexCode=c.getColumnIndex("code_number");
+		for(c.moveToFirst();!c.isAfterLast();c.moveToNext()){
+			solution.add((c.getString(indexCode)));
+		}
+		return solution;
+	}
+
+	public String getAnatomicTarget(String drug_name, String code) {
+		// TODO Auto-generated method stub
+		SQLiteDatabase db=this.getReadableDatabase();
+		String args[]={drug_name,code};
+		String columns[]={"anatomic_group"};
+		Cursor c=db.query("Code", columns, "drug_name=? and code_number=?", args, null, null, null);
+		int indexAnatomic=c.getColumnIndex("anatomic_group");
+		c.moveToFirst();
+		return c.getString(indexAnatomic);
+	}
+	
+	public String getTherapeuticTarget(String drug_name, String code) {
+		// TODO Auto-generated method stub
+		SQLiteDatabase db=this.getReadableDatabase();
+		String args[]={drug_name,code};
+		String columns[]={"therapeutic_group"};
+		Cursor c=db.query("Code", columns, "drug_name=? and code_number=?", args, null, null, null);
+		int indexTherapeutic=c.getColumnIndex("therapeutic_group");
+		c.moveToFirst();
+		return c.getString(indexTherapeutic);
+	}
+	
+	public String getLicense_AEMPS(String drug_name){
+		SQLiteDatabase db=this.getReadableDatabase();
+		String args[]={drug_name};
+		String columns[]={"license_AEMPS"};
+		Cursor c=db.query("Drug", columns, "drug_name=?", args, null, null, null);
+		int indexLicense_AEMPS=c.getColumnIndex("license_AEMPS");
+		c.moveToFirst();
+		return c.getString(indexLicense_AEMPS);
+	}
+	
+	public String getLicense_EMA(String drug_name){
+		SQLiteDatabase db=this.getReadableDatabase();
+		String args[]={drug_name};
+		String columns[]={"license_EMA"};
+		Cursor c=db.query("Drug", columns, "drug_name=?", args, null, null, null);
+		int indexLicense_EMA=c.getColumnIndex("license_EMA");
+		c.moveToFirst();
+		return c.getString(indexLicense_EMA);
+	}
+	
+	public String getLicense_FDA(String drug_name){
+		SQLiteDatabase db=this.getReadableDatabase();
+		String args[]={drug_name};
+		String columns[]={"license_FDA"};
+		Cursor c=db.query("Drug", columns, "drug_name=?", args, null, null, null);
+		int indexLicense_FDA=c.getColumnIndex("license_FDA");
+		c.moveToFirst();
+		return c.getString(indexLicense_FDA);
+	}
+	
+	public ArrayList<String> getAllTherapeuticGroup(){
+		ArrayList<String> solution=new ArrayList<String>();
+		SQLiteDatabase db=this.getReadableDatabase();
+		String columns[]={"name"};
+		Cursor c=db.query("Therapeutic_Group", columns, null, null, null, null, null);
+		int indexName=c.getColumnIndex("name");
+		for(c.moveToFirst();!c.isAfterLast();c.moveToNext()){
+			solution.add((c.getString(indexName)));
+		}
+		return solution;
+		
+	}
+
+	public void deleteTherapeuticGroup(String name){
+		
+		SQLiteDatabase db = getWritableDatabase();
+	    db.delete("Therapeutic_Group", "name="+"'"+name+"'", null);
+	    
+		
+	}
+	
+	public void insertTherapeuticGroup(String name){
+		ContentValues registro=new ContentValues();
+		registro.put("name", name);
+		this.getWritableDatabase().insert("Therapeutic_Group", null, registro);
+	}
+	
+	public ArrayList<String> read_animals_family(String drug_name, String group_name) {
+		
+		ArrayList<String> result = new ArrayList<String>();
+		SQLiteDatabase db = this.getReadableDatabase();
+		String args [] = {drug_name, group_name};
+		Cursor c=db.query("Animal", null, "drug_name=? and group_name=?", args, null, null, null);
+		int idFamily;
+		idFamily = c.getColumnIndex("family");
+		
+		for(c.moveToFirst();!c.isAfterLast();c.moveToNext()) {
+			if (!result.contains(c.getString(idFamily)))
+				result.add(c.getString(idFamily));
+			
+		}
+		
+		return result;
+	}
+	
+	public HashMap<String, ArrayList<String>> read_animal_information(String drug_name, String group_name, String family) {
+		
+		HashMap<String, ArrayList<String>> result = new HashMap<String, ArrayList<String>>();
+		SQLiteDatabase db = this.getReadableDatabase();
+		String args [] = {drug_name, group_name, family};
+		Cursor c=db.query("Animal", null, "drug_name=? and group_name=? and family=?", args, null, null, null);
+		int idName;
+		idName = c.getColumnIndex("animal_name");
+		
+		for(c.moveToFirst();!c.isAfterLast();c.moveToNext()) {
+			if (!result.containsKey(c.getString(idName))) {
+				ArrayList<String> categories = new ArrayList<String>();
+				String args1 [] = {drug_name, group_name, family, c.getString(idName)};
+				Cursor d=db.query("Animal_has_Category", null, "drug_name=? and group_name=? and family=? and animal_name=?", args1, null, null, null);
+				int idCategory;
+				idCategory = d.getColumnIndex("category_name");
+				
+				for(d.moveToFirst();!d.isAfterLast();d.moveToNext()) {
+					if (!categories.contains(d.getString(idCategory)))
+						categories.add(d.getString(idCategory));
+				}
+				
+				result.put(c.getString(idName), categories);
+			}
+			
+		}
+		
+		return result;
+	}
+	
+	public ArrayList<Dose_Data> read_dose_information(String drug_name, String group_name, String family, String animal_name, String category_name) {
+		
+		ArrayList<Dose_Data> result = new ArrayList<Dose_Data>();
+		SQLiteDatabase db = this.getReadableDatabase();
+		String args [] = {drug_name, group_name, family, animal_name, category_name};
+		Cursor c=db.query("Animal_has_Category", null, "drug_name=? and group_name=? and family=? and animal_name=? and category_name=?", args, null, null, null);
+		int idAmount, idPosology, idRoute, idReference;
+		idAmount = c.getColumnIndex("dose");
+		idPosology = c.getColumnIndex("posology");
+		idRoute = c.getColumnIndex("route");
+		idReference = c.getColumnIndex("reference");
+		
+		for(c.moveToFirst();!c.isAfterLast();c.moveToNext()) {
+			Dose_Data data = new Dose_Data(c.getString(idAmount), c.getString(idPosology), c.getString(idRoute), c.getString(idReference));
+			if (!result.contains(data))
+				result.add(data);
+		}
+		
+		return result;
+	}
+	
+	public ArrayList<String> read_notes(String drug_name, String group_name, String notes_option) {
+			
+			ArrayList<String> result = new ArrayList<String>();
+			SQLiteDatabase db = this.getReadableDatabase();
+			String args [] = {drug_name, group_name};
+			int idNote;
+			if (notes_option.equals("GENERAL NOTES")) {
+				Cursor c=db.query("Drug_aplicated_to_Animal_Type", null, "drug_name=? and group_name=?", args, null, null, null);
+				idNote = c.getColumnIndex("general_note");
+			
+				for(c.moveToFirst();!c.isAfterLast();c.moveToNext()) {
+					if (!c.getString(idNote).equals(""))
+						result.add(c.getString(idNote));
+				}
+			}
+			else if (notes_option.equals("SPECIFIC NOTES")) {
+				Cursor c=db.query("Animal_has_Category", null, "drug_name=? and group_name=?", args, null, null, null);
+				int idAnimal, idCategory, idDose, idPosology, idRoute, idReference;
+				idNote = c.getColumnIndex("specific_note");
+				idAnimal = c.getColumnIndex("animal_name");
+				idCategory = c.getColumnIndex("category_name");
+				idDose = c.getColumnIndex("dose");
+				idPosology = c.getColumnIndex("posology");
+				idRoute = c.getColumnIndex("route");
+				idReference = c.getColumnIndex("reference");
+			
+				for(c.moveToFirst();!c.isAfterLast();c.moveToNext()) {
+					if (!c.getString(idNote).equals("")) {
+						String note;
+						if (c.getString(idAnimal).equals("") && c.getString(idCategory).equals("")) {
+							note = c.getString(idDose) + " " + c.getString(idPosology) + " " + c.getString(idRoute) + " " + c.getString(idReference) + "		" + c.getString(idNote);
+						}
+						else {
+							
+							if (c.getString(idAnimal).equals(""))
+								note = c.getString(idCategory) + " 	" + c.getString(idDose) + " " + c.getString(idPosology) + " " + c.getString(idRoute) + " " + c.getString(idReference) + "		" + c.getString(idNote);
+							else
+								note = c.getString(idAnimal) + "  " + c.getString(idCategory) + " 	" + c.getString(idDose) + " " + c.getString(idPosology) + " " + c.getString(idRoute) + " " + c.getString(idReference) + "		" + c.getString(idNote);
+							
+						}
+						result.add(note);
+					}
+				}
+					
+			}
+			
+			return result;
+		}
 
 }

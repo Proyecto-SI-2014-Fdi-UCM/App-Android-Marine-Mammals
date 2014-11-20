@@ -2,45 +2,44 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
   	android:layout_width="fill_parent"
   	android:layout_height="fill_parent"
-  	android:background="@drawable/background"
+  	android:background="@color/lightGray" 
  	android:fillViewport="true" >
 	    
 	<LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical" >
+        android:orientation="vertical" >       
         
-    <LinearLayout
+    	<LinearLayout
+        android:id="@+id/layoutDescription"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical" >
 
-        <TextView
-            android:id="@+id/drugTitle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" 
-            android:textSize="30sp"
-            android:textStyle="bold"
-            android:layout_gravity="center_horizontal"/>
-
-        <TextView
-            android:id="@+id/headerBriefDescription"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:textSize="20sp"
-            android:textStyle="bold"
-            android:layout_marginTop="20dp"
-            android:text="@string/headerBriefDescription" />
-
-        <TextView
-            android:id="@+id/briefDescription"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="30dp"
-            android:layout_marginRight="30dp"
-            android:layout_marginTop="20dp"/>
+    	    
+    	    <TextView
+	            android:id="@+id/drugTitle"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content" 
+	            android:textSize="40sp"
+	            android:textStyle="bold"
+	            android:textColor="@color/blue"
+	            android:layout_gravity="center_horizontal"/>
+		    
         
-    </LinearLayout>
+		        <TextView
+		            android:id="@+id/headerBriefDescription"
+		            android:layout_width="fill_parent"
+		            android:layout_height="wrap_content"
+		            android:textSize="25sp"
+		            android:textStyle="bold"
+		            android:textColor="@color/darkGray"
+		            android:layout_marginTop="30dp"
+		            android:text="@string/headerBriefDescription" />
+		        
+		       
+        
+    	</LinearLayout>
     
     <LinearLayout
         android:layout_width="fill_parent"
@@ -51,9 +50,10 @@
             android:id="@+id/headerGenericDrug"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:textSize="20sp"
+            android:layout_marginTop="30dp"
+            android:textSize="25sp"
             android:textStyle="bold"
+            android:textColor="@color/darkGray"
             android:text="@string/headerGenericDrug" />
         
         <ImageView
@@ -61,8 +61,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" 
             android:layout_gravity="center"
-            android:layout_marginLeft="40dp"
-            android:layout_marginTop="10dp"
+            android:layout_marginLeft="60dp"
+            android:layout_marginTop="20dp"
             />
         
         
@@ -76,9 +76,10 @@
             android:id="@+id/headerLicense"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:textSize="20sp"
+            android:textSize="25sp"
             android:textStyle="bold"
-            android:layout_marginTop="20dp"
+            android:textColor="@color/darkGray"          
+            android:layout_marginTop="30dp"
             android:text="@string/headerLicense" />
     </LinearLayout>
     		
@@ -88,22 +89,28 @@
 		        android:orientation="horizontal" >
 		        
     				<ImageButton
+    				    android:id="@+id/food_and_drug"
     				    android:layout_width="0dip"
     				    android:layout_height="fill_parent"
     				    android:layout_weight="1"
-    				    android:src="@drawable/food_and_drug" />
+    				    android:src="@drawable/food_and_drug" 
+    				    android:background="@drawable/listview_selector"/>
     			
     				<ImageButton
+    				    android:id="@+id/logo_aemps"
     				    android:layout_width="0dip"
     				    android:layout_height="fill_parent"
     				    android:layout_weight="1"
-    				    android:src="@drawable/logo_aemps" />
+    				    android:src="@drawable/logo_aemps" 
+    				    android:background="@drawable/listview_selector"/>
 
     				<ImageButton
+    				    android:id="@+id/european_medicines_agency"
     				    android:layout_width="0dip"
     				    android:layout_height="fill_parent"
     				    android:layout_weight="1"
-    				    android:src="@drawable/european_medicines_agency" />
+    				    android:src="@drawable/european_medicines_agency" 
+    				    android:background="@drawable/listview_selector"/>
  			
     </LinearLayout>
     		
@@ -112,57 +119,74 @@
 		        android:layout_height="wrap_content"
 		        android:orientation="horizontal" >
     			
-    		    			<ImageView
+    		    			<TextView
 				    				    android:id="@+id/license1"
 				    				    android:layout_width="0dp"
 				    				    android:layout_height="fill_parent"
 				    				    android:layout_weight="1"
-				    				    android:src="@drawable/yeswhite" />
+				    				    android:gravity="center"
+				    				    android:textSize="20sp"
+				    				    
+				    				     />
 				    
 				    		
-				    		<ImageView
+				    		<TextView
 				    				    android:id="@+id/license2"
 				    				    android:layout_width="0dp"
 				    				    android:layout_height="fill_parent"
 				    				    android:layout_weight="1"
-				    				    android:src="@drawable/nowhite" />
+				    				    android:gravity="center"
+				    				    android:textSize="20sp"
+				    				    
+				    				    />
 				   
 				   
-				    		<ImageView
+				    		<TextView
 				    				    android:id="@+id/license3"
 				    				    android:layout_width="0dp"
 				    				    android:layout_height="fill_parent"
 				    				    android:layout_weight="1"
-				    				    android:src="@drawable/ndwhite" />
+				    				    android:gravity="center"
+				    				    android:textSize="20sp"
+				    				    
+				    				     />
 				    		
 				    
 	</LinearLayout>
 		        
     <LinearLayout
+        	android:id="@+id/layoutActionAnatomical"
 	        android:layout_width="fill_parent"
 	        android:layout_height="wrap_content"
-	        android:orientation="vertical" >
+	        android:orientation="vertical">
     		<TextView
-	            android:id="@+id/headerAction"
+	            android:id="@+id/headerActionAnatomical"
 	            android:layout_width="fill_parent"
 	            android:layout_height="wrap_content"
-	            android:textSize="20sp"
+	            android:layout_marginTop="30dp"
+	            android:textSize="25sp"
             	android:textStyle="bold"
-	            android:text="@string/headerAction" />
+            	android:textColor="@color/darkGray"  
+	            android:text="@string/headerActionAnatomical" />
+    </LinearLayout>
+    
+     <LinearLayout
+        	android:id="@+id/layoutActionTherapeutic"
+	        android:layout_width="fill_parent"
+	        android:layout_height="wrap_content"
+	        android:orientation="vertical">		
     		
     		<TextView
-	            android:id="@+id/anatomicalGroup"
+	            android:id="@+id/headerActionTherapeutic"
 	            android:layout_width="fill_parent"
 	            android:layout_height="wrap_content"
-	            android:layout_marginLeft="30dp"
-                android:layout_marginRight="30dp" />
+	            android:layout_marginTop="30dp"
+	            android:textSize="25sp"
+            	android:textStyle="bold"
+            	android:textColor="@color/darkGray"  
+	            android:text="@string/headerActionTherapeutic" />
+    
     		
-    		<TextView
-	            android:id="@+id/therapeuticGroup"
-	            android:layout_width="fill_parent"
-	            android:layout_height="wrap_content"
-	            android:layout_marginLeft="30dp"
-                android:layout_marginRight="30dp" />
     		
     </LinearLayout>
     
@@ -170,9 +194,10 @@
 	            android:id="@+id/headerATCvetCodes"
 	            android:layout_width="fill_parent"
 	            android:layout_height="wrap_content"
-	            android:textSize="20sp"
+	            android:textSize="25sp"
             	android:textStyle="bold"
-            	android:layout_marginTop="20dp"
+            	android:textColor="@color/darkGray"  
+            	android:layout_marginTop="30dp"
 	            android:text="@string/headerATCvetCodes" />
     
     <LinearLayout
@@ -188,9 +213,10 @@
 	            android:id="@+id/headerAnimals"
 	            android:layout_width="fill_parent"
 	            android:layout_height="wrap_content"
-	            android:textSize="20sp"
+	            android:textSize="25sp"
             	android:textStyle="bold"
-            	android:layout_marginTop="20dp"
+            	android:textColor="@color/darkGray"  
+            	android:layout_marginTop="30dp"
 	            android:text="@string/headerAnimals" />
     
     

@@ -17,6 +17,7 @@ import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.Toast;
 
 public class Fragment_Formulary extends Fragment {
 	
@@ -25,7 +26,8 @@ public class Fragment_Formulary extends Fragment {
 	private View rootView;
 	private Handler_Sqlite helper;
 	private ArrayAdapter<String> adapterDrugNames;
-	
+	private String userEntry;
+	private AutoCompleteTextView actv;
 	
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		
@@ -83,15 +85,32 @@ public class Fragment_Formulary extends Fragment {
 
 		alertDialogBuilder.setView(promptsView);
 		
-		AutoCompleteTextView actv = (AutoCompleteTextView) promptsView.findViewById(R.id.autoCompleteTextView1);
+		actv = (AutoCompleteTextView) promptsView.findViewById(R.id.autoCompleteTextView1);
 		actv.setTypeface(Typeface.SANS_SERIF);
 		actv.setHint("Enter name of drug");
 		initializeArrayWithDrugName();
         
 		alertDialogBuilder.setCancelable(false).setPositiveButton("Search",new DialogInterface.OnClickListener() {
 					    public void onClick(DialogInterface dialog,int id) {
-					    	Intent intent = new Intent(getActivity(),General_Info_Drug.class);
-					    	startActivity(intent);
+					    	userEntry=actv.getText().toString();
+					    	if(helper.existDrug(userEntry)){
+					    		Intent intent = new Intent(getActivity(),General_Info_Drug.class);
+					    		intent.putExtra("drugName", userEntry);
+						    	startActivity(intent);
+					    	}
+					    	else{
+					    		new AlertDialog.Builder(getActivity())
+								.setTitle("NOT FOUND")
+								.setMessage("Drug hasn't been found ")
+								.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+									
+									@Override
+									public void onClick(DialogInterface dialog, int which) {}
+								})
+								.show();
+					    	}
+					    		
+					    	
 					    	
 					    }
 				})
