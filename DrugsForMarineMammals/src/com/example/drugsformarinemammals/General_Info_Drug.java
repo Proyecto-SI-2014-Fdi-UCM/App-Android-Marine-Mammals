@@ -232,7 +232,7 @@ public class General_Info_Drug extends Activity {
 	    	
 	        
 	        //Animals
-	        Button cetaceansButton = new Button(this);
+	        Button cetaceansButton=(Button)findViewById(R.id.cetaceansButton);
 	        cetaceansButton.setText("CETACEANS");
 	        cetaceansButton.setOnClickListener(new OnClickListener() {
 	
@@ -243,7 +243,8 @@ public class General_Info_Drug extends Activity {
 					
 				}});
 	        
-	        Button pinnipedsButton = new Button(this);
+	        
+	        Button pinnipedsButton=(Button)findViewById(R.id.pinnipedsButton);
 	        pinnipedsButton.setText("PINNIPEDS");
 	        pinnipedsButton.setOnClickListener(new OnClickListener() {
 	
@@ -253,7 +254,8 @@ public class General_Info_Drug extends Activity {
 					showDoseInformation(titleBundle, "Pinnipeds");
 				}});
 	        
-	        Button otherButton = new Button(this);
+	        
+	        Button otherButton=(Button)findViewById(R.id.otherButton);
 	        otherButton.setText("OTHER MM");
 	        otherButton.setOnClickListener(new OnClickListener() {
 	
@@ -263,10 +265,7 @@ public class General_Info_Drug extends Activity {
 					showDoseInformation(titleBundle, "Other MM");
 				}});
 	        
-	    	LinearLayout layout2 = (LinearLayout)findViewById(R.id.buttonAnimals);
-	    	layout2.addView(cetaceansButton);
-	    	layout2.addView(pinnipedsButton);
-	    	layout2.addView(otherButton);
+	        
 	    	
 	    	if (helper.existDrug(titleBundle)) {
 				int drug_priority = helper.getDrugPriority(titleBundle);
