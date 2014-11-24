@@ -223,9 +223,30 @@
 	<LinearLayout
 	        android:layout_width="fill_parent"
 	        android:layout_height="wrap_content"
-	        android:orientation="vertical" 
+	        android:orientation="horizontal" 
 	        android:id="@+id/buttonAnimals"
 	        android:layout_gravity="center_horizontal">
+    		
+	    	<Button
+		    android:id="@+id/cetaceansButton"
+		    android:layout_width="wrap_content"
+		    android:layout_height="wrap_content" 
+		    android:layout_weight="1"
+		     />
+
+	    <Button
+	        android:id="@+id/pinnipedsButton"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_weight="1"
+	         />
+
+	    <Button
+	        android:id="@+id/otherButton"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_weight="1"
+	         />
     
     </LinearLayout>
     </LinearLayout>

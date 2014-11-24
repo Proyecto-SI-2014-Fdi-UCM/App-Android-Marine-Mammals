@@ -1,35 +1,27 @@
 package com.example.drugsformarinemammals;
 
-import java.util.ArrayList;
-
-import com.example.drugsformarinemammals.R.color;
-
 import android.app.Activity;
 import android.content.Intent;
-import android.graphics.Color;
 import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup.LayoutParams;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ListView;
+import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.AdapterView.OnItemSelectedListener;
 
 public class General_Info_Drug extends Activity {
 
-	
-	private ArrayList<String> options;
 	private Handler_Sqlite helper;
 	private String titleBundle;
-	private String anatomicTarget;
-	private String therapeuticTarget;
-	private ArrayList<String> codes;
-	private Button buttonCodes;
 	private TextView anatomicalGroup;
 	private TextView therapeuticGroup;
 	private LinearLayout borderTherapeuticGroup;
@@ -37,6 +29,7 @@ public class General_Info_Drug extends Activity {
 	private LinearLayout.LayoutParams params;
 	private LinearLayout layoutAnatomicalGroup;
 	private LinearLayout layoutTherapeuticGroup;
+	private String userEntryCode;
 	
 	@Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -191,82 +184,79 @@ public class General_Info_Drug extends Activity {
 	        params = new LinearLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
 	        params.leftMargin = 60;
 	        params.rightMargin =60;
-	        params.topMargin = 20; 
+	        params.topMargin = 20;         
+	    	
 	        
-	        layoutAnatomicalGroup=(LinearLayout)findViewById(R.id.layoutActionAnatomical);
+	        //Codes & therapeutic target & anatomical target
+	    	Spinner codesSpinner= (Spinner)findViewById(R.id.codesSpinner);
+        	ArrayAdapter<String> adapterCodes = new ArrayAdapter<String>(this, R.layout.item_spinner,helper.getCodes(titleBundle));	     
+        	adapterCodes.setDropDownViewResource(R.layout.spinner_dropdown_item);
+    		codesSpinner.setAdapter(adapterCodes);
+	    	
+    		codesSpinner.setOnItemSelectedListener(new OnItemSelectedListener() {
+
+    			public void onItemSelected(AdapterView<?> parent, View arg1,int arg2, long arg3) {
+    				userEntryCode = parent.getSelectedItem().toString();	
+    				anatomicalGroup.setText(helper.getAnatomicTarget(titleBundle,userEntryCode));
+			        anatomicalGroup.setTextSize(18);
+			        therapeuticGroup.setText(helper.getTherapeuticTarget(titleBundle,userEntryCode));
+			        therapeuticGroup.setTextSize(18); 
+			       
+    		    }
+
+    		   public void onNothingSelected(AdapterView<?> arg0) {
+    		                // TODO Auto-generated method stub
+    		    }
+    		    });
+    		
+    		
+    		layoutAnatomicalGroup=(LinearLayout)findViewById(R.id.layoutActionAnatomical);
 	        layoutTherapeuticGroup=(LinearLayout)findViewById(R.id.layoutActionTherapeutic);
 	        
-	        //Codes
-	        int totalCodes=helper.getCodes(titleBundle).size();
-	        codes=new ArrayList<String>();
-	        for(int i=0; i<totalCodes;i++){
-	        	buttonCodes = new Button(this);
-	        	//Add id each button
-	        	buttonCodes.setId(i);
-	        	//Save codes
-	        	codes.add(helper.getCodes(titleBundle).get(i));
-	        	
-	        	buttonCodes.setText(helper.getCodes(titleBundle).get(i));
-	        	buttonCodes.setOnClickListener(new OnClickListener() {
-					@Override
-					public void onClick(View v) {
-						// TODO Auto-generated method stub
-				        anatomicalGroup.setText(helper.getAnatomicTarget(titleBundle,codes.get(v.getId())));
-				        anatomicalGroup.setTextSize(18);
-				        therapeuticGroup.setText(helper.getTherapeuticTarget(titleBundle,codes.get(v.getId())));
-				        therapeuticGroup.setTextSize(18); 
-				       
-					}});
-	        	
-	        	
-	        	
-	        	LinearLayout layout = (LinearLayout)findViewById(R.id.buttonCodes);
-	        	layout.addView(buttonCodes);
-	        	
-	        }
+	        
 	        borderTherapeuticGroup.addView(therapeuticGroup,borderTherapeuticGroup.getChildCount(),params);
 	        borderAnatomicalGroup.addView(anatomicalGroup,borderAnatomicalGroup.getChildCount(),params);
 	        
 	        layoutAnatomicalGroup.addView(borderAnatomicalGroup,layoutAnatomicalGroup.getChildCount());
-	    	layoutTherapeuticGroup.addView(borderTherapeuticGroup,layoutTherapeuticGroup.getChildCount());     
+	    	layoutTherapeuticGroup.addView(borderTherapeuticGroup,layoutTherapeuticGroup.getChildCount());   
 	    	
+	        	    	
 	        
 	        //Animals
-	        Button cetaceansButton = new Button(this);
+	    	Button cetaceansButton=(Button)findViewById(R.id.cetaceansButton);
 	        cetaceansButton.setText("CETACEANS");
 	        cetaceansButton.setOnClickListener(new OnClickListener() {
 	
 				@Override
 				public void onClick(View v) {
 					// TODO Auto-generated method stub
-					showDoseInformation();
+					showDoseInformation(titleBundle, "Cetaceans");
 					
 				}});
 	        
-	        Button pinnipedsButton = new Button(this);
+	        
+	        Button pinnipedsButton=(Button)findViewById(R.id.pinnipedsButton);
 	        pinnipedsButton.setText("PINNIPEDS");
 	        pinnipedsButton.setOnClickListener(new OnClickListener() {
 	
 				@Override
 				public void onClick(View v) {
 					// TODO Auto-generated method stub
-					showDoseInformation();
+					showDoseInformation(titleBundle, "Pinnipeds");
 				}});
 	        
-	        Button otherButton = new Button(this);
+	        
+	        Button otherButton=(Button)findViewById(R.id.otherButton);
 	        otherButton.setText("OTHER MM");
 	        otherButton.setOnClickListener(new OnClickListener() {
 	
 				@Override
 				public void onClick(View v) {
 					// TODO Auto-generated method stub
-					showDoseInformation();
+					showDoseInformation(titleBundle, "Other MM");
 				}});
 	        
-	    	LinearLayout layout2 = (LinearLayout)findViewById(R.id.buttonAnimals);
-	    	layout2.addView(cetaceansButton);
-	    	layout2.addView(pinnipedsButton);
-	    	layout2.addView(otherButton);
+	        
 	    	
 	    	if (helper.existDrug(titleBundle)) {
 				int drug_priority = helper.getDrugPriority(titleBundle);
@@ -285,9 +275,11 @@ public class General_Info_Drug extends Activity {
         }
 	}
 
-	public void showDoseInformation() {
+	public void showDoseInformation(String drugName, String groupName) {
 		// TODO Auto-generated method stub
 		Intent i = new Intent(this, Dose_Information.class);
+		i.putExtra("drugName", drugName);
+		i.putExtra("groupName", groupName);
 		startActivity(i);
 	}
 

@@ -1,271 +1,358 @@
 package com.example.drugsformarinemammals;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+
 import android.app.Activity;
+import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.LinearLayout;
+import android.widget.TableLayout;
+import android.widget.TableRow;
 import android.widget.TextView;
 
 public class Dose_Information extends Activity {
 	
 	private LinearLayout layoutDose;
+	private Handler_Sqlite helper;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.dose_information);
-		TextView textViewDrug = (TextView) findViewById(R.id.textView_drug_name);
-		textViewDrug.setTypeface(Typeface.SANS_SERIF);
-		TextView textViewGroupName = (TextView) findViewById(R.id.textView_group_name);
-		textViewGroupName.setTypeface(Typeface.SANS_SERIF);
-		layoutDose = (LinearLayout) findViewById(R.id.layout_dose);
 		
-		int numFamily = 2;
-		for (int l=0;l<numFamily;l++) {
-			//if exist animals for OTARIDS
+		Bundle parameters = this.getIntent().getExtras();
+		if (parameters!=null) {
+			TextView textViewDrug = (TextView) findViewById(R.id.textView_drug_name);
+			textViewDrug.setText(parameters.getString("drugName"));
+			TextView textViewGroupName = (TextView) findViewById(R.id.textView_group_name);
+			textViewGroupName.setText("(" + parameters.getString("groupName") + ")");
+			layoutDose = (LinearLayout) findViewById(R.id.layout_dose);
 			
-			TextView testView_family = new TextView(this);
-			testView_family.setText("OTARIDS");
-			testView_family.setTextSize(20);
-			testView_family.setTextColor(Color.BLACK);
-			testView_family.setTypeface(Typeface.SANS_SERIF);
-			LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
-			params.leftMargin = 30;
-			params.topMargin = 20;
-			layoutDose.addView(testView_family,layoutDose.getChildCount(),params);
-			
-			//dose information
-			
-			LinearLayout layout_dose_information = new LinearLayout(this);
-			layout_dose_information.setOrientation(LinearLayout.VERTICAL);
-			layout_dose_information.setLayoutParams(new LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT));
-			layout_dose_information.setBackgroundResource(R.drawable.layout_border);
-			
-			int numAnimals = 2;
-			String animalName;
-			for (int i=0;i<numAnimals;i++) {
+			helper = new Handler_Sqlite(this);
+			SQLiteDatabase db = helper.open();
+			HashMap<Integer,String> notes_index = new HashMap<Integer,String>();
+			ArrayList<String> families = new ArrayList<String>();
+			if (db!=null)
+				families = helper.read_animals_family(parameters.getString("drugName"), parameters.getString("groupName"));
+		
+			for (int l=0;l<families.size();l++) {
+				//if exist animals for OTARIDS
 				
-				//if exist animal name
-				animalName="Californian Sea Lion";
+				TextView testView_family = new TextView(this);
+				testView_family.setText(families.get(l));
+				testView_family.setTextSize(20);
+				testView_family.setTextColor(getResources().getColor(R.color.darkGray));
+				testView_family.setTypeface(Typeface.DEFAULT_BOLD, Typeface.DEFAULT_BOLD.getStyle());
+				LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
+				params.leftMargin = 30;
+				params.topMargin = 20;
+				layoutDose.addView(testView_family,layoutDose.getChildCount(),params);
 				
-				//if exist category
-				int numCategory = 3;
-				String animalCategory;
-				for (int j=0;j<numCategory;j++) {
+				//dose information
+				
+				LinearLayout layout_dose_information = new LinearLayout(this);
+				layout_dose_information.setOrientation(LinearLayout.VERTICAL);
+				layout_dose_information.setLayoutParams(new LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT));
+				layout_dose_information.setBackgroundResource(R.drawable.layout_border);
+				HashMap<String, ArrayList<String>> animal_information = new HashMap<String, ArrayList<String>>();
+				if (db!=null)
+					animal_information = helper.read_animal_information(parameters.getString("drugName"), parameters.getString("groupName"), families.get(l));
+				
+				String animalName;
+				Object [] animalsName = animal_information.keySet().toArray();
+				for (int i=0;i<animalsName.length;i++) {
+					
+					//if exist animal name
+					animalName = (String) animalsName[i];
+					
+					//if exist category
+					ArrayList<String> categories = animal_information.get(animalName);
+					String animalCategory;
+					for (int j=0;j<categories.size();j++) {
+							
+						animalCategory = categories.get(j);
 						
-					animalCategory="general";
-					
-					LinearLayout layout_animal_information = new LinearLayout(this);
-					layout_animal_information.setOrientation(LinearLayout.HORIZONTAL);
-					layout_animal_information.setLayoutParams(new LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT));
-					
-					LinearLayout layout_dose_information_header = new LinearLayout(this);
-					layout_dose_information_header.setOrientation(LinearLayout.HORIZONTAL);
-					layout_dose_information_header.setLayoutParams(new LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT));
-					
-					//Animal name
-					
-					TextView testView_animal_name = new TextView(this);
-					testView_animal_name.setText(animalName);
-					testView_animal_name.setTextColor(Color.BLACK);
-					testView_animal_name.setTextSize(15);
-					testView_animal_name.setTypeface(Typeface.SANS_SERIF);
-					LinearLayout.LayoutParams paramsAnimalName = new LinearLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
-					paramsAnimalName.leftMargin = 190;
-					paramsAnimalName.topMargin = 25;
-					layout_animal_information.addView(testView_animal_name,layout_animal_information.getChildCount(),paramsAnimalName);
-					
-					//Animal category
-					
-					TextView testView_animal_category = new TextView(this);
-					testView_animal_category.setText(animalCategory);
-					testView_animal_category.setTextColor(Color.BLACK);
-					testView_animal_category.setTextSize(15);
-					testView_animal_category.setTypeface(Typeface.SANS_SERIF);
-					LinearLayout.LayoutParams paramsAnimalCategory = new LinearLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
-					paramsAnimalCategory.leftMargin = 100;
-					paramsAnimalCategory.topMargin = 25;
-					paramsAnimalCategory.rightMargin = 60;
-					layout_animal_information.addView(testView_animal_category,layout_animal_information.getChildCount(),paramsAnimalCategory);
-					
-					//Dose amount
-					
-					TextView testView_cant_dose = new TextView(this);
-					testView_cant_dose.setText("Dose");
-					testView_cant_dose.setTextColor(Color.BLACK);
-					testView_cant_dose.setTextSize(16);
-					testView_cant_dose.setTypeface(Typeface.SANS_SERIF);
-					LinearLayout.LayoutParams paramsCantDose = new LinearLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
-					paramsCantDose.leftMargin = 170;
-					paramsCantDose.topMargin = 5;
-					layout_dose_information_header.addView(testView_cant_dose,layout_dose_information_header.getChildCount(),paramsCantDose);
-					
-					//Posology
-					TextView testView_posology = new TextView(this);
-					testView_posology.setText("Posology");
-					testView_posology.setTextColor(Color.BLACK);
-					testView_posology.setTextSize(16);
-					testView_posology.setTypeface(Typeface.SANS_SERIF);
-					LinearLayout.LayoutParams paramsPosology = new LinearLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
-					paramsPosology.leftMargin = 100;
-					paramsPosology.topMargin = 5;
-					layout_dose_information_header.addView(testView_posology,layout_dose_information_header.getChildCount(),paramsPosology);
-					
-					//Route
-					
-					TextView testView_route = new TextView(this);
-					testView_route.setText("Route");
-					testView_route.setTextColor(Color.BLACK);
-					testView_route.setTextSize(16);
-					testView_route.setTypeface(Typeface.SANS_SERIF);
-					LinearLayout.LayoutParams paramsRoute = new LinearLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
-					paramsRoute.leftMargin = 65;
-					paramsRoute.topMargin = 5;
-					layout_dose_information_header.addView(testView_route,layout_dose_information_header.getChildCount(),paramsRoute);
-					
-					//Reference
-					
-					TextView testView_reference = new TextView(this);
-					testView_reference.setText("Ref");
-					testView_reference.setTextColor(Color.BLACK);
-					testView_reference.setTextSize(16);
-					testView_reference.setTypeface(Typeface.SANS_SERIF);
-					LinearLayout.LayoutParams paramsReference = new LinearLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
-					paramsReference.leftMargin = 90;
-					paramsReference.rightMargin = 60;
-					paramsReference.topMargin = 5;
-					layout_dose_information_header.addView(testView_reference,layout_dose_information_header.getChildCount(),paramsReference);
+						if (!animalName.equals("") || !animalCategory.equals("")) {
+						
+							TableLayout animalTable = new TableLayout(this);
+							animalTable.setStretchAllColumns(true);
+							
+							TableRow animalInformation = new TableRow(this);
+							
+							//Animal name
+							
+							TextView testView_animal_name = new TextView(this);
+							testView_animal_name.setText(animalName);
+							testView_animal_name.setTextColor(Color.BLACK);
+							testView_animal_name.setTextSize(17);
+							testView_animal_name.setTypeface(Typeface.SANS_SERIF);
+							TableRow.LayoutParams paramsAnimalName = new TableRow.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
+							paramsAnimalName.gravity = Gravity.CENTER;
+							animalInformation.addView(testView_animal_name,paramsAnimalName);
+							
+							//Animal category
+							
+							TextView testView_animal_category = new TextView(this);
+							testView_animal_category.setText(animalCategory);
+							testView_animal_category.setTextColor(Color.BLACK);
+							testView_animal_category.setTextSize(17);
+							testView_animal_category.setTypeface(Typeface.SANS_SERIF);
+							TableRow.LayoutParams paramsAnimalCategory = new TableRow.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
+							paramsAnimalCategory.gravity = Gravity.CENTER;
+							animalInformation.addView(testView_animal_category,paramsAnimalCategory);
+							
+							animalTable.addView(animalInformation);
+							
+							LinearLayout.LayoutParams paramsAnimalTable = new LinearLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
+							paramsAnimalTable.leftMargin = 60;
+							paramsAnimalTable.rightMargin = 60;
+							if (i==0 && j==0)
+								paramsAnimalTable.topMargin = 5;
+							else
+								paramsAnimalTable.topMargin = 70;
+			
+							layout_dose_information.addView(animalTable,paramsAnimalTable);
+						}
+						
+						ArrayList<Dose_Data> dose = new ArrayList<Dose_Data>();
+						if (db!=null) 
+							dose = helper.read_dose_information(parameters.getString("drugName"), parameters.getString("groupName"), families.get(l), animalName, animalCategory);
+						
+						TableLayout doseTable = new TableLayout(this);
+						doseTable.setStretchAllColumns(true);
+						
+						TableRow header = new TableRow(this);
+						
+						TextView testView_dose_amount = new TextView(this);
+						testView_dose_amount.setText("Dose");
+						testView_dose_amount.setTextColor(Color.BLACK);
+						testView_dose_amount.setTextSize(17);
+						testView_dose_amount.setTypeface(Typeface.SANS_SERIF);
+						TableRow.LayoutParams paramsAmount = new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT, TableRow.LayoutParams.WRAP_CONTENT);
+						paramsAmount.gravity = Gravity.CENTER;
+						header.addView(testView_dose_amount,paramsAmount);
+						
+						//Posology
+						TextView testView_posology = new TextView(this);
+						testView_posology.setText("Posology");
+						testView_posology.setTextColor(Color.BLACK);
+						testView_posology.setTextSize(17);
+						testView_posology.setTypeface(Typeface.SANS_SERIF);
+						TableRow.LayoutParams paramsPosology = new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT, TableRow.LayoutParams.WRAP_CONTENT);
+						paramsPosology.gravity = Gravity.CENTER;
+						header.addView(testView_posology, paramsPosology);
+						
+						//Route
+						
+						TextView testView_route = new TextView(this);
+						testView_route.setText("Route");
+						testView_route.setTextColor(Color.BLACK);
+						testView_route.setTextSize(17);
+						testView_route.setTypeface(Typeface.SANS_SERIF);
+						TableRow.LayoutParams paramsRoute = new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT, TableRow.LayoutParams.WRAP_CONTENT);
+						paramsRoute.gravity = Gravity.CENTER;
+						header.addView(testView_route, paramsRoute);
+						
+						//Reference
+						
+						TextView testView_reference = new TextView(this);
+						testView_reference.setText("Ref");
+						testView_reference.setTextColor(Color.BLACK);
+						testView_reference.setTextSize(17);
+						testView_reference.setTypeface(Typeface.SANS_SERIF);
+						TableRow.LayoutParams paramsReference = new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT, TableRow.LayoutParams.WRAP_CONTENT);
+						paramsReference.gravity = Gravity.CENTER;
+						header.addView(testView_reference, paramsReference);
+						
+						doseTable.addView(header);
+						
+						String doseAmount;
+						String dosePosology;
+						String doseRoute;
+						String doseReference;
+						for (int k=0;k<dose.size();k++) {
+							doseAmount = dose.get(k).getAmount();
+							dosePosology = dose.get(k).getPosology();
+							doseRoute = dose.get(k).getRoute();
+							doseReference = dose.get(k).getReference();
+							
+							TableRow doseInformation = new TableRow(this);
+							//Dose amount data
+							
+							TextView testView_animal_dose_amount = new TextView(this);
+							testView_animal_dose_amount.setText(doseAmount);
+							testView_animal_dose_amount.setTextColor(Color.BLACK);
+							testView_animal_dose_amount.setTextSize(15);
+							testView_animal_dose_amount.setTypeface(Typeface.SANS_SERIF);
+							TableRow.LayoutParams paramsDoseAmount = new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT, TableRow.LayoutParams.WRAP_CONTENT);
+							paramsDoseAmount.gravity = Gravity.CENTER;
+							doseInformation.addView(testView_animal_dose_amount, paramsDoseAmount);
+							
+							//Dose posology data
+							
+							TextView testView_animal_dose_posology = new TextView(this);
+							testView_animal_dose_posology.setText(dosePosology);
+							testView_animal_dose_posology.setTextColor(Color.BLACK);
+							testView_animal_dose_posology.setTextSize(15);
+							testView_animal_dose_posology.setTypeface(Typeface.SANS_SERIF);
+							TableRow.LayoutParams paramsDosePosology = new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT, TableRow.LayoutParams.WRAP_CONTENT);
+							paramsDosePosology.gravity = Gravity.CENTER;
+							doseInformation.addView(testView_animal_dose_posology, paramsDosePosology);
+							
+							//Dose route data
+							
+							TextView testView_animal_dose_route = new TextView(this);
+							testView_animal_dose_route.setText(doseRoute);
+							testView_animal_dose_route.setTextColor(Color.BLACK);
+							testView_animal_dose_route.setTextSize(15);
+							testView_animal_dose_route.setTypeface(Typeface.SANS_SERIF);
+							TableRow.LayoutParams paramsDoseRoute = new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT, TableRow.LayoutParams.WRAP_CONTENT);
+							paramsDoseRoute.gravity = Gravity.CENTER;
+							doseInformation.addView(testView_animal_dose_route, paramsDoseRoute);
+							
+							//Dose reference data
+							
+							TextView testView_animal_dose_reference = new TextView(this);
+							testView_animal_dose_reference.setText(doseReference);
+							testView_animal_dose_reference.setTextColor(Color.BLACK);
+							testView_animal_dose_reference.setTextSize(15);
+							testView_animal_dose_reference.setTypeface(Typeface.SANS_SERIF);
+							TableRow.LayoutParams paramsDoseReference = new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT, TableRow.LayoutParams.WRAP_CONTENT);
+							paramsDoseReference.gravity = Gravity.CENTER;
+							doseInformation.addView(testView_animal_dose_reference, paramsDoseReference);
+							
+							//Specific note index
+							
+							ArrayList<String> specific_notes = new ArrayList<String>();
+							if (db!=null)
+								specific_notes = helper.read_specific_notes(parameters.getString("drugName"), parameters.getString("groupName"), animalName, 
+										families.get(l), animalCategory, dosePosology, doseRoute, doseReference);
+							
+							String index = "";
+							for (int m=0;m<specific_notes.size();m++) {
+								String note = specific_notes.get(m);
+								if (!notes_index.containsValue(note)) {
+									notes_index.put(notes_index.size()+1,note);
+								}
+								index+="(" + notes_index.size() + ")  ";
+							}
+							
+							TextView textView_specific_note_index = new TextView(this);
+							textView_specific_note_index.setText(index);
+							textView_specific_note_index.setTextColor(Color.BLACK);
+							textView_specific_note_index.setTextSize(15);
+							textView_specific_note_index.setTypeface(Typeface.SANS_SERIF);
+							TableRow.LayoutParams paramsSpecificNoteIndex = new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT, TableRow.LayoutParams.WRAP_CONTENT);
+							paramsSpecificNoteIndex.gravity = Gravity.CENTER;
+							doseInformation.addView(textView_specific_note_index, paramsSpecificNoteIndex);
+							
+							doseTable.addView(doseInformation);
 	
-					layout_dose_information.addView(layout_animal_information,layout_dose_information.getChildCount());
-					
-					layout_dose_information.addView(layout_dose_information_header,layout_dose_information.getChildCount());
-					
-					int numDose = 2;
-					String doseAmount;
-					String dosePosology;
-					String doseRoute;
-					String doseReference;
-					for (int k=0;k<numDose;k++) {
-						doseAmount ="2.5-5.0 mg/kg";
-						dosePosology="BID";
-						doseRoute="IM,IV,PO";
-						doseReference="CRC";
+						}
 						
-						LinearLayout layout_animal_dose = new LinearLayout(this);
-						layout_animal_dose.setOrientation(LinearLayout.HORIZONTAL);
-						layout_animal_dose.setLayoutParams(new LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT));
+						LinearLayout.LayoutParams paramsDoseTable = new LinearLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
+						paramsDoseTable.leftMargin = 60;
+						paramsDoseTable.rightMargin = 60;
+						if ((i==0 && j==0) && (animalName.equals("") && animalCategory.equals("")))
+							paramsDoseTable.topMargin = 5;
+						else if (animalName.equals("") && animalCategory.equals(""))
+							paramsDoseTable.topMargin = 70;
 						
-						//Dose amount data
+						layout_dose_information.addView(doseTable,layout_dose_information.getChildCount(), paramsDoseTable);
 						
-						TextView testView_animal_dose_amount = new TextView(this);
-						testView_animal_dose_amount.setText(doseAmount);
-						testView_animal_dose_amount.setTextColor(Color.BLACK);
-						testView_animal_dose_amount.setTextSize(15);
-						testView_animal_dose_amount.setTypeface(Typeface.SANS_SERIF);
-						LinearLayout.LayoutParams paramsDoseAmount = new LinearLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
-						paramsDoseAmount.leftMargin = 100;
-						paramsDoseAmount.topMargin = 5;
-						layout_animal_dose.addView(testView_animal_dose_amount,layout_animal_dose.getChildCount(),paramsDoseAmount);
-						
-						//Dose posology data
-						
-						TextView testView_animal_dose_posology = new TextView(this);
-						testView_animal_dose_posology.setText(dosePosology);
-						testView_animal_dose_posology.setTextColor(Color.BLACK);
-						testView_animal_dose_posology.setTextSize(15);
-						testView_animal_dose_posology.setTypeface(Typeface.SANS_SERIF);
-						LinearLayout.LayoutParams paramsDosePosology = new LinearLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
-						paramsDosePosology.leftMargin = 70;
-						paramsDosePosology.topMargin = 5;
-						layout_animal_dose.addView(testView_animal_dose_posology,layout_animal_dose.getChildCount(),paramsDosePosology);
-						
-						//Dose route data
-						
-						TextView testView_animal_dose_route = new TextView(this);
-						testView_animal_dose_route.setText(doseRoute);
-						testView_animal_dose_route.setTextColor(Color.BLACK);
-						testView_animal_dose_route.setTextSize(15);
-						testView_animal_dose_route.setTypeface(Typeface.SANS_SERIF);
-						LinearLayout.LayoutParams paramsDoseRoute = new LinearLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
-						paramsDoseRoute.leftMargin = 100;
-						paramsDoseRoute.topMargin = 5;
-						layout_animal_dose.addView(testView_animal_dose_route,layout_animal_dose.getChildCount(),paramsDoseRoute);
-						
-						//Dose reference data
-						
-						TextView testView_animal_dose_reference = new TextView(this);
-						testView_animal_dose_reference.setText(doseReference);
-						testView_animal_dose_reference.setTextColor(Color.BLACK);
-						testView_animal_dose_reference.setTextSize(15);
-						testView_animal_dose_reference.setTypeface(Typeface.SANS_SERIF);
-						LinearLayout.LayoutParams paramsDoseReference = new LinearLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
-						paramsDoseReference.leftMargin = 60;
-						paramsDoseReference.rightMargin = 60;
-						paramsDoseReference.topMargin = 5;
-						layout_animal_dose.addView(testView_animal_dose_reference,layout_animal_dose.getChildCount(),paramsDoseReference);
-					
-						layout_dose_information.addView(layout_animal_dose,layout_dose_information.getChildCount());
-
 					}
 					
 				}
 				
+				layoutDose.addView(layout_dose_information,layoutDose.getChildCount());
 			}
+			helper.close();
 			
-			layoutDose.addView(layout_dose_information,layoutDose.getChildCount());
+			//Notes
+			
+			notes_interface("GENERAL NOTES", parameters.getString("drugName"), parameters.getString("groupName"), notes_index);
+			notes_interface("SPECIFIC NOTES", parameters.getString("drugName"), parameters.getString("groupName"), notes_index);
+			
 		}
-		
-		//General Notes
-		TextView testView_generalNotes = new TextView(this);
-		testView_generalNotes.setText("GENERAL NOTES");
-		testView_generalNotes.setTextSize(20);
-		testView_generalNotes.setTextColor(Color.BLACK);
-		testView_generalNotes.setTypeface(Typeface.SANS_SERIF);
-		LinearLayout.LayoutParams paramsGeneralNotes = new LinearLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
-		paramsGeneralNotes.leftMargin = 30;
-		paramsGeneralNotes.topMargin = 30;
-		layoutDose.addView(testView_generalNotes,layoutDose.getChildCount(),paramsGeneralNotes);
-		notes_interface();
-		
-		//Specific Notes
-		TextView testView_specificNotes = new TextView(this);
-		testView_specificNotes.setText("SPECIFIC NOTES");
-		testView_specificNotes.setTextSize(20);
-		testView_specificNotes.setTextColor(Color.BLACK);
-		testView_specificNotes.setTypeface(Typeface.SANS_SERIF);
-		LinearLayout.LayoutParams paramsSpecificNotes = new LinearLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
-		paramsSpecificNotes.leftMargin = 30;
-		paramsSpecificNotes.topMargin = 30;
-		layoutDose.addView(testView_specificNotes,layoutDose.getChildCount(),paramsSpecificNotes);
-		notes_interface();
 		
 	}
 	
-	public void notes_interface() {
+	public void notes_interface(String notesOption, String drug_name, String group_name, HashMap<Integer,String> notesIndex) {
+		
 		LinearLayout layout_notes = new LinearLayout(this);
 		layout_notes.setOrientation(LinearLayout.VERTICAL);
 		layout_notes.setLayoutParams(new LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT));
 		layout_notes.setBackgroundResource(R.drawable.layout_border);
 		
-		int numNotes = 2;
-		for (int i=0;i<numNotes;i++) {
-			TextView testView_note = new TextView(this);
-			testView_note.setText("may increase ototoxicity and nephrotoxicity of cephalosporins (e.g. gentamicin)");
-			testView_note.setTextColor(Color.BLACK);
-			testView_note.setTextSize(15);
-			testView_note.setTypeface(Typeface.SANS_SERIF);
-			LinearLayout.LayoutParams paramsNote = new LinearLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
-			paramsNote.leftMargin = 70;
-			paramsNote.rightMargin = 60;
-			paramsNote.topMargin = 30;
-			layout_notes.addView(testView_note,layout_notes.getChildCount(),paramsNote);
+		if (notesOption.equals("GENERAL NOTES")) {
+			ArrayList<String> notes = new ArrayList<String>();
+			SQLiteDatabase db = helper.open();
+			if (db!=null) {
+				notes = helper.read_general_notes(drug_name, group_name);
+				helper.close();
+			}
+			if (notes.size() > 0) {
+				TextView testView_notes = new TextView(this);
+				testView_notes.setText(notesOption);
+				testView_notes.setTextSize(20);
+				testView_notes.setTextColor(getResources().getColor(R.color.darkGray));
+				testView_notes.setTypeface(Typeface.DEFAULT_BOLD, Typeface.DEFAULT_BOLD.getStyle());
+				LinearLayout.LayoutParams paramsNotes = new LinearLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
+				paramsNotes.leftMargin = 30;
+				paramsNotes.topMargin = 30;
+				layoutDose.addView(testView_notes,layoutDose.getChildCount(),paramsNotes);
+				
+				for (int i=0;i<notes.size();i++) {
+					TextView testView_note = new TextView(this);
+					testView_note.setText("•	" + notes.get(i));
+					testView_note.setTextColor(Color.BLACK);
+					testView_note.setTextSize(16);
+					testView_note.setTypeface(Typeface.SANS_SERIF);
+					LinearLayout.LayoutParams paramsNote = new LinearLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
+					paramsNote.leftMargin = 70;
+					paramsNote.rightMargin = 60;
+					paramsNote.topMargin = 5;
+					layout_notes.addView(testView_note,layout_notes.getChildCount(),paramsNote);
+				}
+				
+			}
+		}
+		else {
+			if (notesIndex.size() > 0) {
+				TextView testView_notes = new TextView(this);
+				testView_notes.setText(notesOption);
+				testView_notes.setTextSize(20);
+				testView_notes.setTextColor(getResources().getColor(R.color.darkGray));
+				testView_notes.setTypeface(Typeface.DEFAULT_BOLD, Typeface.DEFAULT_BOLD.getStyle());
+				LinearLayout.LayoutParams paramsNotes = new LinearLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
+				paramsNotes.leftMargin = 30;
+				paramsNotes.topMargin = 30;
+				layoutDose.addView(testView_notes,layoutDose.getChildCount(),paramsNotes);
+				
+				for (int i=0;i<notesIndex.size();i++) {
+					TextView testView_note = new TextView(this);
+					testView_note.setText("(" + (i+1) + ")	" + notesIndex.get(i+1));
+					testView_note.setTextColor(Color.BLACK);
+					testView_note.setTextSize(16);
+					testView_note.setTypeface(Typeface.SANS_SERIF);
+					LinearLayout.LayoutParams paramsNote = new LinearLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
+					paramsNote.leftMargin = 70;
+					paramsNote.rightMargin = 60;
+					paramsNote.topMargin = 5;
+					layout_notes.addView(testView_note,layout_notes.getChildCount(),paramsNote);
+				}
+			}
 		}
 		
 		layoutDose.addView(layout_notes,layoutDose.getChildCount());
+		
 	}
 
 	@Override

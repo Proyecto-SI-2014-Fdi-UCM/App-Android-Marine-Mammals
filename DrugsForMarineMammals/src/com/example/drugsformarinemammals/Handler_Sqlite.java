@@ -6,6 +6,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.HashMap;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -360,5 +361,107 @@ public class Handler_Sqlite extends SQLiteOpenHelper{
 		registro.put("name", name);
 		this.getWritableDatabase().insert("Therapeutic_Group", null, registro);
 	}
+	
+	public ArrayList<String> read_animals_family(String drug_name, String group_name) {
+		
+		ArrayList<String> result = new ArrayList<String>();
+		SQLiteDatabase db = this.getReadableDatabase();
+		String args [] = {drug_name, group_name};
+		Cursor c=db.query("Animal", null, "drug_name=? and group_name=?", args, null, null, null);
+		int idFamily;
+		idFamily = c.getColumnIndex("family");
+		
+		for(c.moveToFirst();!c.isAfterLast();c.moveToNext()) {
+			if (!result.contains(c.getString(idFamily)))
+				result.add(c.getString(idFamily));
+			
+		}
+		
+		return result;
+	}
+	
+	public HashMap<String, ArrayList<String>> read_animal_information(String drug_name, String group_name, String family) {
+		
+		HashMap<String, ArrayList<String>> result = new HashMap<String, ArrayList<String>>();
+		SQLiteDatabase db = this.getReadableDatabase();
+		String args [] = {drug_name, group_name, family};
+		Cursor c=db.query("Animal", null, "drug_name=? and group_name=? and family=?", args, null, null, null);
+		int idName;
+		idName = c.getColumnIndex("animal_name");
+		
+		for(c.moveToFirst();!c.isAfterLast();c.moveToNext()) {
+			if (!result.containsKey(c.getString(idName))) {
+				ArrayList<String> categories = new ArrayList<String>();
+				String args1 [] = {drug_name, group_name, family, c.getString(idName)};
+				Cursor d=db.query("Animal_has_Category", null, "drug_name=? and group_name=? and family=? and animal_name=?", args1, null, null, null);
+				int idCategory;
+				idCategory = d.getColumnIndex("category_name");
+				
+				for(d.moveToFirst();!d.isAfterLast();d.moveToNext()) {
+					if (!categories.contains(d.getString(idCategory)))
+						categories.add(d.getString(idCategory));
+				}
+				
+				result.put(c.getString(idName), categories);
+			}
+			
+		}
+		
+		return result;
+	}
+	
+	public ArrayList<Dose_Data> read_dose_information(String drug_name, String group_name, String family, String animal_name, String category_name) {
+		
+		ArrayList<Dose_Data> result = new ArrayList<Dose_Data>();
+		SQLiteDatabase db = this.getReadableDatabase();
+		String args [] = {drug_name, group_name, family, animal_name, category_name};
+		Cursor c=db.query("Animal_has_Category", null, "drug_name=? and group_name=? and family=? and animal_name=? and category_name=?", args, null, null, null);
+		int idAmount, idPosology, idRoute, idReference;
+		idAmount = c.getColumnIndex("dose");
+		idPosology = c.getColumnIndex("posology");
+		idRoute = c.getColumnIndex("route");
+		idReference = c.getColumnIndex("reference");
+		
+		for(c.moveToFirst();!c.isAfterLast();c.moveToNext()) {
+			Dose_Data data = new Dose_Data(c.getString(idAmount), c.getString(idPosology), c.getString(idRoute), c.getString(idReference));
+			if (!result.contains(data))
+				result.add(data);
+		}
+		
+		return result;
+	}
+	
+	public ArrayList<String> read_general_notes(String drug_name, String group_name) {
+			
+			ArrayList<String> result = new ArrayList<String>();
+			SQLiteDatabase db = this.getReadableDatabase();
+			String args [] = {drug_name, group_name};
+			Cursor c=db.query("Drug_aplicated_to_Animal_Type", null, "drug_name=? and group_name=?", args, null, null, null);
+			int idNote;
+			idNote = c.getColumnIndex("general_note");
+			
+			for(c.moveToFirst();!c.isAfterLast();c.moveToNext()) {
+				if (!c.getString(idNote).equals(""))
+					result.add(c.getString(idNote));
+			}
+			
+			return result;
+	}
+	
+	public ArrayList<String> read_specific_notes(String drug_name, String group_name, String animal_name, String family_name, String category_name, String posology, String route, String reference) {
+			ArrayList<String> result = new ArrayList<String>();
+			SQLiteDatabase db = this.getReadableDatabase();
+			String args [] = {drug_name, group_name, family_name, animal_name, category_name, posology, route, reference};
+			Cursor c=db.query("Animal_has_Category", null, "drug_name=? and group_name=? and family=? and animal_name=? and category_name=? and posology=? and route=? and reference=?", args, null, null, null);
+			int idNote;
+			idNote = c.getColumnIndex("specific_note");
+			for(c.moveToFirst();!c.isAfterLast();c.moveToNext()) {
+				if (!c.getString(idNote).equals(""))
+					result.add(c.getString(idNote));
+			}
+			
+			return result;
+	}
+
 
 }

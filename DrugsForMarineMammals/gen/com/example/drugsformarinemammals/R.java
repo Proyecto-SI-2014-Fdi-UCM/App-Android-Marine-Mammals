@@ -90,12 +90,14 @@ public final class R {
         public static final int SpinAnatomicalTarget=0x7f0a0001;
         public static final int SpinAnimals=0x7f0a0003;
         public static final int SpinTherapeuticTarget=0x7f0a0002;
-        public static final int action_settings=0x7f0a002d;
+        public static final int action_settings=0x7f0a0031;
         public static final int autoCompleteTextView1=0x7f0a0007;
         public static final int buttonAnimals=0x7f0a0024;
-        public static final int buttonCodes=0x7f0a0022;
+        public static final int buttonCodes=0x7f0a0028;
+        public static final int cetaceansButton=0x7f0a0025;
+        public static final int codesSpinner=0x7f0a0022;
         public static final int drugTitle=0x7f0a0012;
-        public static final int drugsresult=0x7f0a0029;
+        public static final int drugsresult=0x7f0a002d;
         public static final int editTextDialogUserInput=0x7f0a0008;
         public static final int european_medicines_agency=0x7f0a0019;
         public static final int expandableAbout=0x7f0a000d;
@@ -111,7 +113,7 @@ public final class R {
         public static final int headerBriefDescription=0x7f0a0013;
         public static final int headerGenericDrug=0x7f0a0014;
         public static final int headerLicense=0x7f0a0016;
-        public static final int imageItem=0x7f0a0027;
+        public static final int imageItem=0x7f0a002b;
         public static final int layoutActionAnatomical=0x7f0a001d;
         public static final int layoutActionTherapeutic=0x7f0a001f;
         public static final int layoutDescription=0x7f0a0011;
@@ -122,16 +124,18 @@ public final class R {
         public static final int license3=0x7f0a001c;
         public static final int listViewTypeSearch=0x7f0a000f;
         public static final int logo_aemps=0x7f0a0018;
-        public static final int progressBar1=0x7f0a002a;
-        public static final int textSearch=0x7f0a0028;
+        public static final int otherButton=0x7f0a0027;
+        public static final int pinnipedsButton=0x7f0a0026;
+        public static final int progressBar1=0x7f0a002e;
+        public static final int textSearch=0x7f0a002c;
         public static final int textView=0x7f0a0006;
-        public static final int textViewProductsList=0x7f0a0025;
+        public static final int textViewProductsList=0x7f0a0029;
         public static final int textViewUrl=0x7f0a0009;
         public static final int textView_drug_name=0x7f0a000b;
         public static final int textView_group_name=0x7f0a000c;
-        public static final int textview_drugs=0x7f0a0026;
-        public static final int title=0x7f0a002c;
-        public static final int vp_mainmenu=0x7f0a002b;
+        public static final int textview_drugs=0x7f0a002a;
+        public static final int title=0x7f0a0030;
+        public static final int vp_mainmenu=0x7f0a002f;
     }
     public static final class layout {
         public static final int combined_search=0x7f030000;
