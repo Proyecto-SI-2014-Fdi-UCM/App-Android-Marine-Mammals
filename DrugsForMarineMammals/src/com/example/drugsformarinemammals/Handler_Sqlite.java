@@ -6,6 +6,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.HashMap;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -430,53 +431,37 @@ public class Handler_Sqlite extends SQLiteOpenHelper{
 		return result;
 	}
 	
-	public ArrayList<String> read_notes(String drug_name, String group_name, String notes_option) {
+	public ArrayList<String> read_general_notes(String drug_name, String group_name) {
 			
 			ArrayList<String> result = new ArrayList<String>();
 			SQLiteDatabase db = this.getReadableDatabase();
 			String args [] = {drug_name, group_name};
+			Cursor c=db.query("Drug_aplicated_to_Animal_Type", null, "drug_name=? and group_name=?", args, null, null, null);
 			int idNote;
-			if (notes_option.equals("GENERAL NOTES")) {
-				Cursor c=db.query("Drug_aplicated_to_Animal_Type", null, "drug_name=? and group_name=?", args, null, null, null);
-				idNote = c.getColumnIndex("general_note");
+			idNote = c.getColumnIndex("general_note");
 			
-				for(c.moveToFirst();!c.isAfterLast();c.moveToNext()) {
-					if (!c.getString(idNote).equals(""))
-						result.add(c.getString(idNote));
-				}
-			}
-			else if (notes_option.equals("SPECIFIC NOTES")) {
-				Cursor c=db.query("Animal_has_Category", null, "drug_name=? and group_name=?", args, null, null, null);
-				int idAnimal, idCategory, idDose, idPosology, idRoute, idReference;
-				idNote = c.getColumnIndex("specific_note");
-				idAnimal = c.getColumnIndex("animal_name");
-				idCategory = c.getColumnIndex("category_name");
-				idDose = c.getColumnIndex("dose");
-				idPosology = c.getColumnIndex("posology");
-				idRoute = c.getColumnIndex("route");
-				idReference = c.getColumnIndex("reference");
-			
-				for(c.moveToFirst();!c.isAfterLast();c.moveToNext()) {
-					if (!c.getString(idNote).equals("")) {
-						String note;
-						if (c.getString(idAnimal).equals("") && c.getString(idCategory).equals("")) {
-							note = c.getString(idDose) + " " + c.getString(idPosology) + " " + c.getString(idRoute) + " " + c.getString(idReference) + "		" + c.getString(idNote);
-						}
-						else {
-							
-							if (c.getString(idAnimal).equals(""))
-								note = c.getString(idCategory) + " 	" + c.getString(idDose) + " " + c.getString(idPosology) + " " + c.getString(idRoute) + " " + c.getString(idReference) + "		" + c.getString(idNote);
-							else
-								note = c.getString(idAnimal) + "  " + c.getString(idCategory) + " 	" + c.getString(idDose) + " " + c.getString(idPosology) + " " + c.getString(idRoute) + " " + c.getString(idReference) + "		" + c.getString(idNote);
-							
-						}
-						result.add(note);
-					}
-				}
-					
+			for(c.moveToFirst();!c.isAfterLast();c.moveToNext()) {
+				if (!c.getString(idNote).equals(""))
+					result.add(c.getString(idNote));
 			}
 			
 			return result;
-		}
+	}
+	
+	public ArrayList<String> read_specific_notes(String drug_name, String group_name, String animal_name, String family_name, String category_name, String posology, String route, String reference) {
+			ArrayList<String> result = new ArrayList<String>();
+			SQLiteDatabase db = this.getReadableDatabase();
+			String args [] = {drug_name, group_name, family_name, animal_name, category_name, posology, route, reference};
+			Cursor c=db.query("Animal_has_Category", null, "drug_name=? and group_name=? and family=? and animal_name=? and category_name=? and posology=? and route=? and reference=?", args, null, null, null);
+			int idNote;
+			idNote = c.getColumnIndex("specific_note");
+			for(c.moveToFirst();!c.isAfterLast();c.moveToNext()) {
+				if (!c.getString(idNote).equals(""))
+					result.add(c.getString(idNote));
+			}
+			
+			return result;
+	}
+
 
 }

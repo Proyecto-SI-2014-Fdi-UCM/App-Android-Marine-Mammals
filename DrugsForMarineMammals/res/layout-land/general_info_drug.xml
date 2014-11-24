@@ -201,13 +201,20 @@
 	            android:text="@string/headerATCvetCodes" />
     
     <LinearLayout
+        	
 	        android:layout_width="fill_parent"
 	        android:layout_height="wrap_content"
-	        android:orientation="vertical" 
-	        android:id="@+id/buttonCodes"
-	        android:layout_gravity="center_horizontal">
-    
-    </LinearLayout>
+	        android:orientation="vertical"
+	        android:gravity="center">		
+	    <Spinner
+	            android:id="@+id/codesSpinner"
+	            android:layout_width="match_parent"
+	            android:layout_height="match_parent"
+	            android:layout_marginTop="40dp"
+	            android:layout_marginLeft="30dp"
+	            android:layout_marginRight="30dp"
+	     />
+	 </LinearLayout>  
 	
     <TextView
 	            android:id="@+id/headerAnimals"
@@ -223,9 +230,30 @@
 	<LinearLayout
 	        android:layout_width="fill_parent"
 	        android:layout_height="wrap_content"
-	        android:orientation="vertical" 
+	        android:orientation="horizontal" 
 	        android:id="@+id/buttonAnimals"
 	        android:layout_gravity="center_horizontal">
+    		
+	    	<Button
+		    android:id="@+id/cetaceansButton"
+		    android:layout_width="wrap_content"
+		    android:layout_height="wrap_content" 
+		    android:layout_weight="1"
+		     />
+
+	    <Button
+	        android:id="@+id/pinnipedsButton"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_weight="1"
+	         />
+
+	    <Button
+	        android:id="@+id/otherButton"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_weight="1"
+	         />
     
     </LinearLayout>
     </LinearLayout>
