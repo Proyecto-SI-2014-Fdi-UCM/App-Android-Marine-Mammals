@@ -35,7 +35,8 @@
 		            android:textStyle="bold"
 		            android:textColor="@color/darkGray"
 		            android:layout_marginTop="20dp"
-		            android:text="@string/headerBriefDescription" />
+		            android:text="@string/headerBriefDescription"
+		             />
 		        
 		       
         
@@ -54,7 +55,8 @@
             android:textSize="20sp"
             android:textStyle="bold"
             android:textColor="@color/darkGray"
-            android:text="@string/headerGenericDrug" />
+            android:text="@string/headerGenericDrug" 
+            />
         
         <ImageView
             android:id="@+id/genericDrug"
@@ -80,7 +82,8 @@
             android:textStyle="bold"
             android:textColor="@color/darkGray"          
             android:layout_marginTop="20dp"
-            android:text="@string/headerLicense" />
+            android:text="@string/headerLicense"
+            />
     </LinearLayout>
     		
     <LinearLayout
@@ -167,7 +170,8 @@
 	            android:textSize="20sp"
             	android:textStyle="bold"
             	android:textColor="@color/darkGray"  
-	            android:text="@string/headerActionAnatomical" />
+	            android:text="@string/headerActionAnatomical" 
+	            />
     </LinearLayout>
     
      <LinearLayout
@@ -184,7 +188,8 @@
 	            android:textSize="20sp"
             	android:textStyle="bold"
             	android:textColor="@color/darkGray"  
-	            android:text="@string/headerActionTherapeutic" />
+	            android:text="@string/headerActionTherapeutic"
+	            />
     
     		
     		
@@ -199,7 +204,8 @@
             	android:textStyle="bold"
             	android:textColor="@color/darkGray"  
             	android:layout_marginTop="20dp"
-	            android:text="@string/headerATCvetCodes" />
+	            android:text="@string/headerATCvetCodes" 
+	            />
     <LinearLayout
         	
 	        android:layout_width="fill_parent"
@@ -224,7 +230,8 @@
             	android:textStyle="bold"
             	android:textColor="@color/darkGray"  
             	android:layout_marginTop="20dp"
-	            android:text="@string/headerAnimals" />
+	            android:text="@string/headerAnimals" 
+	            />
     
 	<LinearLayout
 	    android:id="@+id/buttonAnimals"
