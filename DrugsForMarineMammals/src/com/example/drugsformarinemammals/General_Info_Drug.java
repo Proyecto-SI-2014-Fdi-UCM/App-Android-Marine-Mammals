@@ -44,7 +44,8 @@ public class General_Info_Drug extends Activity {
 			       
 	        //Title
 			TextView drugTitle=(TextView)findViewById(R.id.drugTitle);       
-	        drugTitle.setText(titleBundle);    
+	        drugTitle.setText(titleBundle); 
+	        drugTitle.setTypeface(Typeface.SANS_SERIF);
 			
 			//Description 
 	        LinearLayout borderDescription = new LinearLayout(this);
@@ -52,10 +53,10 @@ public class General_Info_Drug extends Activity {
 	        borderDescription.setLayoutParams(new LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT));
 	        borderDescription.setBackgroundResource(R.drawable.layout_border);
 	        
-			//TextView description=(TextView)findViewById(R.id.description);
 	        TextView description=new TextView(this);
 			description.setText(helper.getDescription(titleBundle));
 			description.setTextSize(18);
+			description.setTypeface(Typeface.SANS_SERIF);
 	       
 			LinearLayout.LayoutParams paramsDescription = new LinearLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
 			paramsDescription.leftMargin = 60;
@@ -162,8 +163,8 @@ public class General_Info_Drug extends Activity {
 	       //Action
 	        
 	        anatomicalGroup=new TextView(this);
-	        anatomicalGroup.setText("Push any ATCvet Code to view Anatomic Target");
 	        anatomicalGroup.setTextSize(18);
+	        anatomicalGroup.setTypeface(Typeface.SANS_SERIF);
 	        
 	        borderAnatomicalGroup = new LinearLayout(this);
 	        borderAnatomicalGroup.setOrientation(LinearLayout.VERTICAL);
@@ -172,8 +173,8 @@ public class General_Info_Drug extends Activity {
 	        
 	        
 	        therapeuticGroup=new TextView(this);
-	        therapeuticGroup.setText("Push any ATCvet Code to view Therapeutic Target");
 	        therapeuticGroup.setTextSize(18);
+	        therapeuticGroup.setTypeface(Typeface.SANS_SERIF);
 	        
 	        borderTherapeuticGroup = new LinearLayout(this);
 	        borderTherapeuticGroup.setOrientation(LinearLayout.VERTICAL);
@@ -225,6 +226,7 @@ public class General_Info_Drug extends Activity {
 	        //Animals
 	    	Button cetaceansButton=(Button)findViewById(R.id.cetaceansButton);
 	        cetaceansButton.setText("CETACEANS");
+	        cetaceansButton.setTypeface(Typeface.SANS_SERIF);
 	        cetaceansButton.setOnClickListener(new OnClickListener() {
 	
 				@Override
@@ -237,6 +239,7 @@ public class General_Info_Drug extends Activity {
 	        
 	        Button pinnipedsButton=(Button)findViewById(R.id.pinnipedsButton);
 	        pinnipedsButton.setText("PINNIPEDS");
+	        pinnipedsButton.setTypeface(Typeface.SANS_SERIF);
 	        pinnipedsButton.setOnClickListener(new OnClickListener() {
 	
 				@Override
@@ -248,6 +251,7 @@ public class General_Info_Drug extends Activity {
 	        
 	        Button otherButton=(Button)findViewById(R.id.otherButton);
 	        otherButton.setText("OTHER MM");
+	        otherButton.setTypeface(Typeface.SANS_SERIF);
 	        otherButton.setOnClickListener(new OnClickListener() {
 	
 				@Override
