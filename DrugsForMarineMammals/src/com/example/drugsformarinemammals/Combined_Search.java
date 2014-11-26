@@ -27,7 +27,7 @@ public class Combined_Search extends Activity {
 	private String userEntryAnatomicalTarget;
 	private String userEntryTherapeuticTarget;
 	private String userEntryAnimalTarget;
-	private ArrayAdapter<String> adapterTherapeuticTarget;
+	private SpinnerAdapter adapterTherapeuticTarget;
 	private Spinner spinnerTherapeuticTarget;
 	private Handler_Sqlite helper;
 	
@@ -69,7 +69,7 @@ public class Combined_Search extends Activity {
 		     });
 
 		spinnerTherapeuticTarget = (Spinner)findViewById(R.id.SpinTherapeuticTarget);
-		SpinnerAdapter adapterTherapeuticTarget = new SpinnerAdapter(this, R.layout.item_spinner,helper.getAllTherapeuticGroup());	     
+		adapterTherapeuticTarget = new SpinnerAdapter(this, R.layout.item_spinner,helper.getAllTherapeuticGroup());	     
 		adapterTherapeuticTarget.setDropDownViewResource(R.layout.spinner_dropdown_item);
 		spinnerTherapeuticTarget.setAdapter(adapterTherapeuticTarget);
 		spinnerTherapeuticTarget.setOnItemSelectedListener(new OnItemSelectedListener() {
