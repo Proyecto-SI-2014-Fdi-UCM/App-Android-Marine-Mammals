@@ -30,15 +30,14 @@ public class Dose_Information extends Activity {
 		Bundle parameters = this.getIntent().getExtras();
 		if (parameters!=null) {
 			TextView textViewDrug = (TextView) findViewById(R.id.textView_drug_name);
-			textViewDrug.setTypeface(Typeface.SANS_SERIF);
 			textViewDrug.setText(parameters.getString("drugName"));
 			TextView textViewGroupName = (TextView) findViewById(R.id.textView_group_name);
-			textViewGroupName.setTypeface(Typeface.SANS_SERIF);
 			textViewGroupName.setText("(" + parameters.getString("groupName") + ")");
 			layoutDose = (LinearLayout) findViewById(R.id.layout_dose);
 			
 			helper = new Handler_Sqlite(this);
 			SQLiteDatabase db = helper.open();
+			HashMap<Integer,String> notes_index = new HashMap<Integer,String>();
 			ArrayList<String> families = new ArrayList<String>();
 			if (db!=null)
 				families = helper.read_animals_family(parameters.getString("drugName"), parameters.getString("groupName"));
@@ -49,8 +48,8 @@ public class Dose_Information extends Activity {
 				TextView testView_family = new TextView(this);
 				testView_family.setText(families.get(l));
 				testView_family.setTextSize(20);
-				testView_family.setTextColor(R.color.darkGray);
-				testView_family.setTypeface(Typeface.SANS_SERIF);
+				testView_family.setTextColor(getResources().getColor(R.color.darkGray));
+				testView_family.setTypeface(Typeface.DEFAULT_BOLD, Typeface.DEFAULT_BOLD.getStyle());
 				LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
 				params.leftMargin = 30;
 				params.topMargin = 20;
@@ -228,7 +227,32 @@ public class Dose_Information extends Activity {
 							TableRow.LayoutParams paramsDoseReference = new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT, TableRow.LayoutParams.WRAP_CONTENT);
 							paramsDoseReference.gravity = Gravity.CENTER;
 							doseInformation.addView(testView_animal_dose_reference, paramsDoseReference);
-				
+							
+							//Specific note index
+							
+							ArrayList<String> specific_notes = new ArrayList<String>();
+							if (db!=null)
+								specific_notes = helper.read_specific_notes(parameters.getString("drugName"), parameters.getString("groupName"), animalName, 
+										families.get(l), animalCategory, dosePosology, doseRoute, doseReference);
+							
+							String index = "";
+							for (int m=0;m<specific_notes.size();m++) {
+								String note = specific_notes.get(m);
+								if (!notes_index.containsValue(note)) {
+									notes_index.put(notes_index.size()+1,note);
+								}
+								index+="(" + notes_index.size() + ")  ";
+							}
+							
+							TextView textView_specific_note_index = new TextView(this);
+							textView_specific_note_index.setText(index);
+							textView_specific_note_index.setTextColor(Color.BLACK);
+							textView_specific_note_index.setTextSize(15);
+							textView_specific_note_index.setTypeface(Typeface.SANS_SERIF);
+							TableRow.LayoutParams paramsSpecificNoteIndex = new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT, TableRow.LayoutParams.WRAP_CONTENT);
+							paramsSpecificNoteIndex.gravity = Gravity.CENTER;
+							doseInformation.addView(textView_specific_note_index, paramsSpecificNoteIndex);
+							
 							doseTable.addView(doseInformation);
 	
 						}
@@ -253,52 +277,81 @@ public class Dose_Information extends Activity {
 			
 			//Notes
 			
-			notes_interface("GENERAL NOTES", parameters.getString("drugName"), parameters.getString("groupName"));
-			notes_interface("SPECIFIC NOTES", parameters.getString("drugName"), parameters.getString("groupName"));
+			notes_interface("GENERAL NOTES", parameters.getString("drugName"), parameters.getString("groupName"), notes_index);
+			notes_interface("SPECIFIC NOTES", parameters.getString("drugName"), parameters.getString("groupName"), notes_index);
 			
 		}
 		
 	}
 	
-	public void notes_interface(String notesOption, String drug_name, String group_name) {
+	public void notes_interface(String notesOption, String drug_name, String group_name, HashMap<Integer,String> notesIndex) {
 		
-		ArrayList<String> notes = new ArrayList<String>();
-		SQLiteDatabase db = helper.open();
-		if (db!=null) {
-			notes = helper.read_notes(drug_name, group_name, notesOption);
-			helper.close();
-		}
-		if (notes.size() > 0) {
-			TextView testView_notes = new TextView(this);
-			testView_notes.setText(notesOption);
-			testView_notes.setTextSize(20);
-			testView_notes.setTextColor(R.color.darkGray);
-			testView_notes.setTypeface(Typeface.SANS_SERIF);
-			LinearLayout.LayoutParams paramsNotes = new LinearLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
-			paramsNotes.leftMargin = 30;
-			paramsNotes.topMargin = 30;
-			layoutDose.addView(testView_notes,layoutDose.getChildCount(),paramsNotes);
-			
-			LinearLayout layout_notes = new LinearLayout(this);
-			layout_notes.setOrientation(LinearLayout.VERTICAL);
-			layout_notes.setLayoutParams(new LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT));
-			layout_notes.setBackgroundResource(R.drawable.layout_border);
-			
-			for (int i=0;i<notes.size();i++) {
-				TextView testView_note = new TextView(this);
-				testView_note.setText(notes.get(i));
-				testView_note.setTextColor(Color.BLACK);
-				testView_note.setTextSize(16);
-				testView_note.setTypeface(Typeface.SANS_SERIF);
-				LinearLayout.LayoutParams paramsNote = new LinearLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
-				paramsNote.leftMargin = 70;
-				paramsNote.rightMargin = 60;
-				paramsNote.topMargin = 30;
-				layout_notes.addView(testView_note,layout_notes.getChildCount(),paramsNote);
+		LinearLayout layout_notes = new LinearLayout(this);
+		layout_notes.setOrientation(LinearLayout.VERTICAL);
+		layout_notes.setLayoutParams(new LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT));
+		layout_notes.setBackgroundResource(R.drawable.layout_border);
+		
+		if (notesOption.equals("GENERAL NOTES")) {
+			ArrayList<String> notes = new ArrayList<String>();
+			SQLiteDatabase db = helper.open();
+			if (db!=null) {
+				notes = helper.read_general_notes(drug_name, group_name);
+				helper.close();
 			}
-			
-			layoutDose.addView(layout_notes,layoutDose.getChildCount());
+			if (notes.size() > 0) {
+				TextView testView_notes = new TextView(this);
+				testView_notes.setText(notesOption);
+				testView_notes.setTextSize(20);
+				testView_notes.setTextColor(getResources().getColor(R.color.darkGray));
+				testView_notes.setTypeface(Typeface.DEFAULT_BOLD, Typeface.DEFAULT_BOLD.getStyle());
+				LinearLayout.LayoutParams paramsNotes = new LinearLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
+				paramsNotes.leftMargin = 30;
+				paramsNotes.topMargin = 30;
+				layoutDose.addView(testView_notes,layoutDose.getChildCount(),paramsNotes);
+				
+				for (int i=0;i<notes.size();i++) {
+					TextView testView_note = new TextView(this);
+					testView_note.setText("•	" + notes.get(i));
+					testView_note.setTextColor(Color.BLACK);
+					testView_note.setTextSize(16);
+					testView_note.setTypeface(Typeface.SANS_SERIF);
+					LinearLayout.LayoutParams paramsNote = new LinearLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
+					paramsNote.leftMargin = 70;
+					paramsNote.rightMargin = 60;
+					paramsNote.topMargin = 5;
+					layout_notes.addView(testView_note,layout_notes.getChildCount(),paramsNote);
+				}
+				
+			}
 		}
+		else {
+			if (notesIndex.size() > 0) {
+				TextView testView_notes = new TextView(this);
+				testView_notes.setText(notesOption);
+				testView_notes.setTextSize(20);
+				testView_notes.setTextColor(getResources().getColor(R.color.darkGray));
+				testView_notes.setTypeface(Typeface.DEFAULT_BOLD, Typeface.DEFAULT_BOLD.getStyle());
+				LinearLayout.LayoutParams paramsNotes = new LinearLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
+				paramsNotes.leftMargin = 30;
+				paramsNotes.topMargin = 30;
+				layoutDose.addView(testView_notes,layoutDose.getChildCount(),paramsNotes);
+				
+				for (int i=0;i<notesIndex.size();i++) {
+					TextView testView_note = new TextView(this);
+					testView_note.setText("(" + (i+1) + ")	" + notesIndex.get(i+1));
+					testView_note.setTextColor(Color.BLACK);
+					testView_note.setTextSize(16);
+					testView_note.setTypeface(Typeface.SANS_SERIF);
+					LinearLayout.LayoutParams paramsNote = new LinearLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
+					paramsNote.leftMargin = 70;
+					paramsNote.rightMargin = 60;
+					paramsNote.topMargin = 5;
+					layout_notes.addView(testView_note,layout_notes.getChildCount(),paramsNote);
+				}
+			}
+		}
+		
+		layoutDose.addView(layout_notes,layoutDose.getChildCount());
 		
 	}
 
