@@ -1,11 +1,14 @@
 package com.example.drugsformarinemammals;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -37,7 +40,10 @@ public class Combined_Search extends Activity {
     	userEntryAnimalTarget = "";
     	helper=new Handler_Sqlite(this);
     	helper.open();
+    	TextView title = (TextView)findViewById(R.id.CombinedSearch);
+    	title.setTypeface(Typeface.SANS_SERIF);
         Button go=(Button)findViewById(R.id.goButton);
+        go.setTypeface(Typeface.SANS_SERIF);
         go.setOnClickListener(new OnClickListener() {
 
 			@Override
@@ -46,12 +52,11 @@ public class Combined_Search extends Activity {
 			}
         	
         });
-        
-        
-        Spinner spinnerAnatomicalTarget = (Spinner)findViewById(R.id.SpinAnatomicalTarget);  
-        ArrayAdapter<CharSequence> adapterAnatomicalTarget = ArrayAdapter.createFromResource(this,R.array.AnatomicalTarget, R.layout.item_spinner);	     
-		adapterAnatomicalTarget.setDropDownViewResource(R.layout.spinner_dropdown_item);
-		spinnerAnatomicalTarget.setAdapter(adapterAnatomicalTarget);
+		
+        Spinner spinnerAnatomicalTarget = (Spinner)findViewById(R.id.SpinAnatomicalTarget);
+        SpinnerAdapter adapterAnatomicalTarget = new SpinnerAdapter(this, R.layout.item_spinner, Arrays.asList(getResources().getStringArray(R.array.AnatomicalTarget)));
+        adapterAnatomicalTarget.setDropDownViewResource(R.layout.spinner_dropdown_item);
+        spinnerAnatomicalTarget.setAdapter(adapterAnatomicalTarget);
 		spinnerAnatomicalTarget.setOnItemSelectedListener(new OnItemSelectedListener() {
 
 		     public void onItemSelected(AdapterView<?> parent, View arg1,int arg2, long arg3) {
@@ -63,10 +68,10 @@ public class Combined_Search extends Activity {
 		     }
 		     });
 
-		spinnerTherapeuticTarget = (Spinner)findViewById(R.id.SpinTherapeuticTarget);       
-        
-        
-		adapterTherapeuticTarget = new ArrayAdapter<String>(this, R.layout.item_spinner,helper.getAllTherapeuticGroup());	     
+		spinnerTherapeuticTarget = (Spinner)findViewById(R.id.SpinTherapeuticTarget);               
+//		adapterTherapeuticTarget = new ArrayAdapter<String>(this, R.layout.item_spinner,helper.getAllTherapeuticGroup());	     
+//		adapterTherapeuticTarget.setDropDownViewResource(R.layout.spinner_dropdown_item);
+		SpinnerAdapter adapterTherapeuticTarget = new SpinnerAdapter(this, R.layout.item_spinner,helper.getAllTherapeuticGroup());	     
 		adapterTherapeuticTarget.setDropDownViewResource(R.layout.spinner_dropdown_item);
 		spinnerTherapeuticTarget.setAdapter(adapterTherapeuticTarget);
 		spinnerTherapeuticTarget.setOnItemSelectedListener(new OnItemSelectedListener() {
@@ -85,7 +90,8 @@ public class Combined_Search extends Activity {
 		
 		
 		Spinner spinnerAnimals = (Spinner)findViewById(R.id.SpinAnimals);       
-        ArrayAdapter<CharSequence> adapterAnimals = ArrayAdapter.createFromResource(this, R.array.Animals, R.layout.item_spinner);	     
+//      ArrayAdapter<CharSequence> adapterAnimals = ArrayAdapter.createFromResource(this, R.array.Animals, R.layout.item_spinner);
+		SpinnerAdapter adapterAnimals = new SpinnerAdapter(this, R.layout.item_spinner, Arrays.asList(getResources().getStringArray(R.array.Animals)));
 		adapterAnimals.setDropDownViewResource(R.layout.spinner_dropdown_item);
 		spinnerAnimals.setAdapter(adapterAnimals);
 		
@@ -205,6 +211,7 @@ public class Combined_Search extends Activity {
 		}
 			
 	}
+	
 	
 	
 }

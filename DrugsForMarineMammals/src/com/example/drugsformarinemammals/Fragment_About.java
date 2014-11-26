@@ -48,7 +48,7 @@ public class Fragment_About extends Fragment implements OnClickListener {
 					return true;
 				}
 			});
-
+			
 			return rootView;
 			
 	    }

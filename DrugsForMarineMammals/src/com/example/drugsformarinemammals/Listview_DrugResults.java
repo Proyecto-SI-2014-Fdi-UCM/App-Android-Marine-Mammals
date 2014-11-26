@@ -4,8 +4,9 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
-import android.database.sqlite.SQLiteDatabase;
 
+import android.database.sqlite.SQLiteDatabase;
+import android.graphics.Typeface;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -15,6 +16,7 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.ListAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
 
 public class Listview_DrugResults extends Activity {
 	
@@ -55,7 +57,7 @@ public class Listview_DrugResults extends Activity {
 				drugList.add(drugs_with_priority.get(i).getName());
 			}
 		}
-		ListAdapter adapter = new ArrayAdapter<String>(this, R.layout.item_drugresult, drugList);
+		ListAdapter adapter = new ItemAdapterDrugResults(this, drugList);
 		ListView listview = (ListView) findViewById(R.id.drugsresult);
 		listview.setOnItemClickListener(new OnItemClickListener() {
 
@@ -66,6 +68,7 @@ public class Listview_DrugResults extends Activity {
 				startGralInfo(drugName);
 			}
 		});
+		
 		listview.setAdapter(adapter);
 	}
 	

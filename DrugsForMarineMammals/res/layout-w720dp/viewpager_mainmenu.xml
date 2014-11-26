@@ -20,7 +20,7 @@
         android:layout_gravity="top"
         android:paddingBottom="4dp"
         android:paddingTop="4dp" 
-        style="@style/tabstrip">
+        style="@style/tabstripwXXXdp">
         
         </android.support.v4.view.PagerTabStrip>
         

@@ -273,6 +273,7 @@ public class General_Info_Drug extends Activity {
 	    	
 	    	helper.close();
         }
+        
 	}
 
 	public void showDoseInformation(String drugName, String groupName) {
