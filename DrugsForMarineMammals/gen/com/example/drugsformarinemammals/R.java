@@ -126,6 +126,10 @@ public final class R {
         public static final int otherButton=0x7f0a0027;
         public static final int pinnipedsButton=0x7f0a0026;
         public static final int progressBar1=0x7f0a002d;
+<<<<<<< HEAD
+=======
+        public static final int spinner_item=0x7f0a002e;
+>>>>>>> MeetingNov20
         public static final int textSearch=0x7f0a002b;
         public static final int textView=0x7f0a0006;
         public static final int textViewProductsList=0x7f0a0028;
@@ -133,8 +137,13 @@ public final class R {
         public static final int textView_drug_name=0x7f0a000b;
         public static final int textView_group_name=0x7f0a000c;
         public static final int textview_drugs=0x7f0a0029;
+<<<<<<< HEAD
         public static final int title=0x7f0a002f;
         public static final int vp_mainmenu=0x7f0a002e;
+=======
+        public static final int title=0x7f0a0030;
+        public static final int vp_mainmenu=0x7f0a002f;
+>>>>>>> MeetingNov20
     }
     public static final class layout {
         public static final int combined_search=0x7f030000;
@@ -206,10 +215,11 @@ public final class R {
         public static final int AppTheme=0x7f080001;
         /**  the theme applied to the application or activity 
          */
-        public static final int CustomActionBarTheme=0x7f080003;
+        public static final int CustomActionBarTheme=0x7f080004;
         /**  ActionBar styles 
          */
-        public static final int MyActionBar=0x7f080004;
+        public static final int MyActionBar=0x7f080005;
         public static final int tabstrip=0x7f080002;
+        public static final int tabstripwXXXdp=0x7f080003;
     }
 }

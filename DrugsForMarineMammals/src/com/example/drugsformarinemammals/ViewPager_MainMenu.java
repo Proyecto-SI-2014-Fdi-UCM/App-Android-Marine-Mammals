@@ -1,25 +1,41 @@
 package com.example.drugsformarinemammals;
 
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
+import android.support.v4.view.PagerTabStrip;
 import android.support.v4.view.ViewPager;
+import android.view.View;
+import android.widget.TextView;
 
 
 public class ViewPager_MainMenu extends FragmentActivity {
 	
 	private MyPagerAdapter adapterViewPager;
-	ViewPager viewPager = null;
+	private ViewPager viewPager = null;
+	private TextView textView;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
         setContentView(R.layout.viewpager_mainmenu);
+        PagerTabStrip mPagerTabStrip = (PagerTabStrip) findViewById(R.id.title);
+        int size = mPagerTabStrip.getChildCount();
+        for (int i=0; i<size; i++) {
+        	View child = mPagerTabStrip.getChildAt(i);
+        	if (child instanceof TextView) {
+        		textView = (TextView) child;
+        		textView.setTypeface(Typeface.SANS_SERIF);
+        	}
+        }
         ViewPager vpPager = (ViewPager) findViewById(R.id.vp_mainmenu);
         adapterViewPager = new MyPagerAdapter(getSupportFragmentManager());
         vpPager.setAdapter(adapterViewPager);
+        vpPager.setCurrentItem(1);
+        
 	}
 
 

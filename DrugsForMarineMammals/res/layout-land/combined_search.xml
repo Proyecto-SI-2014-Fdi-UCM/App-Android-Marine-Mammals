@@ -24,7 +24,8 @@
             android:gravity="center"
             android:text="@string/titleCombinedSearch"
             android:textSize="30sp"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            android:textColor="@color/blue" />
     </LinearLayout>
 
     <LinearLayout
