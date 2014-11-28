@@ -30,8 +30,10 @@ public class Dose_Information extends Activity {
 		Bundle parameters = this.getIntent().getExtras();
 		if (parameters!=null) {
 			TextView textViewDrug = (TextView) findViewById(R.id.textView_drug_name);
+			textViewDrug.setTypeface(Typeface.SANS_SERIF);
 			textViewDrug.setText(parameters.getString("drugName"));
 			TextView textViewGroupName = (TextView) findViewById(R.id.textView_group_name);
+			textViewGroupName.setTypeface(Typeface.SANS_SERIF);
 			textViewGroupName.setText("(" + parameters.getString("groupName") + ")");
 			layoutDose = (LinearLayout) findViewById(R.id.layout_dose);
 			
@@ -43,13 +45,13 @@ public class Dose_Information extends Activity {
 				families = helper.read_animals_family(parameters.getString("drugName"), parameters.getString("groupName"));
 		
 			for (int l=0;l<families.size();l++) {
-				//if exist animals for OTARIDS
+				//if exists animals family
 				
 				TextView testView_family = new TextView(this);
 				testView_family.setText(families.get(l));
 				testView_family.setTextSize(20);
 				testView_family.setTextColor(getResources().getColor(R.color.darkGray));
-				testView_family.setTypeface(Typeface.DEFAULT_BOLD, Typeface.DEFAULT_BOLD.getStyle());
+				testView_family.setTypeface(Typeface.SANS_SERIF, Typeface.DEFAULT_BOLD.getStyle());
 				LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
 				params.leftMargin = 30;
 				params.topMargin = 20;
@@ -69,10 +71,10 @@ public class Dose_Information extends Activity {
 				Object [] animalsName = animal_information.keySet().toArray();
 				for (int i=0;i<animalsName.length;i++) {
 					
-					//if exist animal name
+					//if exists animal name
 					animalName = (String) animalsName[i];
 					
-					//if exist category
+					//if exists category
 					ArrayList<String> categories = animal_information.get(animalName);
 					String animalCategory;
 					for (int j=0;j<categories.size();j++) {
@@ -129,6 +131,8 @@ public class Dose_Information extends Activity {
 						doseTable.setStretchAllColumns(true);
 						
 						TableRow header = new TableRow(this);
+						
+						//Amount
 						
 						TextView testView_dose_amount = new TextView(this);
 						testView_dose_amount.setText("Dose");
@@ -303,7 +307,7 @@ public class Dose_Information extends Activity {
 				testView_notes.setText(notesOption);
 				testView_notes.setTextSize(20);
 				testView_notes.setTextColor(getResources().getColor(R.color.darkGray));
-				testView_notes.setTypeface(Typeface.DEFAULT_BOLD, Typeface.DEFAULT_BOLD.getStyle());
+				testView_notes.setTypeface(Typeface.SANS_SERIF, Typeface.DEFAULT_BOLD.getStyle());
 				LinearLayout.LayoutParams paramsNotes = new LinearLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
 				paramsNotes.leftMargin = 30;
 				paramsNotes.topMargin = 30;
@@ -330,7 +334,7 @@ public class Dose_Information extends Activity {
 				testView_notes.setText(notesOption);
 				testView_notes.setTextSize(20);
 				testView_notes.setTextColor(getResources().getColor(R.color.darkGray));
-				testView_notes.setTypeface(Typeface.DEFAULT_BOLD, Typeface.DEFAULT_BOLD.getStyle());
+				testView_notes.setTypeface(Typeface.SANS_SERIF, Typeface.DEFAULT_BOLD.getStyle());
 				LinearLayout.LayoutParams paramsNotes = new LinearLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
 				paramsNotes.leftMargin = 30;
 				paramsNotes.topMargin = 30;

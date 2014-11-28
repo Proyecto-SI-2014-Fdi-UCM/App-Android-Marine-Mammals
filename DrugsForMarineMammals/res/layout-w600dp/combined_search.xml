@@ -25,7 +25,8 @@
             android:text="@string/titleCombinedSearch"
             android:paddingTop="30dp"
             android:textSize="30sp"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            android:textColor="@color/blue" />
     </LinearLayout>
 
     <LinearLayout
@@ -39,8 +40,7 @@
         <Spinner
             android:id="@+id/SpinAnatomicalTarget"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@drawable/listview_selector"/>
+            android:layout_height="match_parent"/>
     </LinearLayout>
 
     
@@ -55,8 +55,7 @@
         <Spinner
             android:id="@+id/SpinTherapeuticTarget"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@drawable/listview_selector" />
+            android:layout_height="match_parent" />
     </LinearLayout>
 
     
@@ -71,8 +70,7 @@
         <Spinner
             android:id="@+id/SpinAnimals"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@drawable/listview_selector" />
+            android:layout_height="match_parent" />
     </LinearLayout>
     
     <LinearLayout

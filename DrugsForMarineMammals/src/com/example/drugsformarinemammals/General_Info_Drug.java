@@ -43,19 +43,23 @@ public class General_Info_Drug extends Activity {
 			titleBundle=extras1.getString("drugName");
 			       
 	        //Title
-			TextView drugTitle=(TextView)findViewById(R.id.drugTitle);       
-	        drugTitle.setText(titleBundle);    
+		TextView drugTitle=(TextView)findViewById(R.id.drugTitle);       
+	        drugTitle.setText(titleBundle); 
+	        drugTitle.setTypeface(Typeface.SANS_SERIF);
 			
-			//Description 
+		//Description 
+		TextView headerBriefDescription=(TextView)findViewById(R.id.headerBriefDescription);
+	        headerBriefDescription.setTypeface(Typeface.SANS_SERIF);
+	        
 	        LinearLayout borderDescription = new LinearLayout(this);
 	        borderDescription.setOrientation(LinearLayout.VERTICAL);
 	        borderDescription.setLayoutParams(new LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT));
 	        borderDescription.setBackgroundResource(R.drawable.layout_border);
 	        
-			//TextView description=(TextView)findViewById(R.id.description);
 	        TextView description=new TextView(this);
 			description.setText(helper.getDescription(titleBundle));
 			description.setTextSize(18);
+			description.setTypeface(Typeface.SANS_SERIF);
 	       
 			LinearLayout.LayoutParams paramsDescription = new LinearLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
 			paramsDescription.leftMargin = 60;
@@ -68,6 +72,10 @@ public class General_Info_Drug extends Activity {
 			layoutDescription.addView(borderDescription,layoutDescription.getChildCount());
 			        
 	        //Generic Drug
+	        TextView headerGenericDrug=(TextView)findViewById(R.id.headerGenericDrug);
+		headerGenericDrug.setTypeface(Typeface.SANS_SERIF);
+	        
+	        
 	        ImageView genericDrug=(ImageView)findViewById(R.id.genericDrug);
 	        if(helper.isAvalaible(titleBundle)){
 	        	genericDrug.setImageResource(R.drawable.tick_verde);
@@ -78,6 +86,8 @@ public class General_Info_Drug extends Activity {
 	        
 	        
 	        //Licenses
+	        TextView headerLicense=(TextView)findViewById(R.id.headerLicense);
+	        headerLicense.setTypeface(Typeface.SANS_SERIF);
 	        
 	        TextView fdaLicense=(TextView)findViewById(R.id.license1);
 	        Typeface font=Typeface.createFromAsset(getAssets(), "Typoster_demo.otf");
@@ -160,20 +170,24 @@ public class General_Info_Drug extends Activity {
 	
 	        
 	       //Action
+	        TextView headerActionAnatomical=(TextView)findViewById(R.id.headerActionAnatomical);
+	        headerActionAnatomical.setTypeface(Typeface.SANS_SERIF);
 	        
 	        anatomicalGroup=new TextView(this);
-	        anatomicalGroup.setText("Push any ATCvet Code to view Anatomic Target");
 	        anatomicalGroup.setTextSize(18);
+	        anatomicalGroup.setTypeface(Typeface.SANS_SERIF);
 	        
 	        borderAnatomicalGroup = new LinearLayout(this);
 	        borderAnatomicalGroup.setOrientation(LinearLayout.VERTICAL);
 	        borderAnatomicalGroup.setLayoutParams(new LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT));
 	        borderAnatomicalGroup.setBackgroundResource(R.drawable.layout_border);
 	        
+	        TextView headerActionTherapeutic=(TextView)findViewById(R.id.headerActionTherapeutic);
+	        headerActionTherapeutic.setTypeface(Typeface.SANS_SERIF);
 	        
 	        therapeuticGroup=new TextView(this);
-	        therapeuticGroup.setText("Push any ATCvet Code to view Therapeutic Target");
 	        therapeuticGroup.setTextSize(18);
+	        therapeuticGroup.setTypeface(Typeface.SANS_SERIF);
 	        
 	        borderTherapeuticGroup = new LinearLayout(this);
 	        borderTherapeuticGroup.setOrientation(LinearLayout.VERTICAL);
@@ -188,8 +202,11 @@ public class General_Info_Drug extends Activity {
 	    	
 	        
 	        //Codes & therapeutic target & anatomical target
+	        TextView headerATCvetCodes=(TextView)findViewById(R.id.headerATCvetCodes);
+	        headerATCvetCodes.setTypeface(Typeface.SANS_SERIF);
+	        
 	    	Spinner codesSpinner= (Spinner)findViewById(R.id.codesSpinner);
-        	ArrayAdapter<String> adapterCodes = new ArrayAdapter<String>(this, R.layout.item_spinner,helper.getCodes(titleBundle));	     
+			SpinnerAdapter adapterCodes = new SpinnerAdapter(this, R.layout.item_spinner,helper.getCodes(titleBundle));	     
         	adapterCodes.setDropDownViewResource(R.layout.spinner_dropdown_item);
     		codesSpinner.setAdapter(adapterCodes);
 	    	
@@ -223,8 +240,12 @@ public class General_Info_Drug extends Activity {
 	        	    	
 	        
 	        //Animals
+	        TextView headerAnimals=(TextView)findViewById(R.id.headerAnimals);
+	    	headerAnimals.setTypeface(Typeface.SANS_SERIF);
+	        
 	    	Button cetaceansButton=(Button)findViewById(R.id.cetaceansButton);
 	        cetaceansButton.setText("CETACEANS");
+	        cetaceansButton.setTypeface(Typeface.SANS_SERIF);
 	        cetaceansButton.setOnClickListener(new OnClickListener() {
 	
 				@Override
@@ -237,6 +258,7 @@ public class General_Info_Drug extends Activity {
 	        
 	        Button pinnipedsButton=(Button)findViewById(R.id.pinnipedsButton);
 	        pinnipedsButton.setText("PINNIPEDS");
+	        pinnipedsButton.setTypeface(Typeface.SANS_SERIF);
 	        pinnipedsButton.setOnClickListener(new OnClickListener() {
 	
 				@Override
@@ -248,6 +270,7 @@ public class General_Info_Drug extends Activity {
 	        
 	        Button otherButton=(Button)findViewById(R.id.otherButton);
 	        otherButton.setText("OTHER MM");
+	        otherButton.setTypeface(Typeface.SANS_SERIF);
 	        otherButton.setOnClickListener(new OnClickListener() {
 	
 				@Override
@@ -273,6 +296,7 @@ public class General_Info_Drug extends Activity {
 	    	
 	    	helper.close();
         }
+        
 	}
 
 	public void showDoseInformation(String drugName, String groupName) {
