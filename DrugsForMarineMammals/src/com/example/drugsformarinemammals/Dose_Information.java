@@ -48,7 +48,7 @@ public class Dose_Information extends Activity {
 				//if exists animals family
 				
 				TextView testView_family = new TextView(this);
-				testView_family.setText(families.get(l));
+				testView_family.setText(families.get(l).toUpperCase());
 				testView_family.setTextSize(20);
 				testView_family.setTextColor(getResources().getColor(R.color.darkGray));
 				testView_family.setTypeface(Typeface.SANS_SERIF, Typeface.DEFAULT_BOLD.getStyle());

@@ -58,14 +58,14 @@ public class Fragment_About extends Fragment implements OnClickListener {
 			childAbout = new HashMap<Integer,List<ItemWithImage>>();
 			List<ItemWithImage> itemsAboutMarineMammals = new ArrayList<ItemWithImage>();
 			headers=new ArrayList<Integer>();
-			itemsAboutMarineMammals.add(new ItemWithImage(R.drawable.adobe_reader,"Marine Mammals: a general overview (by DGP)"));
-			itemsAboutMarineMammals.add(new ItemWithImage(R.drawable.adobe_reader,"Pharmacological treatments in Marine Mammals (by UCM)"));
-			itemsAboutMarineMammals.add(new ItemWithImage(R.drawable.adobe_reader,"Routes for administering drugs to Marine Mammals (by UCM)"));
+			itemsAboutMarineMammals.add(new ItemWithImage(R.drawable.adobe_reader,"Marine Mammals: a general overview"));
+			itemsAboutMarineMammals.add(new ItemWithImage(R.drawable.adobe_reader,"Pharmacological treatments in Marine Mammals"));
+			itemsAboutMarineMammals.add(new ItemWithImage(R.drawable.adobe_reader,"Routes for administering drugs to Marine Mammals"));
 			childAbout.put(1,itemsAboutMarineMammals);
 			headers.add(1);
 			
 			List<ItemWithImage> itemsAboutFormulary=new ArrayList<ItemWithImage>();
-			itemsAboutFormulary.add((new ItemWithImage(R.drawable.adobe_reader,"The MMF: User guide (by UCM)")));
+			itemsAboutFormulary.add((new ItemWithImage(R.drawable.adobe_reader,"The MMF: User guide")));
 			itemsAboutFormulary.add((new ItemWithImage(R.drawable.adobe_reader,"Disclaimer")));
 			itemsAboutFormulary.add((new ItemWithImage(R.drawable.adobe_reader,"Authors")));
 			itemsAboutFormulary.add((new ItemWithImage(R.drawable.adobe_reader,"Support")));

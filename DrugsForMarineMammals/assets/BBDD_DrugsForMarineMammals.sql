@@ -1,4 +1,4 @@
-INSERT INTO Drug (drug_name, description, available, license_AEMPS, license_EMA, license_FDA, priority) VALUES ('Furosemide', 'Loop diuretic to treat fluid retention', 1, 'No', 'N.d.', 'Yes', 2);
+INSERT INTO Drug (drug_name, description, available, license_AEMPS, license_EMA, license_FDA, priority) VALUES ('Furosemide', 'Loop diuretic to treat fluid retention', 1, 'Nd', 'Nd', 'Yes', 2);
 INSERT INTO Drug (drug_name, description, available, license_AEMPS, license_EMA, license_FDA, priority) VALUES ('Gentamicin', 'Aminoglycoside antibiotic to treat different infections mainly caused by Gram-', 1, 'Yes', 'Yes', 'Yes', 1);
 INSERT INTO Code (code_number, anatomic_group, therapeutic_group, drug_name) VALUES ('QC03CA01', 'Cardiovascular system', 'Diuretics', 'Furosemide');
 INSERT INTO Code (code_number, anatomic_group, therapeutic_group, drug_name) VALUES ('QA07AA91', 'Alimentary tract and metabolism', 'Antidiarrheals, intestinal anti-inflammatory/antiinfective agents', 'Gentamicin');
@@ -14,7 +14,7 @@ INSERT INTO Animal_Type (group_name) VALUES ('Pinnipeds');
 INSERT INTO Animal_Type (group_name) VALUES ('Other MM');
 INSERT INTO Animal (animal_name, family, group_name, drug_name) VALUES ('', '', 'Cetaceans', 'Furosemide');
 INSERT INTO Animal (animal_name, family, group_name, drug_name) VALUES ('Dolphins', '', 'Cetaceans', 'Furosemide');
-INSERT INTO Animal (animal_name, family, group_name, drug_name) VALUES ('Sea lions', 'Otarids', 'Pinnipeds', 'Furosemide');
+INSERT INTO Animal (animal_name, family, group_name, drug_name) VALUES ('Sea lions', 'Otariids', 'Pinnipeds', 'Furosemide');
 INSERT INTO Animal (animal_name, family, group_name, drug_name) VALUES ('', 'Phocids', 'Pinnipeds', 'Furosemide');
 INSERT INTO Animal (animal_name, family, group_name, drug_name) VALUES ('Sea otters', '', 'Other MM', 'Furosemide');
 INSERT INTO Animal (animal_name, family, group_name, drug_name) VALUES ('', '', 'Cetaceans', 'Gentamicin');
@@ -48,7 +48,7 @@ INSERT INTO Drug_aplicated_to_Animal_Type (drug_name, group_name, general_note) 
 INSERT INTO Animal_has_Category (animal_name, drug_name, family, group_name, category_name, reference, specific_note, posology, route, dose) VALUES ('', 'Furosemide', '', 'Cetaceans', 'Small odontocetes', 'CRC', 'Consider reduce dose to transport', '', 'IM', '2.0-4.0 mg/kg');
 INSERT INTO Animal_has_Category (animal_name, drug_name, family, group_name, category_name, reference, specific_note, posology, route, dose) VALUES ('Dolphins', 'Furosemide', '', 'Cetaceans', '', 'FW5', 'For Bottlenose dolphins', '', 'IM', '2.0-4.0 mg/kg');
 INSERT INTO Animal_has_Category (animal_name, drug_name, family, group_name, category_name, reference, specific_note, posology, route, dose) VALUES ('', 'Furosemide', '', 'Cetaceans', '', 'SRM', '', '', 'IM', '2.0-4.0 mg/kg');
-INSERT INTO Animal_has_Category (animal_name, drug_name, family, group_name, category_name, reference, specific_note, posology, route, dose) VALUES ('Sea lions', 'Furosemide', 'Otarids', 'Pinnipeds', '', 'CRC', 'For Californian sea lions', 'BID', 'IM, IV, PO', 'up to 5.0 mg/kg');
+INSERT INTO Animal_has_Category (animal_name, drug_name, family, group_name, category_name, reference, specific_note, posology, route, dose) VALUES ('Sea lions', 'Furosemide', 'Otariids', 'Pinnipeds', '', 'CRC', 'For Californian sea lions', 'BID', 'IM, IV, PO', 'up to 5.0 mg/kg');
 INSERT INTO Animal_has_Category (animal_name, drug_name, family, group_name, category_name, reference, specific_note, posology, route, dose) VALUES ('', 'Furosemide', 'Phocids', 'Pinnipeds', '', 'CRC', 'For Harbor seals', 'BID', 'IM, IV, PO', 'up to 5.0 mg/kg');
 INSERT INTO Animal_has_Category (animal_name, drug_name, family, group_name, category_name, reference, specific_note, posology, route, dose) VALUES ('Sea otters', 'Furosemide', '', 'Other MM', '', 'CRC', 'For Enhydra lutris', '', 'IM', '2.0 mg/kg');
 INSERT INTO Animal_has_Category (animal_name, drug_name, family, group_name, category_name, reference, specific_note, posology, route, dose) VALUES ('', 'Gentamicin', '', 'Cetaceans', '', 'CRC', 'Use with caution nephrotoxicity common', 'SID', 'IM', '4.0 mg/kg');
