@@ -76,9 +76,6 @@ public class Combined_Search extends Activity {
 			
 		     public void onItemSelected(AdapterView<?> parent, View arg1,int arg2, long arg3) {
 		    	 userEntryTherapeuticTarget = parent.getSelectedItem().toString();
-		    	 if (userEntryTherapeuticTarget.equals("Add new group")){
-		    		 open_Dialog();
-		    	 }   	 
 		     }
 
 		     public void onNothingSelected(AdapterView<?> arg0) {
@@ -109,80 +106,7 @@ public class Combined_Search extends Activity {
 	
 
 	
-		public void open_Dialog() {
 			
-			LayoutInflater li = LayoutInflater.from(this);
-			View promptsView = li.inflate(R.layout.dialog_therapeutic_class_combined_search, null);
-			
-			final EditText edittext = (EditText)promptsView.findViewById(R.id.editTextDialogUserInput);
-			edittext.setHint(R.string.Enter_Therapeutic_Class);
-			TextView url= (TextView)promptsView.findViewById(R.id.textViewUrl);
-			url.setText(R.string.urlAtcVet);
-			url.setOnClickListener(new OnClickListener() {
-
-				@Override
-				public void onClick(View v) {
-					// TODO Auto-generated method stub
-					Intent intent = new Intent(Intent.ACTION_VIEW);
-					intent.setData(Uri.parse("http://www.whocc.no/atcvet/atcvet_index/"));
-					startActivity(intent);
-				}});
-			
-			AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
-
-			// set prompts.xml to alertdialog builder
-			alertDialogBuilder.setView(promptsView);
-
-			//userInput = (EditText) promptsView.findViewById(R.id.editTextDialogUserInput);
-			/*switch (position) {
-				case 0: userInput.setHint("Introduzca ingrediente");
-						break;
-				case 1: userInput.setHint("Introduzca nacionalidad");
-						break;
-				case 3: userInput.setHint("Introduzca ");
-						break;			
-			}*/
-	        
-			// set dialog message
-			alertDialogBuilder.setCancelable(false).setPositiveButton("OK",new DialogInterface.OnClickListener() {
-						    public void onClick(DialogInterface dialog,int id) {
-						    	
-						    	/*switch (position){
-						    	case 0: new GetTitleImageByIngredient().execute();			    
-						    			break;
-						    			
-						    	case 1: new GetTitleImageByNationality().execute();
-						    			break;
-						    	}*/
-						    	
-						    
-						    	userEntryTherapeuticTarget = edittext.getText().toString();
-						    	
-						    	adapterTherapeuticTarget.remove("Add new group");
-						    	helper.deleteTherapeuticGroup("Add new group");
-						    	adapterTherapeuticTarget.add(userEntryTherapeuticTarget);
-						    	helper.insertTherapeuticGroup(userEntryTherapeuticTarget);
-						    	//adapterTherapeuticTarget.add("Add new group");
-						    	adapterTherapeuticTarget.notifyDataSetChanged();
-						    	//spinnerTherapeuticTarget.bringToFront();
-						    	spinnerTherapeuticTarget.setSelection(spinnerTherapeuticTarget.getCount()-1);
-						    	adapterTherapeuticTarget.add("Add new group");
-						    	helper.insertTherapeuticGroup("Add new group");
-						    }
-					})
-			.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-				    public void onClick(DialogInterface dialog,int id) {
-				    	dialog.cancel();
-				    }
-			});
-
-			// create alert dialog
-			AlertDialog alertDialog = alertDialogBuilder.create();
-
-			// show it
-			alertDialog.show();
-		}
-		
 	public void search() {
 		Handler_Sqlite handler = new Handler_Sqlite(this);
 		String[] parameters = new String[3];

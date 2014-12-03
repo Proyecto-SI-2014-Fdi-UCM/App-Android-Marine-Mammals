@@ -72,4 +72,3 @@ INSERT INTO Therapeutic_Group (name) VALUES ('Antibacterials for sistemic use ')
 INSERT INTO Therapeutic_Group (name) VALUES ('Ophtalmologicals');
 INSERT INTO Therapeutic_Group (name) VALUES ('Otologicals');
 INSERT INTO Therapeutic_Group (name) VALUES ('Ophtalmologicals and otologicals preparations');
-INSERT INTO Therapeutic_Group (name) VALUES ('Add new group');
