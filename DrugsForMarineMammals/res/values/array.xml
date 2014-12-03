@@ -20,20 +20,6 @@
         <item >Various </item>
     </string-array>
     
-    <string-array name="TherapeuticTarget">
-        <item >Choose a Therapeutic Target </item>
-        <item >Diuretics </item>
-        <item >Antidiarrheals, intestinal anti-inflammatory/antiinfective agents </item>
-        <item >Antibiotics and chemotherapeutics for dermatological use </item>
-        <item >Gynecological antiinfectives and antiseptics </item>
-        <item >Antiinfectives and antiseptics for intrauterine use </item>
-        <item >Antibacterials for sistemic use </item>
-        <item >Antibacterials for intrammary use </item>
-        <item >Ophtalmologicals </item>
-        <item >Otologicals </item>
-        <item >Ophtalmologicals and otologicals preparations </item>
-        <item >Add new group </item>
-    </string-array>
     
     <string-array name="Animals">
         <item >Choose a Group </item>
