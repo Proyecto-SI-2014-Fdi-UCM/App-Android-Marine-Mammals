@@ -5,20 +5,24 @@ import java.util.Arrays;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -196,15 +200,28 @@ public class Combined_Search extends Activity {
 			startActivity(i);
 		}
 		else {
-			new AlertDialog.Builder(this)
-			.setTitle("NOT FOUND")
-			.setMessage("Drugs haven't been found with the specified parameters")
-			.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
-				
-				@Override
-				public void onClick(DialogInterface dialog, int which) {}
-			})
-			.show();
+			AlertDialog.Builder myalert = new AlertDialog.Builder(this);
+			
+			TextView title = new TextView(this);
+			title.setTypeface(Typeface.SANS_SERIF);
+			title.setTextSize(20);
+			title.setTextColor(getResources().getColor(R.color.blue));
+			title.setPadding(8, 8, 8, 8);
+			title.setText("NOT FOUND");
+			title.setGravity(Gravity.CENTER_VERTICAL);
+			
+			LinearLayout layout = new LinearLayout(this);
+			TextView text = new TextView(this);
+			text.setTypeface(Typeface.SANS_SERIF);
+			text.setTextSize(20);
+			text.setPadding(10, 10, 10, 10);
+			text.setText("Drugs haven't been found with the specified parameters");
+			layout.addView(text);
+			
+			myalert.setView(layout);
+			myalert.setCustomTitle(title);
+			myalert.setCancelable(true);
+			myalert.show();
 		}
 			
 	}
