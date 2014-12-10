@@ -89,7 +89,7 @@ public final class R {
         public static final int SpinAnatomicalTarget=0x7f0a0001;
         public static final int SpinAnimals=0x7f0a0003;
         public static final int SpinTherapeuticTarget=0x7f0a0002;
-        public static final int action_settings=0x7f0a0031;
+        public static final int action_settings=0x7f0a0034;
         public static final int autoCompleteTextView1=0x7f0a0007;
         public static final int buttonAnimals=0x7f0a0024;
         public static final int cetaceansButton=0x7f0a0025;
@@ -126,6 +126,8 @@ public final class R {
         public static final int pinnipedsButton=0x7f0a0026;
         public static final int progressBar1=0x7f0a002d;
         public static final int spinner_item=0x7f0a002e;
+        public static final int subtitle=0x7f0a0031;
+        public static final int tabs=0x7f0a0033;
         public static final int textSearch=0x7f0a002b;
         public static final int textView=0x7f0a0006;
         public static final int textViewProductsList=0x7f0a0028;
@@ -135,6 +137,7 @@ public final class R {
         public static final int textview_drugs=0x7f0a0029;
         public static final int title=0x7f0a0030;
         public static final int vp_mainmenu=0x7f0a002f;
+        public static final int vp_pinnipeds=0x7f0a0032;
     }
     public static final class layout {
         public static final int combined_search=0x7f030000;
@@ -155,6 +158,7 @@ public final class R {
         public static final int progressbar_transitionscreen=0x7f03000f;
         public static final int spinner_dropdown_item=0x7f030010;
         public static final int viewpager_mainmenu=0x7f030011;
+        public static final int viewpager_pinnipeds=0x7f030012;
     }
     public static final class menu {
         public static final int combined_search=0x7f090000;
@@ -173,6 +177,7 @@ public final class R {
         public static final int headerGenericDrug=0x7f070008;
         public static final int headerLicense=0x7f070009;
         public static final int ok=0x7f07000e;
+        public static final int pinnipeds=0x7f07000f;
         public static final int titleAnatomicalTarget=0x7f070003;
         public static final int titleCombinedSearch=0x7f070002;
         public static final int urlAtcVet=0x7f070005;

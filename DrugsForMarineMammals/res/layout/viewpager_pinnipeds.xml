@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent" 
+    android:layout_height="fill_parent"
+    android:background="@color/lightGray" >
+    
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:textColor="@color/blue"
+        android:textSize="30sp" 
+        android:textStyle="bold"
+        android:text="@string/pinnipeds"
+        android:gravity="center" >
+                
+    </TextView>
+   
+    <TextView
+        android:id="@+id/subtitle"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:paddingBottom="10dp"
+        android:textColor="@color/blue"
+        android:textSize="25sp" 
+		android:textStyle="bold"
+        android:text="@string/pinnipeds"
+        android:layout_below="@+id/title"
+		android:gravity="center" >
+                
+    </TextView>
+    
+    <android.support.v4.view.ViewPager
+        android:id="@+id/vp_pinnipeds"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/subtitle" >
+        
+        <android.support.v4.view.PagerTabStrip
+        android:id="@+id/tabs"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:paddingBottom="4dp"
+        android:paddingTop="4dp" 
+        style="@style/tabstrip">
+        
+        </android.support.v4.view.PagerTabStrip>
+        
+    </android.support.v4.view.ViewPager>
+
+</RelativeLayout>

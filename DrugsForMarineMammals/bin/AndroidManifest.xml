@@ -67,6 +67,15 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".ViewPager_Pinnipeds"
+            android:label=" " >
+            <intent-filter>
+                <action android:name="com.example.drugsformarinemammals.ViewPager_Pinnipeds" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>

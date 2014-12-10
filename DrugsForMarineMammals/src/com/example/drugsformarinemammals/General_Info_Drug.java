@@ -252,7 +252,7 @@ public class General_Info_Drug extends Activity {
 				@Override
 				public void onClick(View v) {
 					// TODO Auto-generated method stub
-					showDoseInformation(titleBundle, "Pinnipeds");
+					showDoseInformationPinnipeds(titleBundle);
 				}});
 	        
 	        
@@ -295,5 +295,9 @@ public class General_Info_Drug extends Activity {
 		startActivity(i);
 	}
 
-	
+	public void showDoseInformationPinnipeds(String drugName) {
+		Intent j = new Intent(this, ViewPager_Pinnipeds.class);
+		j.putExtra("drugName", drugName);
+		startActivity(j);
+	}
 }
