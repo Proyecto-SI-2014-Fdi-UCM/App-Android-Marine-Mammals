@@ -12,7 +12,7 @@ import android.view.View;
 import android.widget.TextView;
 
 
-public class ViewPager_MainMenu extends FragmentActivity {
+public class ViewPager_Pinnipeds extends FragmentActivity {
 	
 	private MyPagerAdapter adapterViewPager;
 	private TextView textView;
@@ -20,8 +20,14 @@ public class ViewPager_MainMenu extends FragmentActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-        setContentView(R.layout.viewpager_mainmenu);
-        PagerTabStrip mPagerTabStrip = (PagerTabStrip) findViewById(R.id.title);
+		Bundle extra = this.getIntent().getExtras();
+        setContentView(R.layout.viewpager_pinnipeds);
+        TextView drug = (TextView) findViewById(R.id.title);
+        drug.setTypeface(Typeface.SANS_SERIF);
+        drug.setText(extra.getCharSequence("drugName"));
+        TextView group = (TextView) findViewById(R.id.subtitle);
+        group.setTypeface(Typeface.SANS_SERIF);
+        PagerTabStrip mPagerTabStrip = (PagerTabStrip) findViewById(R.id.tabs);
         int size = mPagerTabStrip.getChildCount();
         for (int i=0; i<size; i++) {
         	View child = mPagerTabStrip.getChildAt(i);
@@ -30,7 +36,7 @@ public class ViewPager_MainMenu extends FragmentActivity {
         		textView.setTypeface(Typeface.SANS_SERIF);
         	}
         }
-        ViewPager vpPager = (ViewPager) findViewById(R.id.vp_mainmenu);
+        ViewPager vpPager = (ViewPager) findViewById(R.id.vp_pinnipeds);
         adapterViewPager = new MyPagerAdapter(getSupportFragmentManager());
         vpPager.setAdapter(adapterViewPager);
         vpPager.setCurrentItem(1);
@@ -39,7 +45,7 @@ public class ViewPager_MainMenu extends FragmentActivity {
 
 
 	public static class MyPagerAdapter extends FragmentStatePagerAdapter {
-		private static int NUM_ITEMS = 4;
+		private static int NUM_ITEMS = 3;
 
 		public MyPagerAdapter(FragmentManager fragmentManager) {
 			super(fragmentManager);
@@ -56,13 +62,11 @@ public class ViewPager_MainMenu extends FragmentActivity {
 		public Fragment getItem(int position) {
 			switch (position) {
 			case 0:
-				return new Fragment_About();
+				return new Fragment_Otharids();
 			case 1: 
-				return new Fragment_Formulary();
+				return new Fragment_Phocids();
 			case 2: 
-				return new Fragment_Report();
-			case 3: 
-				return new Fragment_Calculator();
+				return new Fragment_Odobenids();
 			default:
 				return null;
 			}
@@ -71,13 +75,11 @@ public class ViewPager_MainMenu extends FragmentActivity {
 		public CharSequence getPageTitle(int position){
 			switch (position) {
 			case 0:
-				return "About formulary";
+				return "Odobenids";
 			case 1: 
-				return "Formulary";
+				return "Otharids";
 			case 2: 
-				return "Report your experience";
-			case 3: 
-				return "Calculator";
+				return "Phocids";
 			default:
 				return null;
 			}			

@@ -97,12 +97,8 @@ public class General_Info_Drug extends Activity {
 	        	fdaLicense.setText("Yes");
 	        	fdaLicense.setTextColor(getResources().getColor(R.color.lightGreen));
 	        }
-	        else if(fda.equals("No")){
-	        	fdaLicense.setText("No");
-	        	fdaLicense.setTextColor(getResources().getColor(R.color.red));
-	        }
 	        else{
-	        	fdaLicense.setText("N.d.");
+	        	fdaLicense.setText("Nd");
 	        	fdaLicense.setTextColor(getResources().getColor(R.color.maroon));
 	        }
 	        
@@ -113,12 +109,8 @@ public class General_Info_Drug extends Activity {
 	        	aempsLicense.setText("Yes");	
 	        	aempsLicense.setTextColor(getResources().getColor(R.color.lightGreen));
 	        }
-	        else if(aemps.equals("No")){
-	        	aempsLicense.setText("No");
-	        	aempsLicense.setTextColor(getResources().getColor(R.color.red));
-	        }
 	        else{
-	        	aempsLicense.setText("N.d.");
+	        	aempsLicense.setText("Nd");
 	        	aempsLicense.setTextColor(getResources().getColor(R.color.maroon));
 	        }
 	        
@@ -128,10 +120,6 @@ public class General_Info_Drug extends Activity {
 	        if(ema.equals("Yes")){
 	        	emaLicense.setText("Yes");
 	        	emaLicense.setTextColor(getResources().getColor(R.color.lightGreen));
-	        }
-	        else if(ema.equals("No")){
-	        	emaLicense.setText("No");
-	        	emaLicense.setTextColor(getResources().getColor(R.color.red));
 	        }
 	        else{
 	        	emaLicense.setText("Nd");
@@ -264,7 +252,7 @@ public class General_Info_Drug extends Activity {
 				@Override
 				public void onClick(View v) {
 					// TODO Auto-generated method stub
-					showDoseInformation(titleBundle, "Pinnipeds");
+					showDoseInformationPinnipeds(titleBundle);
 				}});
 	        
 	        
@@ -307,5 +295,9 @@ public class General_Info_Drug extends Activity {
 		startActivity(i);
 	}
 
-	
+	public void showDoseInformationPinnipeds(String drugName) {
+		Intent j = new Intent(this, ViewPager_Pinnipeds.class);
+		j.putExtra("drugName", drugName);
+		startActivity(j);
+	}
 }

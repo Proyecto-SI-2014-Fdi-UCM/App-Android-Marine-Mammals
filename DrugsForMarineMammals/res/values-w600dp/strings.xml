@@ -16,6 +16,5 @@
 	<string name="headerATCvetCodes">ATCvet Codes</string>
 	<string name="headerAnimals">Animals</string>
 	<string name="ok">OK</string>
-	<string name="pinnipeds">(Pinnipeds)</string>
-	<string name="display">500</string>
+	<string name="display">600</string>
 </resources>
