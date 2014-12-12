@@ -48,7 +48,7 @@ public class Dose_Information extends Activity {
 				//if exists animals family
 				
 				TextView textView_family = new TextView(this);
-				testView_family.setText(families.get(l).toUpperCase());
+				textView_family.setText(families.get(l).toUpperCase());
 				textView_family.setTextSize(20);
 				textView_family.setTextColor(getResources().getColor(R.color.darkGray));
 				textView_family.setTypeface(Typeface.SANS_SERIF, Typeface.DEFAULT_BOLD.getStyle());
@@ -320,7 +320,7 @@ public class Dose_Information extends Activity {
 				
 				for (int i=0;i<notes.size();i++) {
 					TextView textView_note = new TextView(this);
-					textView_note.setText("•	" + notes.get(i));
+					textView_note.setText("Â•	" + notes.get(i));
 					textView_note.setTextColor(Color.BLACK);
 					textView_note.setTextSize(16);
 					textView_note.setTypeface(Typeface.SANS_SERIF);
