@@ -168,6 +168,7 @@ public final class R {
         public static final int Enter_Therapeutic_Class=0x7f070006;
         public static final int action_settings=0x7f070001;
         public static final int app_name=0x7f070000;
+        public static final int display=0x7f070010;
         public static final int go=0x7f070004;
         public static final int headerATCvetCodes=0x7f07000c;
         public static final int headerActionAnatomical=0x7f07000a;

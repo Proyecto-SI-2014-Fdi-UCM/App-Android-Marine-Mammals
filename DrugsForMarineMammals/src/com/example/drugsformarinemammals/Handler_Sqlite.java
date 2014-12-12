@@ -373,8 +373,7 @@ public class Handler_Sqlite extends SQLiteOpenHelper{
 		
 		for(c.moveToFirst();!c.isAfterLast();c.moveToNext()) {
 			if (!result.contains(c.getString(idFamily)))
-				result.add(c.getString(idFamily));
-			
+				result.add(c.getString(idFamily).toUpperCase());
 		}
 		
 		return result;
