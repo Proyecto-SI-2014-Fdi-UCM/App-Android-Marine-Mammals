@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Drugs for Marine Mammals</string>
+    <string name="action_settings">Settings</string>
+    <string name="titleCombinedSearch">Combined Search</string>
+    <string name="titleAnatomicalTarget">Anatomical Target</string>
+	<string name="go">Search</string>
+	<string name="urlAtcVet">http://www.whocc.no/atcvet/atcvet_index/</string>
+	<string name="Enter_Therapeutic_Class">Enter a Therapeutic Class</string>
+	<string name="headerBriefDescription">Brief Description</string>
+	<string name="headerGenericDrug">Avalaible as generic drug</string>
+	<string name="headerLicense">License for vet use</string>
+	<string name="headerActionAnatomical">Action (Anatomical Target)</string>
+	<string name="headerActionTherapeutic">Action (Therapeutic Target)</string>
+	<string name="headerATCvetCodes">ATCvet Codes</string>
+	<string name="headerAnimals">Animals</string>
+	<string name="ok">OK</string>
+	<string name="display">720</string>
+</resources>
