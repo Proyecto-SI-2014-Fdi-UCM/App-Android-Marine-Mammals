@@ -1,9 +1,23 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+    <ImageView
+            android:id="@+id/footer"
+            android:layout_width="match_parent"
+            android:layout_height="100dp" 
+            android:layout_alignParentBottom="true"
+            android:contentDescription="@string/footer"
+            android:src="@drawable/footerapp"
+            android:scaleType="fitXY"
+            />
+
 <ScrollView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+    
   	android:layout_width="fill_parent"
   	android:layout_height="fill_parent"
   	android:background="@color/lightGray" 
- 	android:fillViewport="true" >
+ 	android:fillViewport="true" 
+ 	android:layout_above="@+id/footer" >
 	    
 	<LinearLayout
         android:layout_width="fill_parent"
@@ -63,6 +77,7 @@
             android:layout_gravity="center"
             android:layout_marginLeft="60dp"
             android:layout_marginTop="20dp"
+            android:contentDescription="@string/genericDrug"
             />
         
         
@@ -94,6 +109,7 @@
     				    android:layout_height="fill_parent"
     				    android:layout_weight="1"
     				    android:src="@drawable/food_and_drug" 
+    				    android:contentDescription="@string/logo_food_drug"
     				    android:background="@drawable/listview_selector"/>
     			
     				<ImageButton
@@ -102,6 +118,7 @@
     				    android:layout_height="fill_parent"
     				    android:layout_weight="1"
     				    android:src="@drawable/logo_aemps" 
+    				    android:contentDescription="@string/logo_aemps"
     				    android:background="@drawable/listview_selector"/>
 
     				<ImageButton
@@ -109,7 +126,8 @@
     				    android:layout_width="0dip"
     				    android:layout_height="fill_parent"
     				    android:layout_weight="1"
-    				    android:src="@drawable/european_medicines_agency" 
+    				    android:src="@drawable/european_medicines_agency"
+    				    android:contentDescription="@string/logo_ema" 
     				    android:background="@drawable/listview_selector"/>
  			
     </LinearLayout>
@@ -230,7 +248,7 @@
 	<LinearLayout
 	        android:layout_width="fill_parent"
 	        android:layout_height="wrap_content"
-	        android:orientation="horizontal" 
+	        android:orientation="vertical" 
 	        android:id="@+id/buttonAnimals"
 	        android:layout_gravity="center_horizontal">
     		
@@ -258,3 +276,4 @@
     </LinearLayout>
     </LinearLayout>
 </ScrollView>
+</RelativeLayout>
