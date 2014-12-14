@@ -321,7 +321,7 @@ public class Dose_Information extends Activity {
 				
 				for (int i=0;i<notes.size();i++) {
 					TextView textView_note = new TextView(this);
-					textView_note.setText("•	" + notes.get(i));
+					textView_note.setText("?	" + notes.get(i));
 					textView_note.setTextColor(Color.BLACK);
 					textView_note.setTextSize(16);
 					textView_note.setTypeface(Typeface.SANS_SERIF);
