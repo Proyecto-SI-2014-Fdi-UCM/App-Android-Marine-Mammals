@@ -1,17 +1,9 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent" 
-    android:background="@color/lightGray">
-    <ImageView
-            android:id="@+id/footer"
-            android:layout_width="match_parent"
-            android:layout_height="80dp" 
-            android:layout_alignParentBottom="true"
-            android:contentDescription="@string/footer"
-            android:src="@drawable/footerapp"
-            android:scaleType="fitXY"
-            />
-
+    android:layout_height="match_parent"
+    android:orientation="vertical" 
+	android:background="@color/lightGray" >
 	
     <ListView
         android:id="@+id/drugsresult"
@@ -22,10 +14,10 @@
         android:divider="@android:color/transparent"
         android:dividerHeight="30dp"
         android:paddingBottom="30dp"
-        android:paddingLeft="30dp"
-        android:paddingRight="30dp"
+        android:paddingLeft="80dp"
+        android:paddingRight="80dp"
         android:paddingTop="30dp"
         android:scrollbarStyle="outsideOverlay" >
     </ListView>
 
-</RelativeLayout>
+</LinearLayout>

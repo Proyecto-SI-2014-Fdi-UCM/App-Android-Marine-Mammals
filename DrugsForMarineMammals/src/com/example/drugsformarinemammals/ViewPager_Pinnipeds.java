@@ -1,5 +1,8 @@
 package com.example.drugsformarinemammals;
 
+import java.util.ArrayList;
+
+import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -16,6 +19,7 @@ public class ViewPager_Pinnipeds extends FragmentActivity {
 	
 	private MyPagerAdapter adapterViewPager;
 	private TextView textView;
+	private static ArrayList<String> families;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -23,11 +27,20 @@ public class ViewPager_Pinnipeds extends FragmentActivity {
 		Bundle extra = this.getIntent().getExtras();
         setContentView(R.layout.viewpager_pinnipeds);
         TextView drug = (TextView) findViewById(R.id.title);
+        if (extra != null) {
+	        drug.setText(extra.getCharSequence("drugName"));
+	        Handler_Sqlite helper = new Handler_Sqlite(this);
+			SQLiteDatabase db = helper.open();
+			families = new ArrayList<String>();
+			if (db!=null)
+				families = helper.read_animals_family(extra.getString("drugName"), "Pinnipeds");
+        }
         drug.setTypeface(Typeface.SANS_SERIF);
-        drug.setText(extra.getCharSequence("drugName"));
         TextView group = (TextView) findViewById(R.id.subtitle);
         group.setTypeface(Typeface.SANS_SERIF);
         PagerTabStrip mPagerTabStrip = (PagerTabStrip) findViewById(R.id.tabs);
+        if (families.size() == 1)
+        	mPagerTabStrip.setTabIndicatorColor(getResources().getColor(android.R.color.white));
         int size = mPagerTabStrip.getChildCount();
         for (int i=0; i<size; i++) {
         	View child = mPagerTabStrip.getChildAt(i);
@@ -45,8 +58,9 @@ public class ViewPager_Pinnipeds extends FragmentActivity {
 
 
 	public static class MyPagerAdapter extends FragmentStatePagerAdapter {
-		private static int NUM_ITEMS = 3;
-
+		
+		private int size;
+		
 		public MyPagerAdapter(FragmentManager fragmentManager) {
 			super(fragmentManager);
 		}
@@ -54,35 +68,69 @@ public class ViewPager_Pinnipeds extends FragmentActivity {
 		// Returns total number of pages
 		@Override
 		public int getCount() {
-			return NUM_ITEMS;
+			return families.size();
 		}
 
 		// Returns the fragment to display for that page
 		@Override
 		public Fragment getItem(int position) {
+			size = families.size();
 			switch (position) {
 			case 0:
-				return new Fragment_Otharids();
-			case 1: 
+				if (!(families.indexOf("ODOBENIDS") == -1))
+					return new Fragment_Odobenids();
+				else if ((families.indexOf("OTARIIDS") == -1))
+					return new Fragment_Otariids();
+				else
+					return new Fragment_Phocids();
+			case 1:
+				if (!(families.indexOf("") == -1))
+					return new Fragment_General();
+				else if (!(families.indexOf("ODOBENIDS") == -1) && !(families.indexOf("OTARIIDS") == -1))
+					return new Fragment_Otariids();
+				else
+					return new Fragment_Phocids();
+			case 2:
+				if (!(families.indexOf("") == -1) && !(families.indexOf("ODOBENIDS") == -1) &&
+						!(families.indexOf("OTARIIDS") == -1))
+					return new Fragment_Otariids();
+				else
+					return new Fragment_Phocids();
+			case 3:
 				return new Fragment_Phocids();
-			case 2: 
-				return new Fragment_Odobenids();
 			default:
 				return null;
 			}
 		}
 		
-		public CharSequence getPageTitle(int position){
+		public CharSequence getPageTitle(int position) {
+			size = families.size();
 			switch (position) {
-			case 0:
-				return "Odobenids";
-			case 1: 
-				return "Otharids";
-			case 2: 
-				return "Phocids";
+			case 0: 
+				if (!(families.indexOf("ODOBENIDS") == -1))
+					return "ODOBENIDS";
+				else if (!(families.indexOf("OTARIIDS") == -1))
+					return "OTARIIDS";
+				else
+					return "PHOCIDS";
+			case 1:
+				if (!(families.indexOf("") == -1))
+					return "GENERAL";
+				else if (!(families.indexOf("ODOBENIDS") == -1) && !(families.indexOf("OTARIIDS") == -1))
+					return "OTARIIDS";
+				else
+					return "PHOCIDS";
+			case 2:
+				if (!(families.indexOf("") == -1) && !(families.indexOf("ODOBENIDS") == -1) &&
+						!(families.indexOf("OTARIIDS") == -1))
+					return "OTARIIDS";
+				else
+					return "PHOCIDS";
+			case 3:
+				return "PHOCIDS";
 			default:
 				return null;
-			}			
+			}
 		}
 
 	}

@@ -373,8 +373,7 @@ public class Handler_Sqlite extends SQLiteOpenHelper{
 		
 		for(c.moveToFirst();!c.isAfterLast();c.moveToNext()) {
 			if (!result.contains(c.getString(idFamily)))
-				result.add(c.getString(idFamily));
-			
+				result.add(c.getString(idFamily).toUpperCase());
 		}
 		
 		return result;
@@ -461,6 +460,25 @@ public class Handler_Sqlite extends SQLiteOpenHelper{
 			}
 			
 			return result;
+	}
+	
+	public ArrayList<Dose_Data> read_every_dose(String drug_name, String group_name, String family) {
+		ArrayList<Dose_Data> result = new ArrayList<Dose_Data>();
+		SQLiteDatabase db = this.getReadableDatabase();
+		String args [] = {drug_name, group_name, family};
+		Cursor c=db.query("Animal_has_Category", null, "drug_name=? and group_name=? and family=?", args, null, null, null);
+		int idAmount, idPosology, idRoute, idReference;
+		idAmount = c.getColumnIndex("dose");
+		idPosology = c.getColumnIndex("posology");
+		idRoute = c.getColumnIndex("route");
+		idReference = c.getColumnIndex("reference");
+		for(c.moveToFirst();!c.isAfterLast();c.moveToNext()) {
+			Dose_Data data = new Dose_Data(c.getString(idAmount), c.getString(idPosology), c.getString(idRoute), c.getString(idReference));
+			if (!result.contains(data))
+				result.add(data);
+		}
+		
+		return result;
 	}
 
 

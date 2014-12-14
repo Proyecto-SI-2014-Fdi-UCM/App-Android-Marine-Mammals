@@ -1,22 +1,9 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent" >
-    <ImageView
-            android:id="@+id/footer"
-            android:layout_width="match_parent"
-            android:layout_height="100dp" 
-            android:layout_alignParentBottom="true"
-            android:contentDescription="@string/footer"
-            android:src="@drawable/footerapp"
-            android:scaleType="fitXY"
-            />
 <ScrollView
-    
+    xmlns:android="http://schemas.android.com/apk/res/android"
   	android:layout_width="fill_parent"
   	android:layout_height="fill_parent"
   	android:background="@color/lightGray" 
- 	android:fillViewport="true" 
- 	android:layout_above="@+id/footer" >
+ 	android:fillViewport="true" >
 	    
 	<LinearLayout
         android:layout_width="fill_parent"
@@ -67,8 +54,7 @@
             android:textSize="25sp"
             android:textStyle="bold"
             android:textColor="@color/darkGray"
-            android:text="@string/headerGenericDrug"
-             />
+            android:text="@string/headerGenericDrug" />
         
         <ImageView
             android:id="@+id/genericDrug"
@@ -77,7 +63,6 @@
             android:layout_gravity="center"
             android:layout_marginLeft="80dp"
             android:layout_marginTop="20dp"
-            android:contentDescription="@string/genericDrug"
             />
         
         
@@ -110,7 +95,6 @@
     				    android:layout_height="fill_parent"
     				    android:layout_weight="1"
     				    android:src="@drawable/food_and_drug" 
-    				    android:contentDescription="@string/logo_food_drug"
     				    android:background="@drawable/listview_selector"/>
     			
     				<ImageButton
@@ -119,7 +103,6 @@
     				    android:layout_height="fill_parent"
     				    android:layout_weight="1"
     				    android:src="@drawable/logo_aemps" 
-    				    android:contentDescription="@string/logo_aemps"
     				    android:background="@drawable/listview_selector"/>
 
     				<ImageButton
@@ -128,7 +111,6 @@
     				    android:layout_height="fill_parent"
     				    android:layout_weight="1"
     				    android:src="@drawable/european_medicines_agency" 
-    				    android:contentDescription="@string/logo_ema"
     				    android:background="@drawable/listview_selector"/>
  			
     </LinearLayout>
@@ -249,7 +231,7 @@
 	<LinearLayout
 	        android:layout_width="fill_parent"
 	        android:layout_height="wrap_content"
-	        android:orientation="vertical" 
+	        android:orientation="horizontal" 
 	        android:id="@+id/buttonAnimals"
 	        android:layout_gravity="center_horizontal">
     		
@@ -277,4 +259,3 @@
     </LinearLayout>
     </LinearLayout>
 </ScrollView>
-</RelativeLayout>

@@ -1,22 +1,8 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent" >
-    <ImageView
-            android:id="@+id/footer"
-            android:layout_width="match_parent"
-            android:layout_height="80dp" 
-            android:layout_alignParentBottom="true"
-            android:contentDescription="@string/footer"
-            android:src="@drawable/footerapp"
-            android:scaleType="fitXY"
-            />
-
 <ScrollView
-    
+    xmlns:android="http://schemas.android.com/apk/res/android"
   	android:layout_width="fill_parent"
-  	android:layout_height="wrap_content"
- 	android:fillViewport="true" 
- 	android:layout_above="@+id/footer" >
+  	android:layout_height="fill_parent"
+ 	android:fillViewport="true" >
 
     <LinearLayout
         android:layout_width="fill_parent"
@@ -51,7 +37,7 @@
             android:id="@+id/SpinAnatomicalTarget"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="20dp"/>
+            android:layout_marginTop="40dp"/>
     </LinearLayout>
 
     
@@ -64,7 +50,7 @@
             android:id="@+id/SpinTherapeuticTarget"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="20dp" />
+            android:layout_marginTop="40dp" />
     </LinearLayout>
 
     
@@ -77,7 +63,7 @@
             android:id="@+id/SpinAnimals"
             android:layout_width="match_parent"
             android:layout_height="match_parent" 
-            android:layout_marginTop="20dp"/>
+            android:layout_marginTop="40dp"/>
     </LinearLayout>
     
     <LinearLayout
@@ -85,7 +71,7 @@
 			    android:layout_height="wrap_content"
 			    android:orientation="horizontal"
 			    android:gravity="center"
-			    android:layout_marginTop="40dp"
+			    android:layout_marginTop="60dp"
 			     >
 					<Button
 				        android:id="@+id/goButton"
@@ -96,4 +82,3 @@
     		</LinearLayout>
 </LinearLayout>
 </ScrollView>
-</RelativeLayout>
