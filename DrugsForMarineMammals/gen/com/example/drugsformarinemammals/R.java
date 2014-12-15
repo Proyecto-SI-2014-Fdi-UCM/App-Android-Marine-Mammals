@@ -169,8 +169,11 @@ public final class R {
     }
     public static final class string {
         public static final int Enter_Therapeutic_Class=0x7f070006;
+        public static final int Nd=0x7f070015;
         public static final int action_settings=0x7f070001;
         public static final int app_name=0x7f070000;
+        public static final int footer=0x7f070010;
+        public static final int genericDrug=0x7f070011;
         public static final int go=0x7f070004;
         public static final int headerATCvetCodes=0x7f07000c;
         public static final int headerActionAnatomical=0x7f07000a;
@@ -179,6 +182,9 @@ public final class R {
         public static final int headerBriefDescription=0x7f070007;
         public static final int headerGenericDrug=0x7f070008;
         public static final int headerLicense=0x7f070009;
+        public static final int logo_aemps=0x7f070013;
+        public static final int logo_ema=0x7f070014;
+        public static final int logo_food_drug=0x7f070012;
         public static final int ok=0x7f07000e;
         public static final int pinnipeds=0x7f07000f;
         public static final int titleAnatomicalTarget=0x7f070003;

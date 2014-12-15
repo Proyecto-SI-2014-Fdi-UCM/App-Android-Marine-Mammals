@@ -1,9 +1,7 @@
 package com.example.drugsformarinemammals;
 
-import java.util.ArrayList;
 import android.app.Activity;
 import android.content.Intent;
-import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Bundle;
@@ -83,7 +81,7 @@ public class General_Info_Drug extends Activity {
 	        	genericDrug.setImageResource(R.drawable.tick_verde);
 	        }
 	        else{
-	        	genericDrug.setImageResource(R.drawable.red_cross);
+	        	genericDrug.setImageResource(R.string.Nd);
 	        }
 	        
 	        
@@ -254,14 +252,7 @@ public class General_Info_Drug extends Activity {
 				@Override
 				public void onClick(View v) {
 					// TODO Auto-generated method stub
-					SQLiteDatabase db = helper.open();
-					ArrayList<String> families = new ArrayList<String>();
-					if (db!=null)
-						families = helper.read_animals_family(titleBundle, "Pinnipeds");
-					if (families != null && families.get(0).equals(""))
-						showDoseInformation(titleBundle, "Pinnipeds");
-					else 
-						showDoseInformationPinnipeds(titleBundle, families);
+					showDoseInformationPinnipeds(titleBundle);
 				}});
 	        
 	        
@@ -304,10 +295,9 @@ public class General_Info_Drug extends Activity {
 		startActivity(i);
 	}
 
-	public void showDoseInformationPinnipeds(String drugName, ArrayList<String> families) {
+	public void showDoseInformationPinnipeds(String drugName) {
 		Intent j = new Intent(this, ViewPager_Pinnipeds.class);
 		j.putExtra("drugName", drugName);
-		j.putExtra("families", families);
 		startActivity(j);
 	}
 }
