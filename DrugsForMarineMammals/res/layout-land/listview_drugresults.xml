@@ -24,8 +24,7 @@
         android:paddingLeft="80dp"
         android:paddingRight="80dp"
         android:paddingTop="30dp"
-        android:scrollbarStyle="outsideOverlay" 
-        android:layout_above="@+id/footer">
+        android:scrollbarStyle="outsideOverlay" >
     </ListView>
 
 </RelativeLayout>

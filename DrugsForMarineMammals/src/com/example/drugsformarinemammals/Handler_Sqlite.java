@@ -20,7 +20,7 @@ public class Handler_Sqlite extends SQLiteOpenHelper{
 
 	Context myContext;
 	public Handler_Sqlite(Context ctx){
-		super(ctx,nameBD, null,5);
+		super(ctx,nameBD, null,2);
 		myContext = ctx;
 	}
 	
@@ -32,7 +32,7 @@ public class Handler_Sqlite extends SQLiteOpenHelper{
 	@Override
 	//This method is called when the database is created for the first time.
 	public void onCreate(SQLiteDatabase db){
-		String query1 = "CREATE TABLE Drug (drug_name TEXT, description TEXT, available TEXT, license_AEMPS TEXT, license_EMA TEXT, license_FDA TEXT, priority INTEGER, PRIMARY KEY (drug_name))";
+		String query1 = "CREATE TABLE Drug (drug_name TEXT, description TEXT, available INTEGER, license_AEMPS TEXT, license_EMA TEXT, license_FDA TEXT, priority INTEGER, PRIMARY KEY (drug_name))";
 
 		String query2 = "CREATE TABLE Code(code_number TEXT, anatomic_group TEXT, therapeutic_group TEXT, drug_name TEXT, FOREIGN KEY (drug_name) REFERENCES Drug(drug_name), PRIMARY KEY (code_number))";
 		
@@ -266,7 +266,7 @@ public class Handler_Sqlite extends SQLiteOpenHelper{
 		Cursor c=db.query("Drug", columns, "drug_name=?", args, null, null, null);
 		int indexAvalaible=c.getColumnIndex("available");
 		c.moveToFirst();
-		return c.getString(indexAvalaible).equals("Yes");
+		return c.getInt(indexAvalaible)==1;
 		
 	}
 	
@@ -372,8 +372,8 @@ public class Handler_Sqlite extends SQLiteOpenHelper{
 		idFamily = c.getColumnIndex("family");
 		
 		for(c.moveToFirst();!c.isAfterLast();c.moveToNext()) {
-			if (!result.contains(c.getString(idFamily)))
-				result.add(c.getString(idFamily));
+			if (!result.contains(c.getString(idFamily).toUpperCase()))
+				result.add(c.getString(idFamily).toUpperCase());
 			
 		}
 		
@@ -461,6 +461,25 @@ public class Handler_Sqlite extends SQLiteOpenHelper{
 			}
 			
 			return result;
+	}
+	
+	public ArrayList<Dose_Data> read_every_dose(String drug_name, String group_name, String family) {
+		ArrayList<Dose_Data> result = new ArrayList<Dose_Data>();
+		SQLiteDatabase db = this.getReadableDatabase();
+		String args [] = {drug_name, group_name, family};
+		Cursor c=db.query("Animal_has_Category", null, "drug_name=? and group_name=? and family=?", args, null, null, null);
+		int idAmount, idPosology, idRoute, idReference;
+		idAmount = c.getColumnIndex("dose");
+		idPosology = c.getColumnIndex("posology");
+		idRoute = c.getColumnIndex("route");
+		idReference = c.getColumnIndex("reference");
+		for(c.moveToFirst();!c.isAfterLast();c.moveToNext()) {
+			Dose_Data data = new Dose_Data(c.getString(idAmount), c.getString(idPosology), c.getString(idRoute), c.getString(idReference));
+			if (!result.contains(data))
+				result.add(data);
+		}
+		
+		return result;
 	}
 
 

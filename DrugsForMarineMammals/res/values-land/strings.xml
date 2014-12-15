@@ -17,10 +17,4 @@
 	<string name="headerAnimals">Animals</string>
 	<string name="ok">OK</string>
 	<string name="display">500</string>
-	<string name="pinnipeds">(Pinnipeds)</string>
-	<string name="footer">FooterApp</string>
-	<string name="genericDrug">Generic Drug</string>
-	<string name="logo_food_drug">Food And Drug</string>
-	<string name="logo_aemps">Agencia Española de Medicamentos y Productos Sanitarios</string>
-	<string name="logo_ema">European Medicines Agency</string>
 </resources>
