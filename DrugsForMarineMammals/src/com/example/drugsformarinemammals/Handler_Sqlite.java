@@ -16,7 +16,7 @@ import android.text.TextUtils;
 
 public class Handler_Sqlite extends SQLiteOpenHelper{
 
-	private static final String nameBD = "DrugsForMarineMammals-DataBase1";
+	private static final String nameBD = "DrugsForMarineMammals-DataBase2";
 
 	Context myContext;
 	public Handler_Sqlite(Context ctx){
@@ -32,7 +32,7 @@ public class Handler_Sqlite extends SQLiteOpenHelper{
 	@Override
 	//This method is called when the database is created for the first time.
 	public void onCreate(SQLiteDatabase db){
-		String query1 = "CREATE TABLE Drug (drug_name TEXT, description TEXT, available INTEGER, license_AEMPS TEXT, license_EMA TEXT, license_FDA TEXT, priority INTEGER, PRIMARY KEY (drug_name))";
+		String query1 = "CREATE TABLE Drug (drug_name TEXT, description TEXT, available TEXT, license_AEMPS TEXT, license_EMA TEXT, license_FDA TEXT, priority INTEGER, PRIMARY KEY (drug_name))";
 
 		String query2 = "CREATE TABLE Code(code_number TEXT, anatomic_group TEXT, therapeutic_group TEXT, drug_name TEXT, FOREIGN KEY (drug_name) REFERENCES Drug(drug_name), PRIMARY KEY (code_number))";
 		
@@ -266,7 +266,7 @@ public class Handler_Sqlite extends SQLiteOpenHelper{
 		Cursor c=db.query("Drug", columns, "drug_name=?", args, null, null, null);
 		int indexAvalaible=c.getColumnIndex("available");
 		c.moveToFirst();
-		return c.getInt(indexAvalaible)==1;
+		return c.getString(indexAvalaible).equals("Yes");
 		
 	}
 	
