@@ -83,7 +83,7 @@ public class General_Info_Drug extends Activity {
 	        	genericDrug.setImageResource(R.drawable.tick_verde);
 	        }
 	        else{
-	        	genericDrug.setImageResource(R.drawable.red_cross);
+	        	genericDrug.setImageResource(R.string.Nd);
 	        }
 	        
 	        
