@@ -1,7 +1,9 @@
 package com.example.drugsformarinemammals;
 
+import java.util.ArrayList;
 import android.app.Activity;
 import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Bundle;
