@@ -69,16 +69,15 @@
             android:textColor="@color/darkGray"
             android:text="@string/headerGenericDrug" />
         
-        <ImageView
-            android:id="@+id/genericDrug"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" 
-            android:layout_gravity="center"
-            android:layout_marginLeft="40dp"
-            android:layout_marginTop="10dp"
-            android:contentDescription="@string/genericDrug"
-            />
-        
+        <LinearLayout
+        android:id="@+id/layoutGenericDrug"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:gravity="bottom"
+        android:orientation="vertical" 
+        >
+        </LinearLayout>
+
         
     </LinearLayout>
     
@@ -247,7 +246,7 @@
 	<LinearLayout
 	        android:layout_width="fill_parent"
 	        android:layout_height="wrap_content"
-	        android:orientation="vertical" 
+	        android:orientation="horizontal" 
 	        android:id="@+id/buttonAnimals"
 	        android:layout_gravity="center_horizontal">
     		

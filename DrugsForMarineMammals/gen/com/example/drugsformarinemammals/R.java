@@ -105,7 +105,6 @@ public final class R {
         public static final int footer=0x7f0a0000;
         public static final int frag_calculator=0x7f0a000f;
         public static final int frag_report=0x7f0a0012;
-        public static final int genericDrug=0x7f0a0017;
         public static final int goButton=0x7f0a0005;
         public static final int headerATCvetCodes=0x7f0a0023;
         public static final int headerActionAnatomical=0x7f0a0020;
@@ -118,6 +117,7 @@ public final class R {
         public static final int layoutActionAnatomical=0x7f0a001f;
         public static final int layoutActionTherapeutic=0x7f0a0021;
         public static final int layoutDescription=0x7f0a0013;
+        public static final int layoutGenericDrug=0x7f0a0017;
         public static final int layout_dose=0x7f0a000b;
         public static final int layout_pinnipeds_dose=0x7f0a0011;
         public static final int layout_root=0x7f0a0006;
