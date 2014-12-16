@@ -68,7 +68,7 @@ public class Fragment_About extends Fragment {
 					break;
 				case 1: fileName="disclaimer.pdf";
 					break;
-				case 2: fileName="authors.pdf";
+				case 2: fileName="Authors.pdf";
 					break;
 			}
 		}
