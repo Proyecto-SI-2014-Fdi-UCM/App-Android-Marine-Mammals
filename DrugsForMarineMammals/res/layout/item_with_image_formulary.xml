@@ -9,7 +9,7 @@
 		        android:layout_width="?android:attr/listPreferredItemHeight"
 		        android:layout_height="wrap_content"
 		        android:layout_alignParentLeft="true"
-		        android:layout_marginLeft="30dp"
+		        android:layout_marginLeft="20dp"
 		        android:layout_marginTop="6dp"
 		        android:contentDescription="@string/app_name" />
 		
@@ -18,7 +18,7 @@
 		        android:layout_width="fill_parent"
 		        android:layout_height="wrap_content"
 		        android:layout_toRightOf="@id/imageItem"
-		        android:layout_marginLeft="30dp"
+		        android:layout_marginLeft="20dp"
 		        android:layout_marginTop="16dp"
 		        android:singleLine="true"
 		        android:textAppearance="?android:attr/textAppearanceMedium" />

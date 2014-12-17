@@ -56,7 +56,7 @@ public class Fragment_About extends Fragment {
 		String fileName="";
 		if(positionGroup==0){
 			switch(positionChild){
-				case 0: fileName="aGeneralOverview.pdf";
+				case 0: fileName="generaloverview.pdf";
 						break;
 				case 1:
 				case 2:
@@ -73,11 +73,43 @@ public class Fragment_About extends Fragment {
 			}
 		}
 		
+		AssetManager assetManager = rootView.getContext().getAssets();
+
+        InputStream in = null;
+        OutputStream out = null;
+        File file = new File(rootView.getContext().getFilesDir(), fileName);
+        try
+        {
+            in = assetManager.open(fileName);
+            out = rootView.getContext().openFileOutput(file.getName(), Context.MODE_WORLD_READABLE);
+
+            copyFile(in, out);
+            in.close();
+            in = null;
+            out.flush();
+            out.close();
+            out = null;
+        } catch (Exception e)
+        {
+            Log.e("tag", e.getMessage());
+        }
+
+		
 		Intent intent = new Intent(Intent.ACTION_VIEW);
 		intent.setDataAndType(Uri.parse("file://" + rootView.getContext().getFilesDir()+ "/"+fileName), "application/pdf");
 		startActivity(intent);
 	}
 		
+	
+	private void copyFile(InputStream in, OutputStream out) throws IOException
+    {
+        byte[] buffer = new byte[1024];
+        int read;
+        while ((read = in.read(buffer)) != -1)
+        {
+            out.write(buffer, 0, read);
+        }
+    }
 
 	private void initializeListViewWithImage() {
 
