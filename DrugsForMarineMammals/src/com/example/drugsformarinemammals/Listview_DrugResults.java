@@ -53,7 +53,7 @@ public class Listview_DrugResults extends Activity {
 			});
 			
 			drugList = new ArrayList<String>();
-			for (int i=0;i<drugs_with_priority.size();i++) {
+			for (int i=0;i<5;i++) {
 				drugList.add(drugs_with_priority.get(i).getName());
 			}
 		}

@@ -16,11 +16,11 @@ import android.text.TextUtils;
 
 public class Handler_Sqlite extends SQLiteOpenHelper{
 
-	private static final String nameBD = "DrugsForMarineMammals-DataBase1";
+	private static final String nameBD = "DrugsForMarineMammals-DataBase3";
 
 	Context myContext;
 	public Handler_Sqlite(Context ctx){
-		super(ctx,nameBD, null,2);
+		super(ctx,nameBD, null,1);
 		myContext = ctx;
 	}
 	
@@ -32,7 +32,7 @@ public class Handler_Sqlite extends SQLiteOpenHelper{
 	@Override
 	//This method is called when the database is created for the first time.
 	public void onCreate(SQLiteDatabase db){
-		String query1 = "CREATE TABLE Drug (drug_name TEXT, description TEXT, available INTEGER, license_AEMPS TEXT, license_EMA TEXT, license_FDA TEXT, priority INTEGER, PRIMARY KEY (drug_name))";
+		String query1 = "CREATE TABLE Drug (drug_name TEXT, description TEXT, available TEXT, license_AEMPS TEXT, license_EMA TEXT, license_FDA TEXT, priority INTEGER, PRIMARY KEY (drug_name))";
 
 		String query2 = "CREATE TABLE Code(code_number TEXT, anatomic_group TEXT, therapeutic_group TEXT, drug_name TEXT, FOREIGN KEY (drug_name) REFERENCES Drug(drug_name), PRIMARY KEY (code_number))";
 		
@@ -114,6 +114,8 @@ public class Handler_Sqlite extends SQLiteOpenHelper{
 			result.add(c.getString(idName));
 		}
 		
+		c.close();
+		
 		return result;
 	}
 
@@ -153,6 +155,14 @@ public class Handler_Sqlite extends SQLiteOpenHelper{
 				if (!drugsList.contains(drug))
 					drugsList.add(drug);
 			}
+			
+		cc = db.query("Animal_has_Category", column, "group_name=?", a, null, null, null);
+		if (cc.moveToFirst())
+			for (cc.moveToFirst();!cc.isAfterLast();cc.moveToNext()) {
+				drug = cc.getString(cc.getColumnIndex("drug_name"));
+				if (!drugsList.contains(drug))
+					drugsList.add(drug);
+			}
 		close();
 		return drugsList;
 	}
@@ -174,7 +184,15 @@ public class Handler_Sqlite extends SQLiteOpenHelper{
 							for (cs.moveToFirst(); !cs.isAfterLast(); cs.moveToNext())
 								if (!drugsList.contains(drug)) 
 									drugsList.add(cs.getString(cs.getColumnIndex("drug_name")));
-					} else
+									
+						cs = db.query("Animal_has_Category",
+								column, "drug_name=? and group_name=?", args, null, null, null);
+						if (cs.moveToFirst())
+							for (cs.moveToFirst(); !cs.isAfterLast(); cs.moveToNext())
+								if (!drugsList.contains(drug)) 
+									drugsList.add(cs.getString(cs.getColumnIndex("drug_name")));
+					} 
+					else
 						drugsList.add(drug);
 			}
 		close();
@@ -199,6 +217,8 @@ public class Handler_Sqlite extends SQLiteOpenHelper{
 			result.add(new Drug_Information(c.getString(idName), c.getString(idDescription), c.getInt(idAvailable), c.getString(idLicense_AEMPS),
 					c.getString(idLicense_EMA), c.getString(idLicense_FDA), c.getInt(idPriority)));
 		}
+		
+		c.close();
 		
 		return result;
 	}
@@ -266,7 +286,7 @@ public class Handler_Sqlite extends SQLiteOpenHelper{
 		Cursor c=db.query("Drug", columns, "drug_name=?", args, null, null, null);
 		int indexAvalaible=c.getColumnIndex("available");
 		c.moveToFirst();
-		return c.getInt(indexAvalaible)==1;
+		return c.getString(indexAvalaible).equals("Yes");
 		
 	}
 	
@@ -280,6 +300,9 @@ public class Handler_Sqlite extends SQLiteOpenHelper{
 		for(c.moveToFirst();!c.isAfterLast();c.moveToNext()){
 			solution.add((c.getString(indexCode)));
 		}
+		
+		c.close();
+		
 		return solution;
 	}
 
@@ -344,6 +367,9 @@ public class Handler_Sqlite extends SQLiteOpenHelper{
 		for(c.moveToFirst();!c.isAfterLast();c.moveToNext()){
 			solution.add((c.getString(indexName)));
 		}
+		
+		c.close();
+		
 		return solution;
 		
 	}
@@ -367,7 +393,7 @@ public class Handler_Sqlite extends SQLiteOpenHelper{
 		ArrayList<String> result = new ArrayList<String>();
 		SQLiteDatabase db = this.getReadableDatabase();
 		String args [] = {drug_name, group_name};
-		Cursor c=db.query("Animal", null, "drug_name=? and group_name=?", args, null, null, null);
+		Cursor c=db.query("Animal_has_Category", null, "drug_name=? and group_name=?", args, null, null, null);
 		int idFamily;
 		idFamily = c.getColumnIndex("family");
 		
@@ -376,6 +402,8 @@ public class Handler_Sqlite extends SQLiteOpenHelper{
 				result.add(c.getString(idFamily).toUpperCase());
 			
 		}
+		
+		c.close();
 		
 		return result;
 	}
@@ -397,15 +425,25 @@ public class Handler_Sqlite extends SQLiteOpenHelper{
 				int idCategory;
 				idCategory = d.getColumnIndex("category_name");
 				
+				for (d.moveToFirst();!d.isAfterLast();d.moveToNext()) {
+					String category = d.getString(idCategory);
+					if (category.equals("") && !categories.contains(d.getString(idCategory)))
+						categories.add(0, d.getString(idCategory));
+				}
+				
 				for(d.moveToFirst();!d.isAfterLast();d.moveToNext()) {
 					if (!categories.contains(d.getString(idCategory)))
 						categories.add(d.getString(idCategory));
 				}
 				
+				d.close();
+				
 				result.put(c.getString(idName), categories);
 			}
 			
 		}
+		
+		c.close();
 		
 		return result;
 	}
@@ -416,17 +454,32 @@ public class Handler_Sqlite extends SQLiteOpenHelper{
 		SQLiteDatabase db = this.getReadableDatabase();
 		String args [] = {drug_name, group_name, family, animal_name, category_name};
 		Cursor c=db.query("Animal_has_Category", null, "drug_name=? and group_name=? and family=? and animal_name=? and category_name=?", args, null, null, null);
-		int idAmount, idPosology, idRoute, idReference;
+		int idAnimal, idCategory, idAmount, idPosology, idRoute, idReference;
+		idAnimal = c.getColumnIndex("animal_name");
+		idCategory = c.getColumnIndex("category_name");
 		idAmount = c.getColumnIndex("dose");
 		idPosology = c.getColumnIndex("posology");
 		idRoute = c.getColumnIndex("route");
 		idReference = c.getColumnIndex("reference");
 		
 		for(c.moveToFirst();!c.isAfterLast();c.moveToNext()) {
-			Dose_Data data = new Dose_Data(c.getString(idAmount), c.getString(idPosology), c.getString(idRoute), c.getString(idReference));
-			if (!result.contains(data))
+			Dose_Data data = new Dose_Data(c.getString(idAnimal), c.getString(idCategory), c.getString(idAmount), c.getString(idPosology), c.getString(idRoute), c.getString(idReference));
+			if (result.size() == 0)
 				result.add(data);
+			else {
+				boolean find = false;
+				int i = 0;
+				while (!find && i<result.size()) {
+					if (data.equals(result.get(i)))
+						find = true;
+					i++;
+				}
+				if (!find)
+					result.add(data);
+			}
 		}
+		
+		c.close();
 		
 		return result;
 	}
@@ -445,6 +498,8 @@ public class Handler_Sqlite extends SQLiteOpenHelper{
 					result.add(c.getString(idNote));
 			}
 			
+			c.close();
+			
 			return result;
 	}
 	
@@ -460,6 +515,8 @@ public class Handler_Sqlite extends SQLiteOpenHelper{
 					result.add(c.getString(idNote));
 			}
 			
+			c.close();
+			
 			return result;
 	}
 	
@@ -468,16 +525,31 @@ public class Handler_Sqlite extends SQLiteOpenHelper{
 		SQLiteDatabase db = this.getReadableDatabase();
 		String args [] = {drug_name, group_name, family};
 		Cursor c=db.query("Animal_has_Category", null, "drug_name=? and group_name=? and family=?", args, null, null, null);
-		int idAmount, idPosology, idRoute, idReference;
+		int idAnimal, idCategory, idAmount, idPosology, idRoute, idReference;
+		idAnimal = c.getColumnIndex("animal_name");
+		idCategory = c.getColumnIndex("category_name");
 		idAmount = c.getColumnIndex("dose");
 		idPosology = c.getColumnIndex("posology");
 		idRoute = c.getColumnIndex("route");
 		idReference = c.getColumnIndex("reference");
 		for(c.moveToFirst();!c.isAfterLast();c.moveToNext()) {
-			Dose_Data data = new Dose_Data(c.getString(idAmount), c.getString(idPosology), c.getString(idRoute), c.getString(idReference));
-			if (!result.contains(data))
+			Dose_Data data = new Dose_Data(c.getString(idAnimal), c.getString(idCategory), c.getString(idAmount), c.getString(idPosology), c.getString(idRoute), c.getString(idReference));
+			if (result.size() == 0)
 				result.add(data);
+			else {
+				boolean find = false;
+				int i = 0;
+				while (!find && i<result.size()) {
+					if (data.equals(result.get(i)))
+						find = true;
+					i++;
+				}
+				if (!find)
+					result.add(data);
+			}
 		}
+		
+		c.close();
 		
 		return result;
 	}
