@@ -134,6 +134,3 @@ public class Fragment_About extends Fragment {
 	}		
 	
 }
-
-
-
