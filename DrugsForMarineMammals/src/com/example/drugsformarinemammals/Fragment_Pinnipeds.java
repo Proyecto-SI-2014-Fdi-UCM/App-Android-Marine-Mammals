@@ -179,14 +179,21 @@ public class Fragment_Pinnipeds extends Fragment {
 							dose = helper.read_dose_information(getArguments().getString("drugName"), "Pinnipeds", getArguments().getString("familyName"), animalName, animalCategory);
 						
 						doseData = new TableRow(getActivity());
+						textView_animal_category.setTypeface(Typeface.SANS_SERIF, Typeface.ITALIC);
 						TableRow.LayoutParams paramsCategoryName = new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT, TableRow.LayoutParams.WRAP_CONTENT);
-						paramsCategoryName.leftMargin = 60;
+							
 						if (screenWidth < 600 && isCollapsed(getArguments().getString("drugName"), "Pinnipeds", getArguments().getString("familyName"), "Posology") && isCollapsed(getArguments().getString("drugName"), "Pinnipeds", getArguments().getString("familyName"), "Note"))
 							paramsCategoryName.span = 3;
 						else if (screenWidth < 600 && (isCollapsed(getArguments().getString("drugName"), "Pinnipeds", getArguments().getString("familyName"), "Posology") || isCollapsed(getArguments().getString("drugName"), "Pinnipeds", getArguments().getString("familyName"), "Note")))
 							paramsCategoryName.span = 4;
 						else
 							paramsCategoryName.span = 5;
+						if (screenWidth < 600)
+							paramsCategoryName.leftMargin = 15;
+						else if (screenWidth >= 600 && screenWidth < 720)
+							paramsCategoryName.leftMargin = 20;
+						else
+							paramsCategoryName.leftMargin = 30;
 						doseData.addView(textView_animal_category,paramsCategoryName);
 						doseTable.addView(doseData);
 						doseData = new TableRow(getActivity());

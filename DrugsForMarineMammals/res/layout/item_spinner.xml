@@ -4,7 +4,7 @@
     android:layout_height="60dp"
     android:gravity="center"
     android:background="@drawable/listview_selector"
-    android:textSize="20sp"
+    android:textSize="18sp"
     android:textColor="@android:color/black" > 
 </TextView>
 

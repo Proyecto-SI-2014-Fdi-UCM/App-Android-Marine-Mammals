@@ -1,8 +1,6 @@
 package com.example.drugsformarinemammals;
 
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -11,8 +9,6 @@ import java.util.HashMap;
 import java.util.List;
 
 import android.content.Context;
-import android.content.DialogInterface;
-import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
 import android.content.res.AssetManager;
 import android.net.Uri;
@@ -58,18 +54,21 @@ public class Fragment_About extends Fragment {
 			switch(positionChild){
 				case 0: fileName="generaloverview.pdf";
 						break;
-				case 1:
-				case 2:
+				case 1: break;
+				case 2: fileName="challengesinmarinemammalsmedication.pdf";
+						break;
 			}
 		}
 		else{
 			switch(positionChild){
 				case 0: fileName="userGuide.pdf";
-					break;
+						break;
 				case 1: fileName="disclaimer.pdf";
-					break;
+						break;
 				case 2: fileName="Authors.pdf";
-					break;
+						break;
+				case 3: fileName="support.pdf";
+						break;
 			}
 		}
 		
