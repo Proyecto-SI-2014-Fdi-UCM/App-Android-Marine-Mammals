@@ -60,9 +60,9 @@ public class ViewPager_MainMenu extends FragmentActivity {
 			case 1: 
 				return new Fragment_Formulary();
 			case 2: 
-				return new Fragment_Report();
-			case 3: 
 				return new Fragment_Calculator();
+			case 3: 
+				return new Fragment_Report();
 			default:
 				return null;
 			}
@@ -75,9 +75,9 @@ public class ViewPager_MainMenu extends FragmentActivity {
 			case 1: 
 				return "Formulary";
 			case 2: 
-				return "Report your experience";
-			case 3: 
 				return "Calculator";
+			case 3: 
+				return "Report your experience";
 			default:
 				return null;
 			}			

@@ -27,4 +27,22 @@
         <item >Pinnipeds </item>
         <item >Other MM </item>
     </string-array>
+    
+    <string-array name="Doses_Units">
+        <item >mg </item>
+        <item >mcg </item>
+        <item >g </item>
+        <item >kg </item>
+        <item >oz </item>
+        <item >lbs </item>
+    </string-array>
+    
+    <string-array name="Concentrations_Units">
+        <item >mg/ml </item>
+        <item >mcg/ml </item>
+        <item >g/ml </item>
+        <item >tablet(mg) </item>
+        <item >tablet(mcg)  </item>
+        <item >tablet(g)  </item>
+    </string-array>
 </resources>
