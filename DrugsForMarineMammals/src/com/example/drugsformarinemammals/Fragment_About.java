@@ -116,17 +116,17 @@ public class Fragment_About extends Fragment {
 		List<ItemWithImage> itemsAboutMarineMammals = new ArrayList<ItemWithImage>();
 		headers = new ArrayList<Integer>();
 		itemsAboutMarineMammals.add(new ItemWithImage(R.drawable.adobe_reader, "Marine Mammals: a general overview"));
-		itemsAboutMarineMammals.add(new ItemWithImage(R.drawable.adobe_reader, "Pharmacological treatments in Marine Mammals"));
-		itemsAboutMarineMammals.add(new ItemWithImage(R.drawable.adobe_reader, "Routes for administering drugs to Marine Mammals"));
+		itemsAboutMarineMammals.add(new ItemWithImage(R.drawable.treatments, "Pharmacological treatments in Marine Mammals"));
+		itemsAboutMarineMammals.add(new ItemWithImage(R.drawable.routes, "Routes for administering drugs to Marine Mammals"));
 		childAbout.put(1, itemsAboutMarineMammals);
 		headers.add(1);
 		
 		List<ItemWithImage> itemsAboutFormulary = new ArrayList<ItemWithImage>();
-		itemsAboutFormulary.add((new ItemWithImage(R.drawable.adobe_reader, "The MMF: User guide")));
-		itemsAboutFormulary.add((new ItemWithImage(R.drawable.adobe_reader, "Disclaimer")));
-		itemsAboutFormulary.add((new ItemWithImage(R.drawable.adobe_reader, "Authors")));
-		itemsAboutFormulary.add((new ItemWithImage(R.drawable.adobe_reader, "Support")));
-		itemsAboutFormulary.add((new ItemWithImage(R.drawable.adobe_reader, "Rate The App")));
+		itemsAboutFormulary.add((new ItemWithImage(R.drawable.user_guide, "The MMF: User guide")));
+		itemsAboutFormulary.add((new ItemWithImage(R.drawable.disclaimers, "Disclaimer")));
+		itemsAboutFormulary.add((new ItemWithImage(R.drawable.authors, "Authors")));
+		itemsAboutFormulary.add((new ItemWithImage(R.drawable.support, "Support")));
+		itemsAboutFormulary.add((new ItemWithImage(R.drawable.rate, "Rate The App")));
 		childAbout.put(2, itemsAboutFormulary);
 		headers.add(2);
 
