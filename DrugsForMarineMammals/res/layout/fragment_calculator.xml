@@ -11,7 +11,9 @@
 	    <LinearLayout
 	        android:layout_width="fill_parent"
 	        android:layout_height="wrap_content"
-	        android:orientation="vertical">
+	        android:orientation="vertical"
+	        android:layout_marginLeft="15dp"
+	        android:layout_marginRight="15dp">
 		    <LinearLayout
 		        android:layout_width="fill_parent"
 		        android:layout_height="110dp"
@@ -163,9 +165,17 @@
 		     </LinearLayout>
 		     
 		    <LinearLayout
+		        android:id="@+id/layoutResults"
+		        android:layout_width="fill_parent"
+		        android:layout_height="wrap_content"
+		        android:orientation="vertical">
+		 
+		     </LinearLayout>
+		     
+		    <LinearLayout
 		        android:layout_width="fill_parent"
 		        android:layout_height="80dp"
-		        android:layout_marginTop="60dp"
+		        android:layout_marginTop="40dp"
 		        android:orientation="vertical">
 		     
 			    <Button
@@ -182,28 +192,6 @@
 			        android:textSize="20sp" />
 			</LinearLayout>
 			
-		    <LinearLayout
-		        android:layout_width="fill_parent"
-		        android:layout_height="wrap_content"
-		        android:orientation="vertical">
-		 
-		        <TextView
-		            android:id="@+id/textview_title_results"
-		            android:layout_width="fill_parent"
-		            android:layout_height="wrap_content"
-		            android:background="@drawable/calculator_style_textview"
-		            android:gravity="center"
-		            android:text="@string/results"
-		            android:textColor="@color/white"
-		            android:textSize="20sp" />
-		        
-		        <TextView
-		            android:id="@+id/textview_results"
-		            android:layout_width="fill_parent"
-		            android:layout_height="110dp"
-		            android:background="@drawable/calculator_style_edittext"
-		         	/>
-		     </LinearLayout>
 	     </LinearLayout>
 	</RelativeLayout>
 </ScrollView>
