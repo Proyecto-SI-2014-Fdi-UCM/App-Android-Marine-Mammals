@@ -8,6 +8,8 @@ import android.app.AlertDialog;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -28,6 +30,7 @@ public class Fragment_Calculator extends Fragment {
 	private String userEntryConcentrationsUnits;
 	private EditText doseAmount;
 	private EditText weightValue_kgs;
+	private EditText weightValue_lbs;
 	private EditText concentrationValue;
 	private Spinner spinnerDose;
 	private Spinner spinnerConcentration;
@@ -49,14 +52,67 @@ public class Fragment_Calculator extends Fragment {
 		TextView weight_lbs = (TextView)rootView.findViewById(R.id.textview_WeightLbs);
 		weight_lbs.setTypeface(Typeface.SANS_SERIF);
 		
-		EditText hint_weight_lbs=(EditText)rootView.findViewById(R.id.editText_WeightLbs);
-		hint_weight_lbs.setTypeface(Typeface.SANS_SERIF);
+		weightValue_lbs=(EditText)rootView.findViewById(R.id.editText_WeightLbs);
+		weightValue_lbs.setTypeface(Typeface.SANS_SERIF);
+		
+		weightValue_lbs.addTextChangedListener(new TextWatcher () {
+
+			@Override
+			public void beforeTextChanged(CharSequence s, int start, int count,
+					int after) {}
+
+			@Override
+			public void onTextChanged(CharSequence s, int start, int before,
+					int count) {
+				if (weightValue_lbs.isFocused()) {
+					float lbsTokg;
+					try {
+						lbsTokg = Float.parseFloat(weightValue_lbs.getText().toString());
+						lbsTokg = lbsTokg * conversionMap.get("lbsTokg");
+						weightValue_kgs.setText(String.valueOf(lbsTokg));
+					}
+					catch (Exception e){
+						weightValue_kgs.setText("");
+					}
+				}
+
+			}
+			
+			@Override
+			public void afterTextChanged(Editable s) {}
+		});
 		
 		TextView weight_kgs = (TextView)rootView.findViewById(R.id.textview_WeightKgs);
 		weight_kgs.setTypeface(Typeface.SANS_SERIF);
 		
 		weightValue_kgs=(EditText)rootView.findViewById(R.id.editText_WeightKgs);
 		weightValue_kgs.setTypeface(Typeface.SANS_SERIF);
+		weightValue_kgs.addTextChangedListener(new TextWatcher () {
+
+			@Override
+			public void beforeTextChanged(CharSequence s, int start, int count,
+					int after) {}
+
+			@Override
+			public void onTextChanged(CharSequence s, int start, int before,
+					int count) {
+				if (weightValue_kgs.isFocused()) {
+					float kgTolbs;
+					try {
+						kgTolbs = Float.parseFloat(weightValue_kgs.getText().toString());
+						kgTolbs = kgTolbs * conversionMap.get("kgTolbs");
+						weightValue_lbs.setText(String.valueOf(kgTolbs));
+					}
+					catch (Exception e){
+						weightValue_lbs.setText("");
+					}
+				}
+			}
+
+			@Override
+			public void afterTextChanged(Editable s) {}
+			
+		});
 		
 		TextView dose = (TextView)rootView.findViewById(R.id.textview_Dose);
 		dose.setTypeface(Typeface.SANS_SERIF);
@@ -144,6 +200,8 @@ public class Fragment_Calculator extends Fragment {
 		conversionMap.put("lbsTomg", 453592.37f);
 		conversionMap.put("lbsTomcg", 453592370.0f);
 		conversionMap.put("lbsTog", 453.59237f);
+		conversionMap.put("lbsTokg", 2.2046f);
+		conversionMap.put("kgTolbs", 0.4536f);
 	}
 	
 	public void calculateResult(){
