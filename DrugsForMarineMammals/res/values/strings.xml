@@ -24,4 +24,16 @@
 	<string name="logo_aemps">Agencia Española de Medicamentos y Productos Sanitarios</string>
 	<string name="logo_ema">European Medicines Agency</string>
 	<string name="Nd">Nd</string>
+	<string name="weight_lbs">Body Weight (in Lbs)</string>
+	<string name="hint_weight_lbs">Press to enter weight (Lbs)</string>
+	<string name="weight_kgs">Body Weight (in Kgs)</string>
+	<string name="hint_weight_kgs">Press to enter weight (Kgs)</string>
+	<string name="dose">Dose (per Kg)</string>
+	<string name="hint_dose_2lines">Press to enter\ndose</string>
+	<string name="hint_dose">Press to enter dose</string>
+	<string name="concentration">Concentration</string>
+	<string name="hint_concentration_2lines">Press to enter\nconcentration</string>
+	<string name="hint_concentration">Press to enter concentration</string>
+	<string name="calculate"> Calculate</string>
+	
 </resources>
