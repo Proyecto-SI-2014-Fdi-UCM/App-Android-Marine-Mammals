@@ -160,7 +160,6 @@ public class Fragment_Calculator extends Fragment {
 	    results.setBackgroundResource(R.drawable.calculator_style_edittext);
 	       
 		LinearLayout.LayoutParams paramsTitleResults = new LinearLayout.LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT);
-		//paramsTitleResults.topMargin = 40;
 	        
 		LinearLayout.LayoutParams paramsResults = new LinearLayout.LayoutParams(LayoutParams.FILL_PARENT, 90);
 	    
