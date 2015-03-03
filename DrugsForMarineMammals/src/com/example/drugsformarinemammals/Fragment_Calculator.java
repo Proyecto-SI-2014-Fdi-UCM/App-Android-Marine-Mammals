@@ -32,6 +32,12 @@ public class Fragment_Calculator extends Fragment {
 	private Spinner spinnerDose;
 	private Spinner spinnerConcentration;
 	private Map<String,Float> conversionMap;
+	private LinearLayout resultsLayout;
+	private TextView titleResults;
+	private TextView results;
+	private LinearLayout.LayoutParams paramsTitleResults;
+	private LinearLayout.LayoutParams paramsResults;
+	
 	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -142,28 +148,36 @@ public class Fragment_Calculator extends Fragment {
 	
 	public void calculateResult(){
 		//Results title
-		LinearLayout resultsLayout = new LinearLayout(rootView.getContext());
-		resultsLayout.setOrientation(LinearLayout.VERTICAL);
-		resultsLayout.setLayoutParams(new LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.FILL_PARENT));
+		if (resultsLayout==null){
+			resultsLayout = new LinearLayout(rootView.getContext());
+		
+			resultsLayout.setOrientation(LinearLayout.VERTICAL);
+			resultsLayout.setLayoutParams(new LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.FILL_PARENT));
+		        
+		    titleResults=new TextView(rootView.getContext());
+		    titleResults.setText("Results");
+		    titleResults.setTextSize(20);
+		    titleResults.setTypeface(Typeface.SANS_SERIF);
+		    titleResults.setTextColor(getResources().getColor(R.color.white));
+		    titleResults.setGravity(Gravity.CENTER);
+		    titleResults.setBackgroundResource(R.drawable.calculator_style_title_results);
+		    
+		    results=new TextView(rootView.getContext());
+		    results.setTextSize(15);
+		    results.setTypeface(Typeface.SANS_SERIF);
+		    results.setBackgroundResource(R.drawable.calculator_style_edittext);
+		       
+			paramsTitleResults = new LinearLayout.LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT);
+			resultsLayout.addView(titleResults,resultsLayout.getChildCount(),paramsTitleResults);
+			
+			paramsResults = new LinearLayout.LayoutParams(LayoutParams.FILL_PARENT, 90);
+			resultsLayout.addView(results,resultsLayout.getChildCount(),paramsResults);
 	        
-	    TextView titleResults=new TextView(rootView.getContext());
-	    titleResults.setText("Results");
-	    titleResults.setTextSize(20);
-	    titleResults.setTypeface(Typeface.SANS_SERIF);
-	    titleResults.setTextColor(getResources().getColor(R.color.white));
-	    titleResults.setGravity(Gravity.CENTER);
-	    titleResults.setBackgroundResource(R.drawable.calculator_style_title_results);
-	    
-	    TextView results=new TextView(rootView.getContext());
-	    results.setTextSize(15);
-	    results.setTypeface(Typeface.SANS_SERIF);
-	    results.setBackgroundResource(R.drawable.calculator_style_edittext);
-	       
-		LinearLayout.LayoutParams paramsTitleResults = new LinearLayout.LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT);
-	        
-		LinearLayout.LayoutParams paramsResults = new LinearLayout.LayoutParams(LayoutParams.FILL_PARENT, 90);
-	    
-		resultsLayout.addView(titleResults,resultsLayout.getChildCount(),paramsTitleResults);
+			
+			
+			LinearLayout layoutResults=(LinearLayout)rootView.findViewById(R.id.layoutResults);
+			layoutResults.addView(resultsLayout,layoutResults.getChildCount());
+		}
 		
 		float weight = Float.parseFloat(weightValue_kgs.getText().toString());
 		float dose = Float.parseFloat(doseAmount.getText().toString());
@@ -190,11 +204,8 @@ public class Fragment_Calculator extends Fragment {
 		
 		results.setText(resultValue + " " + resultUnits);
 		
-		resultsLayout.addView(results,resultsLayout.getChildCount(),paramsResults);
 		
-	        
-		LinearLayout layoutResults=(LinearLayout)rootView.findViewById(R.id.layoutResults);
-		layoutResults.addView(resultsLayout,layoutResults.getChildCount());
+		
 		
 	}
 	
