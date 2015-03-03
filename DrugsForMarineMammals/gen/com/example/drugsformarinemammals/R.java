@@ -71,7 +71,7 @@ public final class R {
         public static final int calculator_style_textview=0x7f020006;
         public static final int calculator_style_title_results=0x7f020007;
         public static final int combined_search=0x7f020008;
-        public static final int disclaimers=0x7f020009;
+        public static final int disclaimer=0x7f020009;
         public static final int european_medicines_agency=0x7f02000a;
         public static final int five_last_searched=0x7f02000b;
         public static final int food_and_drug=0x7f02000c;
