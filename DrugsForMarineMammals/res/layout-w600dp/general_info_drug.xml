@@ -110,15 +110,6 @@
     				    android:src="@drawable/food_and_drug" 
     				    android:contentDescription="@string/logo_food_drug"
     				    android:background="@drawable/listview_selector"/>
-    			
-    				<ImageButton
-    				    android:id="@+id/logo_aemps"
-    				    android:layout_width="0dip"
-    				    android:layout_height="fill_parent"
-    				    android:layout_weight="1"
-    				    android:src="@drawable/logo_aemps" 
-    				    android:contentDescription="@string/logo_aemps"
-    				    android:background="@drawable/listview_selector"/>
 
     				<ImageButton
     				    android:id="@+id/european_medicines_agency"
@@ -127,6 +118,15 @@
     				    android:layout_weight="1"
     				    android:src="@drawable/european_medicines_agency"
     				    android:contentDescription="@string/logo_ema" 
+    				    android:background="@drawable/listview_selector"/>
+    				
+    				<ImageButton
+    				    android:id="@+id/logo_aemps"
+    				    android:layout_width="0dip"
+    				    android:layout_height="fill_parent"
+    				    android:layout_weight="1"
+    				    android:src="@drawable/logo_aemps" 
+    				    android:contentDescription="@string/logo_aemps"
     				    android:background="@drawable/listview_selector"/>
  			
     </LinearLayout>
@@ -137,36 +137,28 @@
 		        android:orientation="horizontal" >
     			
     		    			<TextView
-				    				    android:id="@+id/license1"
-				    				    android:layout_width="0dp"
-				    				    android:layout_height="fill_parent"
-				    				    android:layout_weight="1"
-				    				    android:gravity="center"
-				    				    android:textSize="20sp"
-				    				    
-				    				     />
-				    
+		    				    android:id="@+id/license1"
+		    				    android:layout_width="0dp"
+		    				    android:layout_height="fill_parent"
+		    				    android:layout_weight="1"
+		    				    android:gravity="center"
+		    				    android:textSize="20sp"/>
+				      
+				    		<TextView
+		    				    android:id="@+id/license3"
+		    				    android:layout_width="0dp"
+		    				    android:layout_height="fill_parent"
+		    				    android:layout_weight="1"
+		    				    android:gravity="center"
+		    				    android:textSize="20sp"/>
 				    		
 				    		<TextView
-				    				    android:id="@+id/license2"
-				    				    android:layout_width="0dp"
-				    				    android:layout_height="fill_parent"
-				    				    android:layout_weight="1"
-				    				    android:gravity="center"
-				    				    android:textSize="20sp"
-				    				    
-				    				    />
-				   
-				   
-				    		<TextView
-				    				    android:id="@+id/license3"
-				    				    android:layout_width="0dp"
-				    				    android:layout_height="fill_parent"
-				    				    android:layout_weight="1"
-				    				    android:gravity="center"
-				    				    android:textSize="20sp"
-				    				    
-				    				     />
+		    				    android:id="@+id/license2"
+		    				    android:layout_width="0dp"
+		    				    android:layout_height="fill_parent"
+		    				    android:layout_weight="1"
+		    				    android:gravity="center"
+		    				    android:textSize="20sp"/>
 				    		
 				    
 	</LinearLayout>

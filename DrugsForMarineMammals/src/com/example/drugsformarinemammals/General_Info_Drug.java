@@ -116,17 +116,6 @@ public class General_Info_Drug extends Activity {
 		    	fdaLicense.setText("Nd");
 		        fdaLicense.setTextColor(getResources().getColor(R.color.maroon));
 		    }
-		        
-			TextView aempsLicense = (TextView) findViewById(R.id.license2);
-			String aemps = helper.getLicense_AEMPS(titleBundle);
-			aempsLicense.setTypeface(font);
-			if (aemps.equals("Yes")) {
-				aempsLicense.setText("Yes");
-				aempsLicense.setTextColor(getResources().getColor(R.color.lightGreen));
-			} else {
-				aempsLicense.setText("Nd");
-				aempsLicense.setTextColor(getResources().getColor(R.color.maroon));
-			}
 	    
 		    TextView emaLicense=(TextView)findViewById(R.id.license3);
 		    String ema=helper.getLicense_EMA(titleBundle);
@@ -139,39 +128,49 @@ public class General_Info_Drug extends Activity {
 		    	emaLicense.setText("Nd");
 		        emaLicense.setTextColor(getResources().getColor(R.color.maroon));
 		    }
+		    
+		    TextView aempsLicense = (TextView) findViewById(R.id.license2);
+			String aemps = helper.getLicense_AEMPS(titleBundle);
+			aempsLicense.setTypeface(font);
+			if (aemps.equals("Yes")) {
+				aempsLicense.setText("Yes");
+				aempsLicense.setTextColor(getResources().getColor(R.color.lightGreen));
+			} else {
+				aempsLicense.setText("Nd");
+				aempsLicense.setTextColor(getResources().getColor(R.color.maroon));
+			}
 		        
 		    ImageButton food_and_drug=(ImageButton)findViewById(R.id.food_and_drug);
 		    food_and_drug.setOnClickListener(new OnClickListener() {
 				@Override
 				public void onClick(View v) {
 					Intent intent = new Intent(Intent.ACTION_VIEW);
-					intent.setData(Uri.parse("http://www.fda.gov/"));
+					intent.setData(Uri.parse("http://www.fda.gov/animalveterinary/products/approvedanimaldrugproducts/default.htm"));
 					startActivity(intent);
 				}
 			});
-		        
-		    ImageButton logo_aemps=(ImageButton)findViewById(R.id.logo_aemps);
-		    logo_aemps.setOnClickListener(new OnClickListener() {
-		    	@Override
-				public void onClick(View v) {
-					Intent intent = new Intent(Intent.ACTION_VIEW);
-					intent.setData(Uri.parse("http://www.aemps.gob.es/"));
-					startActivity(intent);
-				}
-		    	
-		    });
 		
 		    ImageButton european_medicines_agency=(ImageButton)findViewById(R.id.european_medicines_agency);
 		    european_medicines_agency.setOnClickListener(new OnClickListener() {
 		    	@Override
 				public void onClick(View v) {
 					Intent intent = new Intent(Intent.ACTION_VIEW);
-					intent.setData(Uri.parse("http://www.ema.europa.eu/ema/"));
+					intent.setData(Uri.parse("http://www.ema.europa.eu/ema/index.jsp?curl=pages/medicines/landing/vet_epar_search.jsp&mid=WC0b01ac058001fa1c"));
 					startActivity(intent);
 				}
 		    });
-		
-		        
+		    
+		    ImageButton logo_aemps=(ImageButton)findViewById(R.id.logo_aemps);
+		    logo_aemps.setOnClickListener(new OnClickListener() {
+		    	@Override
+				public void onClick(View v) {
+					Intent intent = new Intent(Intent.ACTION_VIEW);
+					intent.setData(Uri.parse("http://www.aemps.gob.es/medicamentosVeterinarios/Med-Vet-autorizados/home.htm"));
+					startActivity(intent);
+				}
+		    	
+		    });
+		 
 		    //Action
 		    TextView headerActionAnatomical=(TextView)findViewById(R.id.headerActionAnatomical);
 		    headerActionAnatomical.setTypeface(Typeface.SANS_SERIF);

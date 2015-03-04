@@ -466,7 +466,7 @@ public class Dose_Information extends Activity {
 			
 			ArrayList<String> specific_notes = new ArrayList<String>();
 			specific_notes = helper.read_specific_notes(drug_name, group_name, animal_name, animal_family, animal_category, 
-						dosePosology, doseRoute, doseReference);
+						doseAmount, dosePosology, doseRoute, doseReference);
 			
 			String index = "";
 			for (int m=0;m<specific_notes.size();m++) {
@@ -513,7 +513,7 @@ public class Dose_Information extends Activity {
 			if ( option.equals("Note")) {
 				ArrayList<String> specific_notes = new ArrayList<String>();
 				specific_notes = helper.read_specific_notes(drug_name, group_name, dose.getAnimalName(), family, dose.getCategoryName(), 
-						dose.getPosology(), dose.getRoute(), dose.getReference());
+						dose.getAmount(), dose.getPosology(), dose.getRoute(), dose.getReference());
 				if (specific_notes.size() > 0)
 					return false;
 			

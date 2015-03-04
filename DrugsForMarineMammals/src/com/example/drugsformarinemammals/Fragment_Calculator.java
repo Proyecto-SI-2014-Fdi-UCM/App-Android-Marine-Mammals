@@ -8,6 +8,8 @@ import android.app.AlertDialog;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -28,10 +30,17 @@ public class Fragment_Calculator extends Fragment {
 	private String userEntryConcentrationsUnits;
 	private EditText doseAmount;
 	private EditText weightValue_kgs;
+	private EditText weightValue_lbs;
 	private EditText concentrationValue;
 	private Spinner spinnerDose;
 	private Spinner spinnerConcentration;
 	private Map<String,Float> conversionMap;
+	private LinearLayout resultsLayout;
+	private TextView titleResults;
+	private TextView results;
+	private LinearLayout.LayoutParams paramsTitleResults;
+	private LinearLayout.LayoutParams paramsResults;
+	
 	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -43,14 +52,67 @@ public class Fragment_Calculator extends Fragment {
 		TextView weight_lbs = (TextView)rootView.findViewById(R.id.textview_WeightLbs);
 		weight_lbs.setTypeface(Typeface.SANS_SERIF);
 		
-		EditText hint_weight_lbs=(EditText)rootView.findViewById(R.id.editText_WeightLbs);
-		hint_weight_lbs.setTypeface(Typeface.SANS_SERIF);
+		weightValue_lbs=(EditText)rootView.findViewById(R.id.editText_WeightLbs);
+		weightValue_lbs.setTypeface(Typeface.SANS_SERIF);
+		
+		weightValue_lbs.addTextChangedListener(new TextWatcher () {
+
+			@Override
+			public void beforeTextChanged(CharSequence s, int start, int count,
+					int after) {}
+
+			@Override
+			public void onTextChanged(CharSequence s, int start, int before,
+					int count) {
+				if (weightValue_lbs.isFocused()) {
+					float lbsTokg;
+					try {
+						lbsTokg = Float.parseFloat(weightValue_lbs.getText().toString());
+						lbsTokg = lbsTokg * conversionMap.get("lbsTokg");
+						weightValue_kgs.setText(String.valueOf(lbsTokg));
+					}
+					catch (Exception e){
+						weightValue_kgs.setText("");
+					}
+				}
+
+			}
+			
+			@Override
+			public void afterTextChanged(Editable s) {}
+		});
 		
 		TextView weight_kgs = (TextView)rootView.findViewById(R.id.textview_WeightKgs);
 		weight_kgs.setTypeface(Typeface.SANS_SERIF);
 		
 		weightValue_kgs=(EditText)rootView.findViewById(R.id.editText_WeightKgs);
 		weightValue_kgs.setTypeface(Typeface.SANS_SERIF);
+		weightValue_kgs.addTextChangedListener(new TextWatcher () {
+
+			@Override
+			public void beforeTextChanged(CharSequence s, int start, int count,
+					int after) {}
+
+			@Override
+			public void onTextChanged(CharSequence s, int start, int before,
+					int count) {
+				if (weightValue_kgs.isFocused()) {
+					float kgTolbs;
+					try {
+						kgTolbs = Float.parseFloat(weightValue_kgs.getText().toString());
+						kgTolbs = kgTolbs * conversionMap.get("kgTolbs");
+						weightValue_lbs.setText(String.valueOf(kgTolbs));
+					}
+					catch (Exception e){
+						weightValue_lbs.setText("");
+					}
+				}
+			}
+
+			@Override
+			public void afterTextChanged(Editable s) {}
+			
+		});
 		
 		TextView dose = (TextView)rootView.findViewById(R.id.textview_Dose);
 		dose.setTypeface(Typeface.SANS_SERIF);
@@ -138,32 +200,42 @@ public class Fragment_Calculator extends Fragment {
 		conversionMap.put("lbsTomg", 453592.37f);
 		conversionMap.put("lbsTomcg", 453592370.0f);
 		conversionMap.put("lbsTog", 453.59237f);
+		conversionMap.put("lbsTokg", 0.4536f);
+		conversionMap.put("kgTolbs", 2.2046f);
 	}
 	
 	public void calculateResult(){
 		//Results title
-		LinearLayout resultsLayout = new LinearLayout(rootView.getContext());
-		resultsLayout.setOrientation(LinearLayout.VERTICAL);
-		resultsLayout.setLayoutParams(new LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.FILL_PARENT));
+		if (resultsLayout==null){
+			resultsLayout = new LinearLayout(rootView.getContext());
+		
+			resultsLayout.setOrientation(LinearLayout.VERTICAL);
+			resultsLayout.setLayoutParams(new LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.FILL_PARENT));
+		        
+		    titleResults=new TextView(rootView.getContext());
+		    titleResults.setText("Results");
+		    titleResults.setTextSize(20);
+		    titleResults.setTypeface(Typeface.SANS_SERIF);
+		    titleResults.setTextColor(getResources().getColor(R.color.white));
+		    titleResults.setGravity(Gravity.CENTER);
+		    titleResults.setBackgroundResource(R.drawable.calculator_style_title_results);
+		    
+		    results=new TextView(rootView.getContext());
+		    results.setTextSize(15);
+		    results.setTypeface(Typeface.SANS_SERIF);
+		    results.setBackgroundResource(R.drawable.calculator_style_edittext);
+		       
+			paramsTitleResults = new LinearLayout.LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT);
+			resultsLayout.addView(titleResults,resultsLayout.getChildCount(),paramsTitleResults);
+			
+			paramsResults = new LinearLayout.LayoutParams(LayoutParams.FILL_PARENT, 90);
+			resultsLayout.addView(results,resultsLayout.getChildCount(),paramsResults);
 	        
-	    TextView titleResults=new TextView(rootView.getContext());
-	    titleResults.setText("Results");
-	    titleResults.setTextSize(20);
-	    titleResults.setTypeface(Typeface.SANS_SERIF);
-	    titleResults.setTextColor(getResources().getColor(R.color.white));
-	    titleResults.setGravity(Gravity.CENTER);
-	    titleResults.setBackgroundResource(R.drawable.calculator_style_title_results);
-	    
-	    TextView results=new TextView(rootView.getContext());
-	    results.setTextSize(15);
-	    results.setTypeface(Typeface.SANS_SERIF);
-	    results.setBackgroundResource(R.drawable.calculator_style_edittext);
-	       
-		LinearLayout.LayoutParams paramsTitleResults = new LinearLayout.LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT);
-	        
-		LinearLayout.LayoutParams paramsResults = new LinearLayout.LayoutParams(LayoutParams.FILL_PARENT, 90);
-	    
-		resultsLayout.addView(titleResults,resultsLayout.getChildCount(),paramsTitleResults);
+			
+			
+			LinearLayout layoutResults=(LinearLayout)rootView.findViewById(R.id.layoutResults);
+			layoutResults.addView(resultsLayout,layoutResults.getChildCount());
+		}
 		
 		float weight = Float.parseFloat(weightValue_kgs.getText().toString());
 		float dose = Float.parseFloat(doseAmount.getText().toString());
@@ -190,11 +262,8 @@ public class Fragment_Calculator extends Fragment {
 		
 		results.setText(resultValue + " " + resultUnits);
 		
-		resultsLayout.addView(results,resultsLayout.getChildCount(),paramsResults);
 		
-	        
-		LinearLayout layoutResults=(LinearLayout)rootView.findViewById(R.id.layoutResults);
-		layoutResults.addView(resultsLayout,layoutResults.getChildCount());
+		
 		
 	}
 	

@@ -54,8 +54,8 @@ public class Fragment_About extends Fragment {
 			switch(positionChild){
 				case 0: fileName="generaloverview.pdf";
 						break;
-				case 1: break;
-				case 2: fileName="challengesinmarinemammalsmedication.pdf";
+				//case 1: break;
+				case 1: fileName="challengesinmarinemammalsmedication.pdf";
 						break;
 			}
 		}
@@ -116,15 +116,16 @@ public class Fragment_About extends Fragment {
 		List<ItemWithImage> itemsAboutMarineMammals = new ArrayList<ItemWithImage>();
 		headers = new ArrayList<Integer>();
 		itemsAboutMarineMammals.add(new ItemWithImage(R.drawable.adobe_reader, "Marine Mammals: a general overview"));
-		itemsAboutMarineMammals.add(new ItemWithImage(R.drawable.treatments, "Pharmacological treatments in Marine Mammals"));
-		itemsAboutMarineMammals.add(new ItemWithImage(R.drawable.routes, "Routes for administering drugs to Marine Mammals"));
+		//itemsAboutMarineMammals.add(new ItemWithImage(R.drawable.treatments, "Pharmacological treatments in Marine Mammals"));
+		//itemsAboutMarineMammals.add(new ItemWithImage(R.drawable.routes, "Routes for administering drugs to Marine Mammals"));
+		itemsAboutMarineMammals.add(new ItemWithImage(R.drawable.routes, "Challenges In Marine Mammals Medication"));
 		childAbout.put(1, itemsAboutMarineMammals);
 		headers.add(1);
 		
 		List<ItemWithImage> itemsAboutFormulary = new ArrayList<ItemWithImage>();
-		itemsAboutFormulary.add((new ItemWithImage(R.drawable.user_guide, "The MMF: User guide")));
-		itemsAboutFormulary.add((new ItemWithImage(R.drawable.disclaimers, "Disclaimer")));
-		itemsAboutFormulary.add((new ItemWithImage(R.drawable.authors, "Authors")));
+		itemsAboutFormulary.add((new ItemWithImage(R.drawable.user_guide, "User's guide")));
+		itemsAboutFormulary.add((new ItemWithImage(R.drawable.disclaimer, "Disclaimer")));
+		itemsAboutFormulary.add((new ItemWithImage(R.drawable.authors, "Authorship")));
 		itemsAboutFormulary.add((new ItemWithImage(R.drawable.support, "Support")));
 		itemsAboutFormulary.add((new ItemWithImage(R.drawable.rate, "Rate The App")));
 		childAbout.put(2, itemsAboutFormulary);

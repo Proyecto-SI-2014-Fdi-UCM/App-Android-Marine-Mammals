@@ -503,11 +503,11 @@ public class Handler_Sqlite extends SQLiteOpenHelper{
 			return result;
 	}
 	
-	public ArrayList<String> read_specific_notes(String drug_name, String group_name, String animal_name, String family_name, String category_name, String posology, String route, String reference) {
+	public ArrayList<String> read_specific_notes(String drug_name, String group_name, String animal_name, String family_name, String category_name, String dose, String posology, String route, String reference) {
 			ArrayList<String> result = new ArrayList<String>();
 			SQLiteDatabase db = this.getReadableDatabase();
-			String args [] = {drug_name, group_name, family_name, animal_name, category_name, posology, route, reference};
-			Cursor c=db.query("Animal_has_Category", null, "drug_name=? and group_name=? and family=? and animal_name=? and category_name=? and posology=? and route=? and reference=?", args, null, null, null);
+			String args [] = {drug_name, group_name, family_name, animal_name, category_name, dose, posology, route, reference};
+			Cursor c=db.query("Animal_has_Category", null, "drug_name=? and group_name=? and family=? and animal_name=? and category_name=? and dose=? and posology=? and route=? and reference=?", args, null, null, null);
 			int idNote;
 			idNote = c.getColumnIndex("specific_note");
 			for(c.moveToFirst();!c.isAfterLast();c.moveToNext()) {
