@@ -94,10 +94,11 @@ public final class R {
         public static final int support=0x7f02001d;
         public static final int tick_verde=0x7f02001e;
         public static final int transitionscreen=0x7f02001f;
-        public static final int treatments=0x7f020020;
-        public static final int user_guide=0x7f020021;
-        public static final int yesgreen=0x7f020022;
-        public static final int yeswhite=0x7f020023;
+        public static final int transitionscreen2=0x7f020020;
+        public static final int treatments=0x7f020021;
+        public static final int user_guide=0x7f020022;
+        public static final int yesgreen=0x7f020023;
+        public static final int yeswhite=0x7f020024;
     }
     public static final class id {
         public static final int CombinedSearch=0x7f0a0001;

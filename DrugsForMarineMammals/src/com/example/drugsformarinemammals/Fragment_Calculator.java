@@ -200,8 +200,8 @@ public class Fragment_Calculator extends Fragment {
 		conversionMap.put("lbsTomg", 453592.37f);
 		conversionMap.put("lbsTomcg", 453592370.0f);
 		conversionMap.put("lbsTog", 453.59237f);
-		conversionMap.put("lbsTokg", 2.2046f);
-		conversionMap.put("kgTolbs", 0.4536f);
+		conversionMap.put("lbsTokg", 0.4536f);
+		conversionMap.put("kgTolbs", 2.2046f);
 	}
 	
 	public void calculateResult(){
