@@ -16,11 +16,11 @@ import android.text.TextUtils;
 
 public class Handler_Sqlite extends SQLiteOpenHelper{
 
-	private static final String nameBD = "DrugsForMarineMammals-DataBase3";
+	private static final String nameBD = "DrugsForMarineMammals-DataBase4";
 
 	Context myContext;
 	public Handler_Sqlite(Context ctx){
-		super(ctx,nameBD, null,6);
+		super(ctx,nameBD, null,1);
 		myContext = ctx;
 	}
 	
@@ -34,7 +34,7 @@ public class Handler_Sqlite extends SQLiteOpenHelper{
 	public void onCreate(SQLiteDatabase db){
 		String query1 = "CREATE TABLE Drug (drug_name TEXT, description TEXT, available TEXT, license_AEMPS TEXT, license_EMA TEXT, license_FDA TEXT, priority INTEGER, PRIMARY KEY (drug_name))";
 
-		String query2 = "CREATE TABLE Code(code_number TEXT, anatomic_group TEXT, therapeutic_group TEXT, drug_name TEXT, FOREIGN KEY (drug_name) REFERENCES Drug(drug_name), PRIMARY KEY (code_number))";
+		String query2 = "CREATE TABLE Code(code_number TEXT, drug_name TEXT, FOREIGN KEY (drug_name) REFERENCES Drug(drug_name), PRIMARY KEY (code_number))";
 		
 		String query3 = "CREATE TABLE Animal_Type (group_name TEXT, PRIMARY KEY (group_name))";
 		
@@ -50,7 +50,16 @@ public class Handler_Sqlite extends SQLiteOpenHelper{
 					"reference TEXT, specific_note TEXT, posology TEXT, route TEXT, dose TEXT, FOREIGN KEY (drug_name) REFERENCES Animal(drug_name), FOREIGN KEY (group_name) REFERENCES Animal(group_name)," +
 					"FOREIGN KEY (animal_name) REFERENCES Animal(animal_name), FOREIGN KEY (family) REFERENCES Animal(family), FOREIGN KEY (category_name) REFERENCES Category(category_name), PRIMARY KEY(animal_name, family, group_name, drug_name, category_name," +
 					"reference, specific_note, posology, route))";
+		
 		String query8 = "CREATE TABLE Therapeutic_Group (name TEXT, PRIMARY KEY (name))";
+		
+		String query9 = "CREATE TABLE Anatomic_Group (anatomic_group_name TEXT, PRIMARY KEY (anatomic_group_name))";
+		
+		String query10 = "CREATE TABLE Code_has_Therapeutic_Group (code_number TEXT, name TEXT, FOREIGN KEY (code_number) REFERENCES Code(code_number), FOREIGN KEY (name) REFERENCES Therapeutic_Group(name)," +
+				"PRIMARY KEY (code_number, name))";
+		
+		String query11 = "CREATE TABLE Code_has_Anatomic_Group (code_number TEXT, anatomic_group_name TEXT, FOREIGN KEY (code_number) REFERENCES Code(code_number), FOREIGN KEY (anatomic_group_name) REFERENCES Anatomic_Group(anatomic_group_name)," +
+				"PRIMARY KEY (code_number, anatomic_group_name))";
 
 		db.execSQL(query1);
 		db.execSQL(query2);
@@ -60,6 +69,9 @@ public class Handler_Sqlite extends SQLiteOpenHelper{
 		db.execSQL(query6);
 		db.execSQL(query7);
 		db.execSQL(query8);
+		db.execSQL(query9);
+		db.execSQL(query10);
+		db.execSQL(query11);
 		
 		 InputStream is = null;
 		    try {
@@ -99,6 +111,9 @@ public class Handler_Sqlite extends SQLiteOpenHelper{
 		db.execSQL("DROP TABLE IF EXISTS Category");
 		db.execSQL("DROP TABLE IF EXISTS Animal_has_Category");
 		db.execSQL("DROP TABLE IF EXISTS Therapeutic_Group");
+		db.execSQL("DROP TABLE IF EXISTS Code_has_Therapeutic_Group");
+		db.execSQL("DROP TABLE IF EXISTS Anatomic_Group");
+		db.execSQL("DROP TABLE IF EXISTS Code_has_Anatomic_Group");
 		onCreate(db);
 	}
 	
@@ -306,18 +321,41 @@ public class Handler_Sqlite extends SQLiteOpenHelper{
 		return solution;
 	}
 
-	public String getAnatomicTarget(String drug_name, String code) {
+	public ArrayList<String>  getAnatomicTarget(String code_number) {
 		// TODO Auto-generated method stub
+		ArrayList<String> solution= new ArrayList<String>();
 		SQLiteDatabase db=this.getReadableDatabase();
-		String args[]={drug_name,code};
-		String columns[]={"anatomic_group"};
-		Cursor c=db.query("Code", columns, "drug_name=? and code_number=?", args, null, null, null);
-		int indexAnatomic=c.getColumnIndex("anatomic_group");
-		c.moveToFirst();
-		return c.getString(indexAnatomic);
+		String args[]={code_number};
+		String columns[]={"anatomic_group_name"};
+		Cursor c=db.query("Code_has_Anatomic_Group", columns, "code_number=?", args, null, null, null);
+		int indexAnatomic=c.getColumnIndex("anatomic_group_name");
+		for(c.moveToFirst();!c.isAfterLast();c.moveToNext()){
+			solution.add((c.getString(indexAnatomic)));
+		}
+		c.close();
+		return solution;
+		
+		
 	}
 	
-	public String getTherapeuticTarget(String drug_name, String code) {
+	public ArrayList<String>  getTherapeuticTarget(String code_number) {
+		// TODO Auto-generated method stub
+		ArrayList<String> solution= new ArrayList<String>();
+		SQLiteDatabase db=this.getReadableDatabase();
+		String args[]={code_number};
+		String columns[]={"name"};
+		Cursor c=db.query("Code_has_Therapeutic_Group", columns, "code_number=?", args, null, null, null);
+		int indexTherapeutic=c.getColumnIndex("name");
+		for(c.moveToFirst();!c.isAfterLast();c.moveToNext()){
+			solution.add((c.getString(indexTherapeutic)));
+		}
+		c.close();
+		return solution;
+		
+		
+	}
+	
+	/*public String getTherapeuticTarget(String drug_name, String code) {
 		// TODO Auto-generated method stub
 		SQLiteDatabase db=this.getReadableDatabase();
 		String args[]={drug_name,code};
@@ -326,7 +364,7 @@ public class Handler_Sqlite extends SQLiteOpenHelper{
 		int indexTherapeutic=c.getColumnIndex("therapeutic_group");
 		c.moveToFirst();
 		return c.getString(indexTherapeutic);
-	}
+	}*/
 	
 	public String getLicense_AEMPS(String drug_name){
 		SQLiteDatabase db=this.getReadableDatabase();
@@ -504,21 +542,21 @@ public class Handler_Sqlite extends SQLiteOpenHelper{
 	}
 	
 	public ArrayList<String> read_specific_notes(String drug_name, String group_name, String animal_name, String family_name, String category_name, String dose, String posology, String route, String reference) {
-			ArrayList<String> result = new ArrayList<String>();
-			SQLiteDatabase db = this.getReadableDatabase();
-			String args [] = {drug_name, group_name, family_name, animal_name, category_name, dose, posology, route, reference};
-			Cursor c=db.query("Animal_has_Category", null, "drug_name=? and group_name=? and family=? and animal_name=? and category_name=? and dose=? and posology=? and route=? and reference=?", args, null, null, null);
-			int idNote;
-			idNote = c.getColumnIndex("specific_note");
-			for(c.moveToFirst();!c.isAfterLast();c.moveToNext()) {
-				if (!c.getString(idNote).equals(""))
-					result.add(c.getString(idNote));
-			}
-			
-			c.close();
-			
-			return result;
-	}
+		ArrayList<String> result = new ArrayList<String>();
+		SQLiteDatabase db = this.getReadableDatabase();
+		String args [] = {drug_name, group_name, family_name, animal_name, category_name, dose, posology, route, reference};
+		Cursor c=db.query("Animal_has_Category", null, "drug_name=? and group_name=? and family=? and animal_name=? and category_name=? and dose=? and posology=? and route=? and reference=?", args, null, null, null);
+		int idNote;
+		idNote = c.getColumnIndex("specific_note");
+		for(c.moveToFirst();!c.isAfterLast();c.moveToNext()) {
+			if (!c.getString(idNote).equals(""))
+				result.add(c.getString(idNote));
+		}
+		
+		c.close();
+		
+		return result;
+}
 	
 	public ArrayList<Dose_Data> read_every_dose(String drug_name, String group_name, String family) {
 		ArrayList<Dose_Data> result = new ArrayList<Dose_Data>();
