@@ -16,11 +16,11 @@ import android.text.TextUtils;
 
 public class Handler_Sqlite extends SQLiteOpenHelper{
 
-	private static final String nameBD = "DrugsForMarineMammals-DataBase4";
+	private static final String nameBD = "DrugsForMarineMammals-DataBase3";
 
 	Context myContext;
 	public Handler_Sqlite(Context ctx){
-		super(ctx,nameBD, null,1);
+		super(ctx,nameBD, null,5);
 		myContext = ctx;
 	}
 	
@@ -133,85 +133,145 @@ public class Handler_Sqlite extends SQLiteOpenHelper{
 		
 		return result;
 	}
-
+	
 	public ArrayList<String> combinedSearch(String[] p) {
-		if (!p[0].equals("Choose an Anatomical Target") && !p[1].equals("Choose a Therapeutic Target")) {
-			String where = "anatomic_group=? and therapeutic_group=?";
-			String args[]= {p[0], p[1]};
-			return searchTables(p, where, args);
-		}
-		else if (!p[0].equals("Choose an Anatomical Target")) {
-			String where = "anatomic_group=?";
-			String args[]= {p[0]};
-			return searchTables(p, where, args);
-
-		}
-		else if (!p[1].equals("Choose a Therapeutic Target")) {
-			String where = "therapeutic_group=?";
-			String args[]= {p[1]};
-			return searchTables(p, where, args);
-		}
-		else if (!p[2].equals("Choose a Group")) {
-			String args[]= {p[2]};
-			return searchTDrugAplicatedAnimalType(args);
-		}
-		return null;
-	}
-
-	private ArrayList<String> searchTDrugAplicatedAnimalType(String[] a) {
 		SQLiteDatabase db = open();
-		ArrayList<String> drugsList = new ArrayList<String>();
-		String drug;
-		String column[] = {"drug_name"};
-		Cursor cc = db.query("Drug_aplicated_to_Animal_Type", column, "group_name=?", a, null, null, null);
-		if (cc.moveToFirst())
-			for (cc.moveToFirst();!cc.isAfterLast();cc.moveToNext()) {
-				drug = cc.getString(cc.getColumnIndex("drug_name"));
-				if (!drugsList.contains(drug))
-					drugsList.add(drug);
-			}
-			
-		cc = db.query("Animal_has_Category", column, "group_name=?", a, null, null, null);
-		if (cc.moveToFirst())
-			for (cc.moveToFirst();!cc.isAfterLast();cc.moveToNext()) {
-				drug = cc.getString(cc.getColumnIndex("drug_name"));
-				if (!drugsList.contains(drug))
-					drugsList.add(drug);
-			}
-		close();
-		return drugsList;
-	}
-
-	private ArrayList<String> searchTables(String[] p, String w, String[] a) {
-		SQLiteDatabase db = open();
-		ArrayList<String> drugsList = new ArrayList<String>();
-		String column[] = {"drug_name"};
-		Cursor cc = db.query("Code", column, w, a, null, null, null);
-		if (cc.moveToFirst())
-			for (cc.moveToFirst();!cc.isAfterLast();cc.moveToNext()) {
-				String drug = cc.getString(cc.getColumnIndex("drug_name"));
-				if (!drugsList.contains(drug))
-					if (!p[2].equals("Choose a Group")) {
-						String args[] = { drug, p[2] };
-						Cursor cs = db.query("Drug_aplicated_to_Animal_Type",
-								column, "drug_name=? and group_name=?", args, null, null, null);
+		ArrayList<String> drugList = new ArrayList<String>();
+		String table_name = "Code_has_Anatomic_Group";
+		String where = "anatomic_group_name=?";
+		String args[]= {p[0]};
+		String column[] = {"code_number"};
+		String code = "";
+		String drug = "";
+		if (!p[0].equals("Choose an Anatomical Target")) {
+			Cursor cc = db.query(table_name, column, where, args, null, null, null);
+			if (cc.moveToFirst())
+				if (!p[1].equals("Choose a Therapeutic Target"))
+					for (cc.moveToFirst();!cc.isAfterLast();cc.moveToNext()) {
+						code = cc.getString(cc.getColumnIndex("code_number"));
+						table_name = "Code_has_Therapeutic_Group"; 
+						where = "code_number=? and name=?";
+						String args2[]= {code, p[1]};
+						Cursor ct = db.query(table_name, column, where, args2, null, null, null);
+						if (ct.moveToFirst())
+							for (ct.moveToFirst();!ct.isAfterLast();ct.moveToNext()) {
+								code = ct.getString(ct.getColumnIndex("code_number"));
+								table_name = "Code";
+								where = "code_number=?";
+								String column2[] = {"drug_name"};
+								String args3[] = {code};
+								Cursor cs = db.query(table_name, column2, where, args3, null, null, null);
+								if (cs.moveToFirst())
+									for (cs.moveToFirst(); !cs.isAfterLast(); cs.moveToNext()) {
+										drug = cs.getString(cs.getColumnIndex("drug_name"));
+										if (!drugList.contains(drug)) 
+											drugList.add(drug);
+									}
+								cs.close();
+							}
+					}				
+				else {
+					for (cc.moveToFirst();!cc.isAfterLast();cc.moveToNext()) {
+						code = cc.getString(cc.getColumnIndex("code_number"));
+						table_name = "Code";
+						where = "code_number=?";
+						String column2[] = {"drug_name"};
+						String args3[] = {code};
+						Cursor cs = db.query(table_name, column2, where, args3, null, null, null);
 						if (cs.moveToFirst())
-							for (cs.moveToFirst(); !cs.isAfterLast(); cs.moveToNext())
-								if (!drugsList.contains(drug)) 
-									drugsList.add(cs.getString(cs.getColumnIndex("drug_name")));
-									
-						cs = db.query("Animal_has_Category",
-								column, "drug_name=? and group_name=?", args, null, null, null);
+							for (cs.moveToFirst(); !cs.isAfterLast(); cs.moveToNext()) {
+								drug = cs.getString(cs.getColumnIndex("drug_name"));
+								if (!drugList.contains(drug)) 
+									drugList.add(drug);
+							}
+						cs.close();
+					}
+				}
+			cc.close();
+		}
+		else {
+			if (!p[1].equals("Choose a Therapeutic Target")) {
+				table_name = "Code_has_Therapeutic_Group"; 
+				where = "name=?";
+				String args2[]= {p[1]};
+				Cursor ct = db.query(table_name, column, where, args2, null, null, null);
+				if (ct.moveToFirst())
+					for (ct.moveToFirst(); !ct.isAfterLast(); ct.moveToNext()) {
+						code = ct.getString(ct.getColumnIndex("code_number"));
+						table_name = "Code";
+						where = "code_number=?";
+						String column2[] = { "drug_name" };
+						String args3[] = { code };
+						Cursor cs = db.query(table_name, column2, where, args3,	null, null, null);
 						if (cs.moveToFirst())
-							for (cs.moveToFirst(); !cs.isAfterLast(); cs.moveToNext())
-								if (!drugsList.contains(drug)) 
-									drugsList.add(cs.getString(cs.getColumnIndex("drug_name")));
-					} 
-					else
-						drugsList.add(drug);
+							for (cs.moveToFirst(); !cs.isAfterLast(); cs.moveToNext()) {
+								drug = cs.getString(cs.getColumnIndex("drug_name"));
+								if (!drugList.contains(drug))
+									drugList.add(drug);
+							}
+						cs.close();
+					}
+				ct.close();
+			}			
+		}
+		if (p[2].equals("Choose a Group"))
+			return drugList;
+		else  {
+			int size = drugList.size();
+			ArrayList<String> result = new ArrayList<String>();
+			if (size > 0) {
+				table_name = "Drug_aplicated_to_Animal_Type";
+				where = "drug_name=? and group_name=?";
+				String column2[] = { "drug_name" };
+				for (int i=0; i<size; i++) {
+					String args3[] = { drugList.get(i), p[2] };
+					Cursor cg = db.query(table_name, column2, where, args3,	null, null, null);
+					if (cg.moveToFirst())
+						for (cg.moveToFirst();!cg.isAfterLast();cg.moveToNext()) {
+							drug = cg.getString(cg.getColumnIndex("drug_name"));
+							if (!result.contains(drug))
+								result.add(drug);
+						}
+					cg.close();	
+				}
+				table_name = "Animal_has_Category";
+				for (int i=0; i<size; i++) {
+					String args3[] = { drugList.get(i), p[2] };
+					Cursor cg = db.query(table_name, column2, where, args3,	null, null, null);
+					if (cg.moveToFirst())
+						for (cg.moveToFirst();!cg.isAfterLast();cg.moveToNext()) {
+							drug = cg.getString(cg.getColumnIndex("drug_name"));
+							if (!result.contains(drug))
+								result.add(drug);
+						}
+					cg.close();	
+				}
 			}
-		close();
-		return drugsList;		
+			else 
+				if (p[0].equals("Choose an Anatomical Target") && p[1].equals("Choose a Therapeutic Target")){
+					table_name = "Drug_aplicated_to_Animal_Type";
+					where = "group_name=?";
+					String column2[] = { "drug_name" };
+					String args3[] = { p[2] };
+					Cursor cg = db.query(table_name, column2, where, args3,	null, null, null);
+					if (cg.moveToFirst())
+						for (cg.moveToFirst();!cg.isAfterLast();cg.moveToNext()) {
+							drug = cg.getString(cg.getColumnIndex("drug_name"));
+							if (!result.contains(drug))
+								result.add(drug);
+					}				
+					table_name = "Animal_has_Category";
+					cg = db.query(table_name, column2, where, args3, null, null, null);
+					if (cg.moveToFirst())
+						for (cg.moveToFirst();!cg.isAfterLast();cg.moveToNext()) {
+							drug = cg.getString(cg.getColumnIndex("drug_name"));
+							if (!result.contains(drug))
+								result.add(drug);
+						}
+					cg.close();	
+				}
+			return result;
+		}
 	}
 	
 	public List<Drug_Information> read_drugs_database() {
@@ -321,41 +381,18 @@ public class Handler_Sqlite extends SQLiteOpenHelper{
 		return solution;
 	}
 
-	public ArrayList<String>  getAnatomicTarget(String code_number) {
+	public String getAnatomicTarget(String drug_name, String code) {
 		// TODO Auto-generated method stub
-		ArrayList<String> solution= new ArrayList<String>();
 		SQLiteDatabase db=this.getReadableDatabase();
-		String args[]={code_number};
-		String columns[]={"anatomic_group_name"};
-		Cursor c=db.query("Code_has_Anatomic_Group", columns, "code_number=?", args, null, null, null);
-		int indexAnatomic=c.getColumnIndex("anatomic_group_name");
-		for(c.moveToFirst();!c.isAfterLast();c.moveToNext()){
-			solution.add((c.getString(indexAnatomic)));
-		}
-		c.close();
-		return solution;
-		
-		
+		String args[]={drug_name,code};
+		String columns[]={"anatomic_group"};
+		Cursor c=db.query("Code", columns, "drug_name=? and code_number=?", args, null, null, null);
+		int indexAnatomic=c.getColumnIndex("anatomic_group");
+		c.moveToFirst();
+		return c.getString(indexAnatomic);
 	}
 	
-	public ArrayList<String>  getTherapeuticTarget(String code_number) {
-		// TODO Auto-generated method stub
-		ArrayList<String> solution= new ArrayList<String>();
-		SQLiteDatabase db=this.getReadableDatabase();
-		String args[]={code_number};
-		String columns[]={"name"};
-		Cursor c=db.query("Code_has_Therapeutic_Group", columns, "code_number=?", args, null, null, null);
-		int indexTherapeutic=c.getColumnIndex("name");
-		for(c.moveToFirst();!c.isAfterLast();c.moveToNext()){
-			solution.add((c.getString(indexTherapeutic)));
-		}
-		c.close();
-		return solution;
-		
-		
-	}
-	
-	/*public String getTherapeuticTarget(String drug_name, String code) {
+	public String getTherapeuticTarget(String drug_name, String code) {
 		// TODO Auto-generated method stub
 		SQLiteDatabase db=this.getReadableDatabase();
 		String args[]={drug_name,code};
@@ -364,7 +401,7 @@ public class Handler_Sqlite extends SQLiteOpenHelper{
 		int indexTherapeutic=c.getColumnIndex("therapeutic_group");
 		c.moveToFirst();
 		return c.getString(indexTherapeutic);
-	}*/
+	}
 	
 	public String getLicense_AEMPS(String drug_name){
 		SQLiteDatabase db=this.getReadableDatabase();
