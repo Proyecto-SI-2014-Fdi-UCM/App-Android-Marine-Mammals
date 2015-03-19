@@ -379,5 +379,3 @@ INSERT INTO Code_has_Anatomic_Group(code_number,anatomic_group_name) VALUES ('QR
 INSERT INTO Code_has_Anatomic_Group(code_number,anatomic_group_name) VALUES ('QS01BA02','Sensory organs');
 INSERT INTO Code_has_Anatomic_Group(code_number,anatomic_group_name) VALUES ('QS01BA03','Sensory organs');
 INSERT INTO Code_has_Anatomic_Group(code_number,anatomic_group_name) VALUES ('QS01BA06','Sensory organs');
-
-
