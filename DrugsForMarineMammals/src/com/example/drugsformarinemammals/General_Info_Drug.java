@@ -76,7 +76,7 @@ public class General_Info_Drug extends Activity {
 				   
 			//Animals
 		    TextView headerAnimals=(TextView)findViewById(R.id.headerAnimals);
-		    headerAnimals.setTypeface(Typeface.SANS_SERIF);
+		    headerAnimals.setTypeface(Typeface.SANS_SERIF, Typeface.BOLD);
 		        
 		    Button cetaceansButton=(Button)findViewById(R.id.cetaceansButton);
 		    cetaceansButton.setText("CETACEANS");
@@ -123,18 +123,18 @@ public class General_Info_Drug extends Activity {
 			
 		  //Codes & therapeutic target & anatomical target
 		    TextView headerATCvetCodes=(TextView)findViewById(R.id.headerATCvetCodes);
-		    headerATCvetCodes.setTypeface(Typeface.SANS_SERIF);
+		    headerATCvetCodes.setTypeface(Typeface.SANS_SERIF, Typeface.BOLD);
 		    
 		     
 		    //Action
 		    TextView headerActionAnatomical=(TextView)findViewById(R.id.headerActionAnatomical);
-		    headerActionAnatomical.setTypeface(Typeface.SANS_SERIF);
+		    headerActionAnatomical.setTypeface(Typeface.SANS_SERIF, Typeface.BOLD);
 		        
 		    createTextViewAnatomical();
 		    createBorderAnatomicalGroup();
 		    
 		    TextView headerActionTherapeutic=(TextView)findViewById(R.id.headerActionTherapeutic);
-		    headerActionTherapeutic.setTypeface(Typeface.SANS_SERIF);
+		    headerActionTherapeutic.setTypeface(Typeface.SANS_SERIF, Typeface.BOLD);
 		    
 		    createTextViewTherapeutic();
 		    createBorderTherapeuticGroup();
@@ -206,7 +206,7 @@ public class General_Info_Drug extends Activity {
 		     
 		    //Generic Drug
 		    TextView headerGenericDrug=(TextView)findViewById(R.id.headerGenericDrug);
-			headerGenericDrug.setTypeface(Typeface.SANS_SERIF);    
+			headerGenericDrug.setTypeface(Typeface.SANS_SERIF, Typeface.BOLD);    
 		        
 		    if(helper.isAvalaible(titleBundle)){
 		    	ImageView genericDrug=new ImageView(this);
@@ -235,7 +235,7 @@ public class General_Info_Drug extends Activity {
 		    
 		    //Licenses
 		    TextView headerLicense=(TextView)findViewById(R.id.headerLicense);
-		    headerLicense.setTypeface(Typeface.SANS_SERIF);
+		    headerLicense.setTypeface(Typeface.SANS_SERIF, Typeface.BOLD);
 		        
 		    TextView fdaLicense=(TextView)findViewById(R.id.license1);
 		    Typeface font=Typeface.createFromAsset(getAssets(), "Typoster_demo.otf");
