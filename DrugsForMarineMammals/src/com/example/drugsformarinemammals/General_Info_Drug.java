@@ -32,6 +32,8 @@ public class General_Info_Drug extends Activity {
 	private LinearLayout.LayoutParams params;
 	private LinearLayout layoutAnatomicalGroup;
 	private LinearLayout layoutTherapeuticGroup;
+	private TextView separator;
+	private LinearLayout.LayoutParams paramSeparator;
 	private String userEntryCode;
 	
 	@Override
@@ -65,6 +67,7 @@ public class General_Info_Drug extends Activity {
 			paramsDescription.leftMargin = 60;
 			paramsDescription.rightMargin = 60;
 			paramsDescription.topMargin = 20;
+			
 		        
 			borderDescription.addView(description,borderDescription.getChildCount(),paramsDescription);
 		        
@@ -175,33 +178,20 @@ public class General_Info_Drug extends Activity {
 		    TextView headerActionAnatomical=(TextView)findViewById(R.id.headerActionAnatomical);
 		    headerActionAnatomical.setTypeface(Typeface.SANS_SERIF);
 		        
-		    anatomicalGroup=new TextView(this);
-		    anatomicalGroup.setTextSize(18);
-		    anatomicalGroup.setTypeface(Typeface.SANS_SERIF);
-		        
-		    borderAnatomicalGroup = new LinearLayout(this);
-		    borderAnatomicalGroup.setOrientation(LinearLayout.VERTICAL);
-		    borderAnatomicalGroup.setLayoutParams(new LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT));
-		    borderAnatomicalGroup.setBackgroundResource(R.drawable.layout_border);
-		        
+		    createTextViewAnatomical();
+		    createBorderAnatomicalGroup();
+		    
 		    TextView headerActionTherapeutic=(TextView)findViewById(R.id.headerActionTherapeutic);
 		    headerActionTherapeutic.setTypeface(Typeface.SANS_SERIF);
 		    
-		    therapeuticGroup=new TextView(this);
-		    therapeuticGroup.setTextSize(18);
-		    therapeuticGroup.setTypeface(Typeface.SANS_SERIF);
-		        
-		    borderTherapeuticGroup = new LinearLayout(this);
-		    borderTherapeuticGroup.setOrientation(LinearLayout.VERTICAL);
-		    borderTherapeuticGroup.setLayoutParams(new LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT));
-		    borderTherapeuticGroup.setBackgroundResource(R.drawable.layout_border);
-		        
-		        
+		    createTextViewTherapeutic();
+		    createBorderTherapeuticGroup();
+		   
 		    params = new LinearLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
 		    params.leftMargin = 60;
 		    params.rightMargin =60;
 		    params.topMargin = 20;         
-		    	
+		    //params.bottomMargin=20;
 		        
 		    //Codes & therapeutic target & anatomical target
 		    TextView headerATCvetCodes=(TextView)findViewById(R.id.headerATCvetCodes);
@@ -216,10 +206,38 @@ public class General_Info_Drug extends Activity {
 	
 		    	public void onItemSelected(AdapterView<?> parent, View arg1,int arg2, long arg3) {
 		    		userEntryCode = parent.getSelectedItem().toString();	
-		    		anatomicalGroup.setText(helper.getAnatomicTarget(titleBundle,userEntryCode));
-					anatomicalGroup.setTextSize(18);
-					therapeuticGroup.setText(helper.getTherapeuticTarget(titleBundle,userEntryCode));
-					therapeuticGroup.setTextSize(18); 
+		    		ArrayList<String> anatomicTargets=helper.getAnatomicTarget(userEntryCode);
+		    		int numAnatomicTarget=anatomicTargets.size();
+		    		
+		    		layoutAnatomicalGroup.removeView(borderAnatomicalGroup);
+		    		createBorderAnatomicalGroup();
+		    		
+		    		for(int i=0;i<numAnatomicTarget;i++){
+		    			createTextViewAnatomical();
+		    			createSeparator();
+		    			anatomicalGroup.setText(anatomicTargets.get(i)+"\n");
+		    			borderAnatomicalGroup.addView(anatomicalGroup,borderAnatomicalGroup.getChildCount(),params);
+		    			borderAnatomicalGroup.addView(separator,borderAnatomicalGroup.getChildCount());
+		    		}
+		    		
+		    		layoutAnatomicalGroup=(LinearLayout)findViewById(R.id.layoutActionAnatomical);
+		    		layoutAnatomicalGroup.addView(borderAnatomicalGroup,layoutAnatomicalGroup.getChildCount());
+					
+					ArrayList<String> therapeuticTargets=helper.getTherapeuticTarget(userEntryCode);
+		    		int numTherapeuticTarget=therapeuticTargets.size();
+		    		
+		    		layoutTherapeuticGroup.removeView(borderTherapeuticGroup);
+		    		createBorderTherapeuticGroup();
+		    		for(int i=0;i<numTherapeuticTarget;i++){
+		    			createTextViewTherapeutic();
+		    			createSeparator();
+		    			therapeuticGroup.setText(therapeuticTargets.get(i)+"\n");
+		    			borderTherapeuticGroup.addView(therapeuticGroup,borderTherapeuticGroup.getChildCount(),params);
+		    			borderTherapeuticGroup.addView(separator,borderTherapeuticGroup.getChildCount());
+		    		}
+		    		layoutTherapeuticGroup=(LinearLayout)findViewById(R.id.layoutActionTherapeutic);
+		    		layoutTherapeuticGroup.addView(borderTherapeuticGroup,layoutTherapeuticGroup.getChildCount());
+		    		//layoutTherapeuticGroup.addView(separator,layoutTherapeuticGroup.getChildCount());
 				}
 		
 		    	public void onNothingSelected(AdapterView<?> arg0) {
@@ -317,5 +335,38 @@ public class General_Info_Drug extends Activity {
 		j.putExtra("drugName", drugName);
 		j.putExtra("families", families);
 		startActivity(j);
+	}
+	
+	public void createTextViewAnatomical(){
+		anatomicalGroup=new TextView(this);
+	    anatomicalGroup.setTextSize(18);
+	    anatomicalGroup.setTypeface(Typeface.SANS_SERIF);
+	    //anatomicalGroup.setBackgroundColor(getResources().getColor(R.color.lightGray));
+	}
+	
+	public void createTextViewTherapeutic(){
+		therapeuticGroup=new TextView(this);
+		therapeuticGroup.setTextSize(18);
+		therapeuticGroup.setTypeface(Typeface.SANS_SERIF);
+	}
+	
+	public void createBorderAnatomicalGroup(){
+		borderAnatomicalGroup = new LinearLayout(this);
+	    borderAnatomicalGroup.setOrientation(LinearLayout.VERTICAL);
+	    borderAnatomicalGroup.setLayoutParams(new LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT));
+	    borderAnatomicalGroup.setBackgroundResource(R.drawable.layout_border);
+	}
+	
+	public void createBorderTherapeuticGroup(){
+		borderTherapeuticGroup = new LinearLayout(this);
+	    borderTherapeuticGroup.setOrientation(LinearLayout.VERTICAL);
+	    borderTherapeuticGroup.setLayoutParams(new LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT));
+	    borderTherapeuticGroup.setBackgroundResource(R.drawable.layout_border);
+	}
+	
+	public void createSeparator(){
+		separator=new TextView(this);
+		separator.setText("");
+		separator.setBackgroundColor(getResources().getColor(R.color.lightGray));		
 	}
 }

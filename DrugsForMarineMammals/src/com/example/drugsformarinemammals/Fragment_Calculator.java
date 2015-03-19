@@ -224,6 +224,7 @@ public class Fragment_Calculator extends Fragment {
 		    results.setTextSize(15);
 		    results.setTypeface(Typeface.SANS_SERIF);
 		    results.setBackgroundResource(R.drawable.calculator_style_edittext);
+		    results.setGravity(Gravity.CENTER);
 		       
 			paramsTitleResults = new LinearLayout.LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT);
 			resultsLayout.addView(titleResults,resultsLayout.getChildCount(),paramsTitleResults);
