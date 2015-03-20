@@ -65,10 +65,15 @@ public class Fragment_About extends Fragment {
 						break;
 				case 1: fileName="disclaimer.pdf";
 						break;
-				case 2: fileName="Authors.pdf";
+				case 2: fileName="authors.pdf";
 						break;
 				case 3: fileName="support.pdf";
 						break;
+				case 5: fileName="bibliography.pdf";
+						break;
+				case 6: fileName="druglist.pdf";
+					break;
+				
 			}
 		}
 		
@@ -115,9 +120,7 @@ public class Fragment_About extends Fragment {
 		childAbout = new HashMap<Integer, List<ItemWithImage>>();
 		List<ItemWithImage> itemsAboutMarineMammals = new ArrayList<ItemWithImage>();
 		headers = new ArrayList<Integer>();
-		itemsAboutMarineMammals.add(new ItemWithImage(R.drawable.adobe_reader, "Marine Mammals: a general overview"));
-		//itemsAboutMarineMammals.add(new ItemWithImage(R.drawable.treatments, "Pharmacological treatments in Marine Mammals"));
-		//itemsAboutMarineMammals.add(new ItemWithImage(R.drawable.routes, "Routes for administering drugs to Marine Mammals"));
+		itemsAboutMarineMammals.add(new ItemWithImage(R.drawable.ageneraloverview, "Marine Mammals: a general overview"));
 		itemsAboutMarineMammals.add(new ItemWithImage(R.drawable.routes, "Challenges In Marine Mammals Medication"));
 		childAbout.put(1, itemsAboutMarineMammals);
 		headers.add(1);
@@ -128,6 +131,8 @@ public class Fragment_About extends Fragment {
 		itemsAboutFormulary.add((new ItemWithImage(R.drawable.authors, "Authorship")));
 		itemsAboutFormulary.add((new ItemWithImage(R.drawable.support, "Support")));
 		itemsAboutFormulary.add((new ItemWithImage(R.drawable.rate, "Rate The App")));
+		itemsAboutFormulary.add((new ItemWithImage(R.drawable.bibliography, "Bibliography")));
+		itemsAboutFormulary.add((new ItemWithImage(R.drawable.druglist, "Drug list")));
 		childAbout.put(2, itemsAboutFormulary);
 		headers.add(2);
 

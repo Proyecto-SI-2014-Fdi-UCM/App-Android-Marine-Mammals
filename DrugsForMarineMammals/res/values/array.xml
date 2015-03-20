@@ -3,21 +3,21 @@
     
     <string-array name="AnatomicalTarget">
         <item >Choose an Anatomical Target </item>
-        <item >Alimentary tract and metabolism </item>
-        <item >Blood and blood forming organs  </item>
-        <item >Cardiovascular system </item>
-        <item >Dermatologicals </item>
-        <item >Genito urinary system and sex hormones </item>
-        <item >Systemic hormonal preparations, excl. sex hormones and insulins </item>
-        <item >Immunologicals </item>
-        <item >Antiinfectives for systemic use </item>
-        <item >Antineoplastic and immunomodulating agents </item>
-        <item >Musculo-skeletal system </item>
-        <item >Nervous system </item>
-        <item >Antiparasitic products, insecticides and repellents </item>
-        <item >Respiratory system </item>
-        <item >Sensory organs </item>
-        <item >Various </item>
+        <item >QA Alimentary tract and metabolism </item>
+        <item >QB Blood and blood forming organs  </item>
+        <item >QC Cardiovascular system </item>
+        <item >QD Dermatologicals </item>
+        <item >QG Genito urinary system and sex hormones </item>
+        <item >QH Systemic hormonal preparations, excl. sex hormones and insulins </item>
+        <item >QI Immunologicals </item>
+        <item >QJ Antiinfectives for systemic use </item>
+        <item >QL Antineoplastic and immunomodulating agents </item>
+        <item >QM Musculo-skeletal system </item>
+        <item >QN Nervous system </item>
+        <item >QP Antiparasitic products, insecticides and repellents </item>
+        <item >QR Respiratory system </item>
+        <item >QS Sensory organs </item>
+        <item >QV Various </item>
     </string-array>
     
     

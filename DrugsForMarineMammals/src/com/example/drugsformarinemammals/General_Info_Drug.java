@@ -73,10 +73,140 @@ public class General_Info_Drug extends Activity {
 		        
 			LinearLayout layoutDescription=(LinearLayout)findViewById(R.id.layoutDescription);
 			layoutDescription.addView(borderDescription,layoutDescription.getChildCount());
-				        
+				   
+			//Animals
+		    TextView headerAnimals=(TextView)findViewById(R.id.headerAnimals);
+		    headerAnimals.setTypeface(Typeface.SANS_SERIF, Typeface.BOLD);
+		        
+		    Button cetaceansButton=(Button)findViewById(R.id.cetaceansButton);
+		    cetaceansButton.setText("CETACEANS");
+		    cetaceansButton.setTypeface(Typeface.SANS_SERIF);
+		    cetaceansButton.setOnClickListener(new OnClickListener() {
+		
+		    	@Override
+				public void onClick(View v) {
+		    		showDoseInformation(titleBundle, "Cetaceans");	
+				}
+		    });
+		        
+		    Button pinnipedsButton=(Button)findViewById(R.id.pinnipedsButton);
+		    pinnipedsButton.setText("PINNIPEDS");
+		    pinnipedsButton.setTypeface(Typeface.SANS_SERIF);
+		    pinnipedsButton.setOnClickListener(new OnClickListener() {
+		
+		    	@Override
+				public void onClick(View v) {
+		    		SQLiteDatabase db = helper.open();
+					ArrayList<String> families = new ArrayList<String>();
+					if (db!=null)
+						families = helper.read_animals_family(titleBundle, "Pinnipeds");
+					if ((families != null && families.size() == 1 && families.get(0).equals("")) || (families!=null && families.size() == 0))
+						showDoseInformation(titleBundle, "Pinnipeds");
+					else 
+						showDoseInformationPinnipeds(titleBundle, families);
+				}
+		    });
+		        
+		        
+		    Button otherButton=(Button)findViewById(R.id.otherButton);
+		    otherButton.setText("OTHER MM");
+		    otherButton.setTypeface(Typeface.SANS_SERIF);
+		    otherButton.setOnClickListener(new OnClickListener() {
+		
+		    	@Override
+				public void onClick(View v) {
+		    		showDoseInformation(titleBundle, "Other MM");
+				}
+		    });
+		        
+		
+			
+		  //Codes & therapeutic target & anatomical target
+		    TextView headerATCvetCodes=(TextView)findViewById(R.id.headerATCvetCodes);
+		    headerATCvetCodes.setTypeface(Typeface.SANS_SERIF, Typeface.BOLD);
+		    
+		     
+		    //Action
+		    TextView headerActionAnatomical=(TextView)findViewById(R.id.headerActionAnatomical);
+		    headerActionAnatomical.setTypeface(Typeface.SANS_SERIF, Typeface.BOLD);
+		        
+		    createTextViewAnatomical();
+		    createBorderAnatomicalGroup();
+		    
+		    TextView headerActionTherapeutic=(TextView)findViewById(R.id.headerActionTherapeutic);
+		    headerActionTherapeutic.setTypeface(Typeface.SANS_SERIF, Typeface.BOLD);
+		    
+		    createTextViewTherapeutic();
+		    createBorderTherapeuticGroup();
+		   
+		    params = new LinearLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
+		    params.leftMargin = 60;
+		    params.rightMargin =60;
+		    params.topMargin = 20;         
+		    //params.bottomMargin=20;
+		    
+		    Spinner codesSpinner= (Spinner)findViewById(R.id.codesSpinner);
+			SpinnerAdapter adapterCodes = new SpinnerAdapter(this, R.layout.item_spinner,helper.getCodes(titleBundle));	     
+	        adapterCodes.setDropDownViewResource(R.layout.spinner_dropdown_item);
+	    	codesSpinner.setAdapter(adapterCodes);
+		    	
+	    	codesSpinner.setOnItemSelectedListener(new OnItemSelectedListener() {
+	
+		    	public void onItemSelected(AdapterView<?> parent, View arg1,int arg2, long arg3) {
+		    		userEntryCode = parent.getSelectedItem().toString();	
+		    		ArrayList<String> anatomicTargets=helper.getAnatomicTarget(userEntryCode);
+		    		int numAnatomicTarget=anatomicTargets.size();
+		    		
+		    		layoutAnatomicalGroup.removeView(borderAnatomicalGroup);
+		    		createBorderAnatomicalGroup();
+		    		
+		    		for(int i=0;i<numAnatomicTarget;i++){
+		    			createTextViewAnatomical();
+		    			createSeparator();
+		    			anatomicalGroup.setText(anatomicTargets.get(i)+"\n");
+		    			borderAnatomicalGroup.addView(anatomicalGroup,borderAnatomicalGroup.getChildCount(),params);
+		    			borderAnatomicalGroup.addView(separator,borderAnatomicalGroup.getChildCount());
+		    		}
+		    		
+		    		layoutAnatomicalGroup=(LinearLayout)findViewById(R.id.layoutActionAnatomical);
+		    		layoutAnatomicalGroup.addView(borderAnatomicalGroup,layoutAnatomicalGroup.getChildCount());
+					
+					ArrayList<String> therapeuticTargets=helper.getTherapeuticTarget(userEntryCode);
+		    		int numTherapeuticTarget=therapeuticTargets.size();
+		    		
+		    		layoutTherapeuticGroup.removeView(borderTherapeuticGroup);
+		    		createBorderTherapeuticGroup();
+		    		for(int i=0;i<numTherapeuticTarget;i++){
+		    			createTextViewTherapeutic();
+		    			createSeparator();
+		    			therapeuticGroup.setText(therapeuticTargets.get(i)+"\n");
+		    			borderTherapeuticGroup.addView(therapeuticGroup,borderTherapeuticGroup.getChildCount(),params);
+		    			borderTherapeuticGroup.addView(separator,borderTherapeuticGroup.getChildCount());
+		    		}
+		    		layoutTherapeuticGroup=(LinearLayout)findViewById(R.id.layoutActionTherapeutic);
+		    		layoutTherapeuticGroup.addView(borderTherapeuticGroup,layoutTherapeuticGroup.getChildCount());
+		    		//layoutTherapeuticGroup.addView(separator,layoutTherapeuticGroup.getChildCount());
+				}
+		
+		    	public void onNothingSelected(AdapterView<?> arg0) {
+		    	}
+	        });
+	    		
+	    		
+	    	layoutAnatomicalGroup=(LinearLayout)findViewById(R.id.layoutActionAnatomical);
+		    layoutTherapeuticGroup=(LinearLayout)findViewById(R.id.layoutActionTherapeutic);
+		        
+		        
+		    borderTherapeuticGroup.addView(therapeuticGroup,borderTherapeuticGroup.getChildCount(),params);
+		    borderAnatomicalGroup.addView(anatomicalGroup,borderAnatomicalGroup.getChildCount(),params);
+		        
+		    layoutAnatomicalGroup.addView(borderAnatomicalGroup,layoutAnatomicalGroup.getChildCount());
+		    layoutTherapeuticGroup.addView(borderTherapeuticGroup,layoutTherapeuticGroup.getChildCount());   
+		    	
+		     
 		    //Generic Drug
 		    TextView headerGenericDrug=(TextView)findViewById(R.id.headerGenericDrug);
-			headerGenericDrug.setTypeface(Typeface.SANS_SERIF);    
+			headerGenericDrug.setTypeface(Typeface.SANS_SERIF, Typeface.BOLD);    
 		        
 		    if(helper.isAvalaible(titleBundle)){
 		    	ImageView genericDrug=new ImageView(this);
@@ -105,7 +235,7 @@ public class General_Info_Drug extends Activity {
 		    
 		    //Licenses
 		    TextView headerLicense=(TextView)findViewById(R.id.headerLicense);
-		    headerLicense.setTypeface(Typeface.SANS_SERIF);
+		    headerLicense.setTypeface(Typeface.SANS_SERIF, Typeface.BOLD);
 		        
 		    TextView fdaLicense=(TextView)findViewById(R.id.license1);
 		    Typeface font=Typeface.createFromAsset(getAssets(), "Typoster_demo.otf");
@@ -173,136 +303,10 @@ public class General_Info_Drug extends Activity {
 				}
 		    	
 		    });
-		 
-		    //Action
-		    TextView headerActionAnatomical=(TextView)findViewById(R.id.headerActionAnatomical);
-		    headerActionAnatomical.setTypeface(Typeface.SANS_SERIF);
-		        
-		    createTextViewAnatomical();
-		    createBorderAnatomicalGroup();
-		    
-		    TextView headerActionTherapeutic=(TextView)findViewById(R.id.headerActionTherapeutic);
-		    headerActionTherapeutic.setTypeface(Typeface.SANS_SERIF);
-		    
-		    createTextViewTherapeutic();
-		    createBorderTherapeuticGroup();
 		   
-		    params = new LinearLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
-		    params.leftMargin = 60;
-		    params.rightMargin =60;
-		    params.topMargin = 20;         
-		    //params.bottomMargin=20;
+
 		        
-		    //Codes & therapeutic target & anatomical target
-		    TextView headerATCvetCodes=(TextView)findViewById(R.id.headerATCvetCodes);
-		    headerATCvetCodes.setTypeface(Typeface.SANS_SERIF);
-		        
-		    Spinner codesSpinner= (Spinner)findViewById(R.id.codesSpinner);
-			SpinnerAdapter adapterCodes = new SpinnerAdapter(this, R.layout.item_spinner,helper.getCodes(titleBundle));	     
-	        adapterCodes.setDropDownViewResource(R.layout.spinner_dropdown_item);
-	    	codesSpinner.setAdapter(adapterCodes);
-		    	
-	    	codesSpinner.setOnItemSelectedListener(new OnItemSelectedListener() {
-	
-		    	public void onItemSelected(AdapterView<?> parent, View arg1,int arg2, long arg3) {
-		    		userEntryCode = parent.getSelectedItem().toString();	
-		    		ArrayList<String> anatomicTargets=helper.getAnatomicTarget(userEntryCode);
-		    		int numAnatomicTarget=anatomicTargets.size();
-		    		
-		    		layoutAnatomicalGroup.removeView(borderAnatomicalGroup);
-		    		createBorderAnatomicalGroup();
-		    		
-		    		for(int i=0;i<numAnatomicTarget;i++){
-		    			createTextViewAnatomical();
-		    			createSeparator();
-		    			anatomicalGroup.setText(anatomicTargets.get(i)+"\n");
-		    			borderAnatomicalGroup.addView(anatomicalGroup,borderAnatomicalGroup.getChildCount(),params);
-		    			borderAnatomicalGroup.addView(separator,borderAnatomicalGroup.getChildCount());
-		    		}
-		    		
-		    		layoutAnatomicalGroup=(LinearLayout)findViewById(R.id.layoutActionAnatomical);
-		    		layoutAnatomicalGroup.addView(borderAnatomicalGroup,layoutAnatomicalGroup.getChildCount());
-					
-					ArrayList<String> therapeuticTargets=helper.getTherapeuticTarget(userEntryCode);
-		    		int numTherapeuticTarget=therapeuticTargets.size();
-		    		
-		    		layoutTherapeuticGroup.removeView(borderTherapeuticGroup);
-		    		createBorderTherapeuticGroup();
-		    		for(int i=0;i<numTherapeuticTarget;i++){
-		    			createTextViewTherapeutic();
-		    			createSeparator();
-		    			therapeuticGroup.setText(therapeuticTargets.get(i)+"\n");
-		    			borderTherapeuticGroup.addView(therapeuticGroup,borderTherapeuticGroup.getChildCount(),params);
-		    			borderTherapeuticGroup.addView(separator,borderTherapeuticGroup.getChildCount());
-		    		}
-		    		layoutTherapeuticGroup=(LinearLayout)findViewById(R.id.layoutActionTherapeutic);
-		    		layoutTherapeuticGroup.addView(borderTherapeuticGroup,layoutTherapeuticGroup.getChildCount());
-		    		//layoutTherapeuticGroup.addView(separator,layoutTherapeuticGroup.getChildCount());
-				}
-		
-		    	public void onNothingSelected(AdapterView<?> arg0) {
-		    	}
-	        });
-	    		
-	    		
-	    	layoutAnatomicalGroup=(LinearLayout)findViewById(R.id.layoutActionAnatomical);
-		    layoutTherapeuticGroup=(LinearLayout)findViewById(R.id.layoutActionTherapeutic);
-		        
-		        
-		    borderTherapeuticGroup.addView(therapeuticGroup,borderTherapeuticGroup.getChildCount(),params);
-		    borderAnatomicalGroup.addView(anatomicalGroup,borderAnatomicalGroup.getChildCount(),params);
-		        
-		    layoutAnatomicalGroup.addView(borderAnatomicalGroup,layoutAnatomicalGroup.getChildCount());
-		    layoutTherapeuticGroup.addView(borderTherapeuticGroup,layoutTherapeuticGroup.getChildCount());   
-		    	
-		        	    	
-		        
-		    //Animals
-		    TextView headerAnimals=(TextView)findViewById(R.id.headerAnimals);
-		    headerAnimals.setTypeface(Typeface.SANS_SERIF);
-		        
-		    Button cetaceansButton=(Button)findViewById(R.id.cetaceansButton);
-		    cetaceansButton.setText("CETACEANS");
-		    cetaceansButton.setTypeface(Typeface.SANS_SERIF);
-		    cetaceansButton.setOnClickListener(new OnClickListener() {
-		
-		    	@Override
-				public void onClick(View v) {
-		    		showDoseInformation(titleBundle, "Cetaceans");	
-				}
-		    });
-		        
-		    Button pinnipedsButton=(Button)findViewById(R.id.pinnipedsButton);
-		    pinnipedsButton.setText("PINNIPEDS");
-		    pinnipedsButton.setTypeface(Typeface.SANS_SERIF);
-		    pinnipedsButton.setOnClickListener(new OnClickListener() {
-		
-		    	@Override
-				public void onClick(View v) {
-		    		SQLiteDatabase db = helper.open();
-					ArrayList<String> families = new ArrayList<String>();
-					if (db!=null)
-						families = helper.read_animals_family(titleBundle, "Pinnipeds");
-					if ((families != null && families.size() == 1 && families.get(0).equals("")) || (families!=null && families.size() == 0))
-						showDoseInformation(titleBundle, "Pinnipeds");
-					else 
-						showDoseInformationPinnipeds(titleBundle, families);
-				}
-		    });
-		        
-		        
-		    Button otherButton=(Button)findViewById(R.id.otherButton);
-		    otherButton.setText("OTHER MM");
-		    otherButton.setTypeface(Typeface.SANS_SERIF);
-		    otherButton.setOnClickListener(new OnClickListener() {
-		
-		    	@Override
-				public void onClick(View v) {
-		    		showDoseInformation(titleBundle, "Other MM");
-				}
-		    });
-		        
-		    if (helper.existDrug(titleBundle)) {
+		        if (helper.existDrug(titleBundle)) {
 				int drug_priority = helper.getDrugPriority(titleBundle);
 				ArrayList<String> sorted_drugs = new ArrayList<String>();
 				sorted_drugs.add(0, titleBundle);
@@ -318,7 +322,11 @@ public class General_Info_Drug extends Activity {
 					
 					//Code when we have a server
 			}	
-		    helper.close();
+		        
+		        
+
+		        
+		    		    helper.close();
         }
         
 	}
