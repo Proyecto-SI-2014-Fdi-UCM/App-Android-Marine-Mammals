@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.graphics.Typeface;
@@ -538,10 +539,19 @@ public class Dose_Information extends Activity {
 		// Handle action bar item clicks here. The action bar will
 		// automatically handle clicks on the Home/Up button, so long
 		// as you specify a parent activity in AndroidManifest.xml.
-		int id = item.getItemId();
-		if (id == R.id.action_settings) {
+		switch (item.getItemId()) {
+        case R.id.calculatorIcon:
+        	Intent c = new Intent(this, ViewPager_MainMenu.class);        	
+        	c.putExtra("dosis", 2);
+			startActivity(c);
 			return true;
-		}
-		return super.onOptionsItemSelected(item);
+        case R.id.reportIcon:
+        	Intent r = new Intent(this, ViewPager_MainMenu.class);
+        	r.putExtra("dosis", 3);
+        	startActivity(r);
+        	return true;
+        default:
+            return super.onOptionsItemSelected(item);
+    }
 	}
 }
