@@ -30,10 +30,19 @@ public class ViewPager_MainMenu extends FragmentActivity {
         		textView.setTypeface(Typeface.SANS_SERIF);
         	}
         }
+        
         ViewPager vpPager = (ViewPager) findViewById(R.id.vp_mainmenu);
         adapterViewPager = new MyPagerAdapter(getSupportFragmentManager());
         vpPager.setAdapter(adapterViewPager);
-        vpPager.setCurrentItem(1);
+        Bundle extra = this.getIntent().getExtras();
+        if (extra != null) {
+			if (extra.getInt("dosis") == 2)
+				vpPager.setCurrentItem(2);
+			else 
+				vpPager.setCurrentItem(3);
+        }
+		else
+			vpPager.setCurrentItem(1);
         
 	}
 
