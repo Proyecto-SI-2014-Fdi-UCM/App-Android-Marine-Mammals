@@ -2,7 +2,6 @@ package com.example.drugsformarinemammals;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Intent;
@@ -13,6 +12,8 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
@@ -20,12 +21,13 @@ import android.widget.TextView;
 
 public class Combined_Search extends Activity {
 
+	
 	private String userEntryAnatomicalTarget;
 	private String userEntryTherapeuticTarget;
 	private String userEntryAnimalTarget;
-	private SpinnerAdapter adapterTherapeuticTarget;
-	private Spinner spinnerTherapeuticTarget;
 	private Handler_Sqlite helper;
+	private AutoCompleteTextView actv;
+	private ArrayAdapter<String> adapterTherapeuticGroup;
 	
 	@Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +46,7 @@ public class Combined_Search extends Activity {
 
 			@Override
 			public void onClick(View v) {
+				userEntryTherapeuticTarget=actv.getText().toString();	
 				search();
 			}
         	
@@ -64,22 +67,12 @@ public class Combined_Search extends Activity {
 		     }
 		     });
 
-		spinnerTherapeuticTarget = (Spinner)findViewById(R.id.SpinTherapeuticTarget);
-		adapterTherapeuticTarget = new SpinnerAdapter(this, R.layout.item_spinner,helper.getAllTherapeuticGroup());	     
-		adapterTherapeuticTarget.setDropDownViewResource(R.layout.spinner_dropdown_item);
-		spinnerTherapeuticTarget.setAdapter(adapterTherapeuticTarget);
-		spinnerTherapeuticTarget.setOnItemSelectedListener(new OnItemSelectedListener() {
+		actv = (AutoCompleteTextView) findViewById(R.id.autoCompleteTextView1);
+		actv.setTypeface(Typeface.SANS_SERIF);
+		actv.setHint("Enter a therapeutic target");		
+		initializeArrayWithTherapeuticGroups();
+		actv.setAdapter(adapterTherapeuticGroup);
 			
-		     public void onItemSelected(AdapterView<?> parent, View arg1,int arg2, long arg3) {
-		    	 userEntryTherapeuticTarget = parent.getSelectedItem().toString();
-		     }
-
-		     public void onNothingSelected(AdapterView<?> arg0) {
-		                // TODO Auto-generated method stub
-		     }
-		     });
-		
-		
 		Spinner spinnerAnimals = (Spinner)findViewById(R.id.SpinAnimals);    
 		SpinnerAdapter adapterAnimals = new SpinnerAdapter(this, R.layout.item_spinner, Arrays.asList(getResources().getStringArray(R.array.Animals)));
 		adapterAnimals.setDropDownViewResource(R.layout.spinner_dropdown_item);
@@ -100,9 +93,16 @@ public class Combined_Search extends Activity {
     }
 
 	
-
+	public void initializeArrayWithTherapeuticGroups() {
+				
+		helper=new Handler_Sqlite(this);
+		helper.open();
+		
+		ArrayList<String> therapeutic_groups=helper.getAllTherapeuticGroup();
+		adapterTherapeuticGroup = new ArrayAdapter<String>(this,android.R.layout.two_line_list_item,android.R.id.text1,therapeutic_groups);
+	}	
 	
-			
+		
 	public void search() {
 		Handler_Sqlite handler = new Handler_Sqlite(this);
 		String[] parameters = new String[3];

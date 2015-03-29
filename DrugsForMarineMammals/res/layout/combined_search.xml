@@ -47,16 +47,18 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:paddingTop="20dp"
-        android:paddingLeft="20dp"
-        android:paddingRight="20dp" >
-
-        <Spinner
-            android:id="@+id/SpinAnatomicalTarget"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
-    </LinearLayout>
-
-    
+        android:paddingLeft="25dp"
+        android:paddingRight="35dp" >
+        
+	    <AutoCompleteTextView
+		      android:id="@+id/autoCompleteTextView1"
+		      android:layout_width="fill_parent"
+		      android:layout_height="wrap_content"
+		      android:gravity="center">
+		      <requestFocus />
+	   	</AutoCompleteTextView>
+	  </LinearLayout>
+        
     <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
@@ -66,12 +68,11 @@
         android:paddingRight="20dp" >
 
         <Spinner
-            android:id="@+id/SpinTherapeuticTarget"
+            android:id="@+id/SpinAnatomicalTarget"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"/>
     </LinearLayout>
-
-    
+	
     <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
