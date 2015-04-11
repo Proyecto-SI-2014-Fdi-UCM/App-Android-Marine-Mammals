@@ -35,5 +35,7 @@
 	<string name="hint_concentration_2lines">Press to enter\nconcentration</string>
 	<string name="hint_concentration">Press to enter concentration</string>
 	<string name="calculate"> Calculate</string>
+	<string name="calculator"> Calculator</string>
+	<string name="report"> Report Experience</string>
 	
 </resources>

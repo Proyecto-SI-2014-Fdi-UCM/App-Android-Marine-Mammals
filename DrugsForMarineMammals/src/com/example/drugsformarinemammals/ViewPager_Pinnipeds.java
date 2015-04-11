@@ -2,6 +2,7 @@ package com.example.drugsformarinemammals;
 
 import java.util.ArrayList;
 
+import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Typeface;
 import android.os.Bundle;
@@ -11,6 +12,8 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.PagerTabStrip;
 import android.support.v4.view.ViewPager;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
@@ -148,5 +151,33 @@ public class ViewPager_Pinnipeds extends FragmentActivity {
 		}
 
 	}
+	
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		// Inflate the menu; this adds items to the action bar if it is present.
+		getMenuInflater().inflate(R.menu.dose_information, menu);
+		return true;
+	}
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		// Handle action bar item clicks here. The action bar will
+		// automatically handle clicks on the Home/Up button, so long
+		// as you specify a parent activity in AndroidManifest.xml.
+		switch (item.getItemId()) {
+        case R.id.calculatorIcon:
+        	Intent c = new Intent(this, ViewPager_MainMenu.class);        	
+        	c.putExtra("dosis", 2);
+			startActivity(c);
+			return true;
+        case R.id.reportIcon:
+        	Intent r = new Intent(this, ViewPager_MainMenu.class);
+        	r.putExtra("dosis", 3);
+        	startActivity(r);
+        	return true;
+        default:
+            return super.onOptionsItemSelected(item);
+		}
+    }
 	
 }

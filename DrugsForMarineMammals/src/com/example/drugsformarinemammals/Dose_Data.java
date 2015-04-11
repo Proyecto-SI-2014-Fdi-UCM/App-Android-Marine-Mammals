@@ -7,15 +7,17 @@ public class Dose_Data {
 	private String amount;
 	private String posology;
 	private String route;
-	private String reference;
+	private String book_reference;
+	private String article_reference;
 	
-	public Dose_Data(String animal_name, String category_name, String amount, String posology, String route, String reference) {
+	public Dose_Data(String animal_name, String category_name, String amount, String posology, String route, String book_reference, String article_reference) {
 		this.animalName = animal_name;
 		this.categoryName = category_name;
 		this.amount = amount;
 		this.posology = posology;
 		this.route = route;
-		this.reference = reference;
+		this.book_reference = book_reference;
+		this.article_reference = article_reference;
 	}
 	
 	public String getAnimalName() {
@@ -58,12 +60,20 @@ public class Dose_Data {
 		route = dose_route;
 	}
 	
-	public String getReference() {
-		return reference;
+	public String getBookReference() {
+		return book_reference;
 	}
 	
-	public void setReference(String dose_reference) {
-		reference = dose_reference;
+	public void setBookReference(String dose_book_reference) {
+		book_reference = dose_book_reference;
+	}
+	
+	public String getArticleReference() {
+		return article_reference;
+	}
+	
+	public void setArticleReference(String dose_article_reference) {
+		article_reference = dose_article_reference;
 	}
 	
 	@Override
@@ -85,7 +95,9 @@ public class Dose_Data {
 			return false;
 		if (!route.equals(dose.getRoute()))
 			return false;
-		if (!reference.equals(dose.getReference()))
+		if (!book_reference.equals(dose.getBookReference()))
+			return false;
+		if (!article_reference.equals(dose.getArticleReference()))
 			return false;
 		return true;
 	 }

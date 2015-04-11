@@ -3,9 +3,15 @@
     tools:context="com.example.drugsformarinemammals.Doses_Information" >
 
     <item
-        android:id="@+id/action_settings"
-        android:orderInCategory="100"
-        android:showAsAction="never"
-        android:title="@string/action_settings"/>
+        android:id="@+id/calculatorIcon"
+        android:showAsAction="ifRoom"
+        android:icon="@drawable/ic_calculator"
+        android:title="@string/calculator"/>
+    
+    <item 
+        android:id="@+id/reportIcon"
+        android:showAsAction="ifRoom"
+        android:icon="@drawable/ic_report"
+        android:title="@string/report"/>
 
 </menu>

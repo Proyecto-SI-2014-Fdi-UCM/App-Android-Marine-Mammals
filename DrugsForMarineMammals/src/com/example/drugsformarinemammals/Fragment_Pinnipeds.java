@@ -24,6 +24,7 @@ public class Fragment_Pinnipeds extends Fragment {
 	private Handler_Sqlite helper;
 	private LinearLayout layout_dose;
 	private int screenWidth;
+	private char reference_index;
 	
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		rootView = inflater.inflate(R.layout.fragment_pinnipeds, container, false);
@@ -38,6 +39,9 @@ public class Fragment_Pinnipeds extends Fragment {
 		layout_dose_information.setBackgroundResource(R.drawable.layout_border);
 		
 		ArrayList<String> notes_index = new ArrayList<String>();
+		ArrayList<String> references = new ArrayList<String>();
+		ArrayList<Article_Reference> references_index = new ArrayList<Article_Reference>();
+		reference_index = 'a';
 		ArrayList<Dose_Data> dose = new ArrayList<Dose_Data>();
 		if (db!=null) {
 			dose = helper.read_dose_information(getArguments().getString("drugName"), "Pinnipeds", getArguments().getString("familyName"), "", "");
@@ -119,7 +123,7 @@ public class Fragment_Pinnipeds extends Fragment {
 		//General Dose
 		
 		if (dose.size() > 0) {
-			show_dose(dose, doseTable, doseData, getArguments().getString("drugName"), "Pinnipeds", getArguments().getString("familyName"), "", "", notes_index);
+			show_dose(dose, doseTable, doseData, getArguments().getString("drugName"), "Pinnipeds", getArguments().getString("familyName"), "", "", notes_index, references, references_index);
 		}
 		
 		HashMap<String, ArrayList<String>> animal_information = new HashMap<String, ArrayList<String>>();
@@ -197,7 +201,7 @@ public class Fragment_Pinnipeds extends Fragment {
 						doseData.addView(textView_animal_category,paramsCategoryName);
 						doseTable.addView(doseData);
 						doseData = new TableRow(getActivity());
-						show_dose(dose, doseTable, doseData, getArguments().getString("drugName"), "Pinnipeds", getArguments().getString("familyName"), animalName, animalCategory, notes_index);
+						show_dose(dose, doseTable, doseData, getArguments().getString("drugName"), "Pinnipeds", getArguments().getString("familyName"), animalName, animalCategory, notes_index, references, references_index);
 						
 						doseData = new TableRow(getActivity());
 					}
@@ -217,7 +221,7 @@ public class Fragment_Pinnipeds extends Fragment {
 						doseData.addView(textView_animal_category,paramsCategoryName);
 						doseTable.addView(doseData);
 						doseData = new TableRow(getActivity());
-						show_dose(dose, doseTable, doseData, getArguments().getString("drugName"), "Pinnipeds", getArguments().getString("familyName"), animalName, animalCategory, notes_index);
+						show_dose(dose, doseTable, doseData, getArguments().getString("drugName"), "Pinnipeds", getArguments().getString("familyName"), animalName, animalCategory, notes_index, references, references_index);
 						
 						doseData = new TableRow(getActivity());
 					}
@@ -238,7 +242,7 @@ public class Fragment_Pinnipeds extends Fragment {
 					doseData.addView(textView_animal_name,paramsAnimalName);
 					doseTable.addView(doseData);
 					doseData = new TableRow(getActivity());
-					show_dose(dose, doseTable, doseData, getArguments().getString("drugName"), "Pinnipeds", getArguments().getString("familyName"), animalName, animalCategory, notes_index);
+					show_dose(dose, doseTable, doseData, getArguments().getString("drugName"), "Pinnipeds", getArguments().getString("familyName"), animalName, animalCategory, notes_index, references, references_index);
 					
 					doseData = new TableRow(getActivity());
 				}
@@ -267,104 +271,113 @@ public class Fragment_Pinnipeds extends Fragment {
 		helper.close();
 	
 		//Notes
-	
-		notes_interface("GENERAL NOTES", getArguments().getString("drugName"), "Pinnipeds", notes_index);
-		notes_interface("SPECIFIC NOTES", getArguments().getString("drugName"), "Pinnipeds", notes_index);
+		additionalInformationInterface("GENERAL NOTES", getArguments().getString("drugName"), "Pinnipeds", notes_index, references_index);
+		additionalInformationInterface("SPECIFIC NOTES", getArguments().getString("drugName"), "Pinnipeds", notes_index, references_index);
+		//References
+		additionalInformationInterface("REFERENCES", getArguments().getString("drugName"), "Pinnipeds", notes_index, references_index);
 	
 		return rootView;
 	
 	}
 
 
-	public void notes_interface(String notesOption, String drug_name, String group_name, ArrayList<String> notesIndex) {
-
-		LinearLayout layout_notes = new LinearLayout(getActivity());
-		layout_notes.setOrientation(LinearLayout.VERTICAL);
-		layout_notes.setLayoutParams(new LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT));
-		layout_notes.setBackgroundResource(R.drawable.layout_border);
+	public void additionalInformationInterface(String option, String drug_name, String group_name, ArrayList<String> notesIndex, ArrayList<Article_Reference> referencesIndex) {
 		
-		if (notesOption.equals("GENERAL NOTES")) {
-			ArrayList<String> notes = new ArrayList<String>();
+		LinearLayout borderLayout = createBorderLayout();
+		ArrayList<String> notes = new ArrayList<String>();
+		if (option.equals("GENERAL NOTES")) {
 			SQLiteDatabase db = helper.open();
 			if (db!=null) {
 				notes = helper.read_general_notes(drug_name, group_name);
 				helper.close();
 			}
-			if (notes.size() > 0) {
-				TextView textView_notes = new TextView(getActivity());
-				textView_notes.setText(notesOption);
-				textView_notes.setTextSize(20);
-				textView_notes.setTextColor(getResources().getColor(R.color.darkGray));
-				textView_notes.setTypeface(Typeface.SANS_SERIF, Typeface.DEFAULT_BOLD.getStyle());
-				LinearLayout.LayoutParams paramsNotes = new LinearLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
-				paramsNotes.leftMargin = 30;
-				paramsNotes.topMargin = 60;
-				layout_dose.addView(textView_notes,layout_dose.getChildCount(),paramsNotes);
-				
-				for (int i=0;i<notes.size();i++) {
-					TextView textView_note = new TextView(getActivity());
-					textView_note.setText("•	" + notes.get(i));
-					textView_note.setTextColor(Color.BLACK);
-					textView_note.setTextSize(16);
-					textView_note.setTypeface(Typeface.SANS_SERIF);
-					LinearLayout.LayoutParams paramsNote = new LinearLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
-					if (screenWidth >= 600) {
-						paramsNote.leftMargin = 45;
-						paramsNote.rightMargin = 45;
-					}
-					else {
-						paramsNote.leftMargin = 60;
-						paramsNote.rightMargin = 60;
-					}
-					paramsNote.topMargin = 5;
-					layout_notes.addView(textView_note,layout_notes.getChildCount(),paramsNote);
-				}
-				
-			}
 		}
-		else {
-			if (notesIndex.size() > 0) {
-				TextView textView_notes = new TextView(getActivity());
-				textView_notes.setText(notesOption);
-				textView_notes.setTextSize(20);
-				textView_notes.setTextColor(getResources().getColor(R.color.darkGray));
-				textView_notes.setTypeface(Typeface.SANS_SERIF, Typeface.DEFAULT_BOLD.getStyle());
-				LinearLayout.LayoutParams paramsNotes = new LinearLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
-				paramsNotes.leftMargin = 30;
-				paramsNotes.topMargin = 60;
-				layout_dose.addView(textView_notes,layout_dose.getChildCount(),paramsNotes);
-				
-				for (int i=0;i<notesIndex.size();i++) {
-					TextView textView_note = new TextView(getActivity());
-					textView_note.setText("(" + (i+1) + ")	" + notesIndex.get(i));
-					textView_note.setTextColor(Color.BLACK);
-					textView_note.setTextSize(16);
-					textView_note.setTypeface(Typeface.SANS_SERIF);
-					LinearLayout.LayoutParams paramsNote = new LinearLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
-					if (screenWidth >= 600) {
-						paramsNote.leftMargin = 45;
-						paramsNote.rightMargin = 45;
-					}
-					else {
-						paramsNote.leftMargin = 60;
-						paramsNote.rightMargin = 60;
-					}
-					paramsNote.topMargin = 5;
-					layout_notes.addView(textView_note,layout_notes.getChildCount(),paramsNote);
+		else if (option.equals("SPECIFIC NOTES")) {
+			notes = notesIndex;
+		}	
+		
+		if (((option.equals("GENERAL NOTES") || option.equals("SPECIFIC NOTES")) && notes.size() > 0) || (option.equals("REFERENCES") && referencesIndex.size() > 0)) {	
+			TextView titleTextView = createTitleTextView();
+			titleTextView.setText(option);
+			LinearLayout.LayoutParams params = createTextViewParams("Title TextView");
+			layout_dose.addView(titleTextView,layout_dose.getChildCount(),params);
+			if (option.equals("GENERAL NOTES") || option.equals("SPECIFIC NOTES")) {
+				for (int i=0;i<notes.size();i++) {
+					TextView informationTextView = createInformationTextView();
+					if (option.equals("GENERAL NOTES"))
+						informationTextView.setText("•	" + notes.get(i));
+					else
+						informationTextView.setText("(" + (i+1) + ")	" + notesIndex.get(i));
+					LinearLayout.LayoutParams informationParams = createTextViewParams("Information TextView");
+					borderLayout.addView(informationTextView,borderLayout.getChildCount(),informationParams);
+				}
+			}
+			else {
+				for (int i=0;i<referencesIndex.size();i++) {
+					TextView informationTextView = createInformationTextView();
+					informationTextView.setText("(" + referencesIndex.get(i).getIndex() + ")   " + referencesIndex.get(i).getArticle());
+					LinearLayout.LayoutParams informationParams = createTextViewParams("Information TextView");
+					borderLayout.addView(informationTextView,borderLayout.getChildCount(),informationParams);
 				}
 			}
 		}
 		
-		layout_dose.addView(layout_notes,layout_dose.getChildCount());
+		layout_dose.addView(borderLayout,layout_dose.getChildCount());
+		
+	}
 	
+	public LinearLayout createBorderLayout() {
+		LinearLayout border_layout = new LinearLayout(getActivity());
+		border_layout.setOrientation(LinearLayout.VERTICAL);
+		border_layout.setLayoutParams(new LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT));
+		border_layout.setBackgroundResource(R.drawable.layout_border);
+		return border_layout;
+	}
+	
+	public TextView createTitleTextView() {
+		TextView title_textview = new TextView(getActivity());
+		title_textview.setTextSize(20);
+		title_textview.setTextColor(getResources().getColor(R.color.darkGray));
+		title_textview.setTypeface(Typeface.SANS_SERIF, Typeface.DEFAULT_BOLD.getStyle());
+		return title_textview;
+	}
+	
+	public TextView createInformationTextView() {
+		TextView information_textview = new TextView(getActivity());
+		information_textview.setTextColor(Color.BLACK);
+		information_textview.setTextSize(16);
+		information_textview.setTypeface(Typeface.SANS_SERIF);
+		return information_textview;
+	}
+	
+	public LinearLayout.LayoutParams createTextViewParams(String option) {
+		
+		LinearLayout.LayoutParams textview_params = new LinearLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
+		if (option.equals("Title TextView")) {
+			textview_params.leftMargin = 30;
+			textview_params.topMargin = 60;
+		}
+		else {
+			if (screenWidth >= 600) {
+				textview_params.leftMargin = 45;
+				textview_params.rightMargin = 45;
+			}
+			else {
+				textview_params.leftMargin = 60;
+				textview_params.rightMargin = 60;
+			}
+			textview_params.topMargin = 5;
+		}
+		return textview_params;
 	}
 
-	public void show_dose(ArrayList<Dose_Data> dose, TableLayout dose_table, TableRow dose_data, String drug_name, String group_name, String animal_family, String animal_name, String animal_category, ArrayList<String> notes) {
+	public void show_dose(ArrayList<Dose_Data> dose, TableLayout dose_table, TableRow dose_data, String drug_name, String group_name, String animal_family, String animal_name, String animal_category, ArrayList<String> notes, ArrayList<String> references, ArrayList<Article_Reference> references_index) {
 
 		String doseAmount;
 		String dosePosology;
 		String doseRoute;
-		String doseReference;
+		String doseBookReference;
+		String doseArticleReference;
 		for (int k=0;k<dose.size();k++) {
 			if (k > 0) {
 				dose_data = new TableRow(getActivity());
@@ -373,7 +386,8 @@ public class Fragment_Pinnipeds extends Fragment {
 			doseAmount = dose.get(k).getAmount();
 			dosePosology = dose.get(k).getPosology();
 			doseRoute = dose.get(k).getRoute();
-			doseReference = dose.get(k).getReference();
+			doseBookReference = dose.get(k).getBookReference();
+			doseArticleReference = dose.get(k).getArticleReference();
 			
 			//Dose amount data
 			
@@ -422,7 +436,18 @@ public class Fragment_Pinnipeds extends Fragment {
 			//Dose reference data
 			
 			TextView textView_animal_dose_reference = new TextView(getActivity());
-			textView_animal_dose_reference.setText(doseReference);
+			if (!doseBookReference.equals(""))
+				textView_animal_dose_reference.setText(doseBookReference);
+			else if (!doseArticleReference.equals("")) {
+				if (!references.contains(doseArticleReference)) {
+					references.add(references.size(),doseArticleReference);
+					Article_Reference article_reference = new Article_Reference(reference_index, doseArticleReference);
+					references_index.add(references_index.size(), article_reference);
+					reference_index++;
+				}
+				int article_index = references.indexOf(doseArticleReference);
+				textView_animal_dose_reference.setText("(" + references_index.get(article_index).getIndex() + ")");
+			}
 			textView_animal_dose_reference.setSingleLine(false);
 			textView_animal_dose_reference.setTextColor(Color.BLACK);
 			textView_animal_dose_reference.setTextSize(15);
@@ -442,7 +467,7 @@ public class Fragment_Pinnipeds extends Fragment {
 			
 			ArrayList<String> specific_notes = new ArrayList<String>();
 			specific_notes = helper.read_specific_notes(drug_name, group_name, animal_name, animal_family, animal_category, 
-						doseAmount, dosePosology, doseRoute, doseReference);
+						doseAmount, dosePosology, doseRoute, doseBookReference, doseArticleReference);
 			
 			String index = "";
 			for (int m=0;m<specific_notes.size();m++) {
@@ -489,7 +514,7 @@ public class Fragment_Pinnipeds extends Fragment {
 			if ( option.equals("Note")) {
 				ArrayList<String> specific_notes = new ArrayList<String>();
 				specific_notes = helper.read_specific_notes(drug_name, group_name, dose.getAnimalName(), family, dose.getCategoryName(), 
-						dose.getAmount(), dose.getPosology(), dose.getRoute(), dose.getReference());
+						dose.getAmount(), dose.getPosology(), dose.getRoute(), dose.getBookReference(), dose.getArticleReference());
 				if (specific_notes.size() > 0)
 					return false;
 			

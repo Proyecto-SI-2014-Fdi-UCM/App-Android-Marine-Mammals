@@ -42,6 +42,24 @@
             android:textColor="@color/blue" />
     </LinearLayout>
 
+    
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingTop="30dp"
+        android:paddingLeft="110dp"
+        android:paddingRight="120dp" >
+
+        <AutoCompleteTextView
+		      android:id="@+id/autoCompleteTextView1"
+		      android:layout_width="fill_parent"
+		      android:layout_height="wrap_content"
+		      android:gravity="center">
+		      <requestFocus />
+	   	</AutoCompleteTextView>
+    </LinearLayout>
+    
     <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
@@ -55,22 +73,6 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
     </LinearLayout>
-
-    
-    <LinearLayout
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:paddingTop="30dp"
-        android:paddingLeft="100dp"
-        android:paddingRight="100dp" >
-
-        <Spinner
-            android:id="@+id/SpinTherapeuticTarget"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
-    </LinearLayout>
-
     
     <LinearLayout
         android:layout_width="fill_parent"

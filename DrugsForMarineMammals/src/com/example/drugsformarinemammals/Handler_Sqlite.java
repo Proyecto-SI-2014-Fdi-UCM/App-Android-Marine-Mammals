@@ -16,7 +16,7 @@ import android.text.TextUtils;
 
 public class Handler_Sqlite extends SQLiteOpenHelper{
 
-	private static final String nameBD = "DrugsForMarineMammals-DataBase4";
+	private static final String nameBD = "DrugsForMarineMammals-DataBase5";
 
 	Context myContext;
 	public Handler_Sqlite(Context ctx){
@@ -47,7 +47,7 @@ public class Handler_Sqlite extends SQLiteOpenHelper{
 		String query6 = "CREATE TABLE Category (category_name TEXT, PRIMARY KEY (category_name))";
 
 		String query7 = "CREATE TABLE Animal_has_Category (animal_name TEXT, family TEXT, group_name TEXT, drug_name TEXT, category_name TEXT," +
-					"reference TEXT, specific_note TEXT, posology TEXT, route TEXT, dose TEXT, FOREIGN KEY (drug_name) REFERENCES Animal(drug_name), FOREIGN KEY (group_name) REFERENCES Animal(group_name)," +
+					"book_reference TEXT, art_reference TEXT, specific_note TEXT, posology TEXT, route TEXT, dose TEXT, FOREIGN KEY (drug_name) REFERENCES Animal(drug_name), FOREIGN KEY (group_name) REFERENCES Animal(group_name)," +
 					"FOREIGN KEY (animal_name) REFERENCES Animal(animal_name), FOREIGN KEY (family) REFERENCES Animal(family), FOREIGN KEY (category_name) REFERENCES Category(category_name), PRIMARY KEY(animal_name, family, group_name, drug_name, category_name," +
 					"reference, specific_note, posology, route))";
 		
@@ -541,16 +541,17 @@ public class Handler_Sqlite extends SQLiteOpenHelper{
 		SQLiteDatabase db = this.getReadableDatabase();
 		String args [] = {drug_name, group_name, family, animal_name, category_name};
 		Cursor c=db.query("Animal_has_Category", null, "drug_name=? and group_name=? and family=? and animal_name=? and category_name=?", args, null, null, null);
-		int idAnimal, idCategory, idAmount, idPosology, idRoute, idReference;
+		int idAnimal, idCategory, idAmount, idPosology, idRoute, idBookReference, idArticleReference;
 		idAnimal = c.getColumnIndex("animal_name");
 		idCategory = c.getColumnIndex("category_name");
 		idAmount = c.getColumnIndex("dose");
 		idPosology = c.getColumnIndex("posology");
 		idRoute = c.getColumnIndex("route");
-		idReference = c.getColumnIndex("reference");
+		idBookReference = c.getColumnIndex("book_reference");
+		idArticleReference = c.getColumnIndex("art_reference");
 		
 		for(c.moveToFirst();!c.isAfterLast();c.moveToNext()) {
-			Dose_Data data = new Dose_Data(c.getString(idAnimal), c.getString(idCategory), c.getString(idAmount), c.getString(idPosology), c.getString(idRoute), c.getString(idReference));
+			Dose_Data data = new Dose_Data(c.getString(idAnimal), c.getString(idCategory), c.getString(idAmount), c.getString(idPosology), c.getString(idRoute), c.getString(idBookReference), c.getString(idArticleReference));
 			if (result.size() == 0)
 				result.add(data);
 			else {
@@ -590,11 +591,11 @@ public class Handler_Sqlite extends SQLiteOpenHelper{
 			return result;
 	}
 	
-	public ArrayList<String> read_specific_notes(String drug_name, String group_name, String animal_name, String family_name, String category_name, String dose, String posology, String route, String reference) {
+	public ArrayList<String> read_specific_notes(String drug_name, String group_name, String animal_name, String family_name, String category_name, String dose, String posology, String route, String book_reference, String article_reference) {
 		ArrayList<String> result = new ArrayList<String>();
 		SQLiteDatabase db = this.getReadableDatabase();
-		String args [] = {drug_name, group_name, family_name, animal_name, category_name, dose, posology, route, reference};
-		Cursor c=db.query("Animal_has_Category", null, "drug_name=? and group_name=? and family=? and animal_name=? and category_name=? and dose=? and posology=? and route=? and reference=?", args, null, null, null);
+		String args [] = {drug_name, group_name, family_name, animal_name, category_name, dose, posology, route, book_reference, article_reference};
+		Cursor c=db.query("Animal_has_Category", null, "drug_name=? and group_name=? and family=? and animal_name=? and category_name=? and dose=? and posology=? and route=? and book_reference=? and art_reference=?", args, null, null, null);
 		int idNote;
 		idNote = c.getColumnIndex("specific_note");
 		for(c.moveToFirst();!c.isAfterLast();c.moveToNext()) {
@@ -612,15 +613,16 @@ public class Handler_Sqlite extends SQLiteOpenHelper{
 		SQLiteDatabase db = this.getReadableDatabase();
 		String args [] = {drug_name, group_name, family};
 		Cursor c=db.query("Animal_has_Category", null, "drug_name=? and group_name=? and family=?", args, null, null, null);
-		int idAnimal, idCategory, idAmount, idPosology, idRoute, idReference;
+		int idAnimal, idCategory, idAmount, idPosology, idRoute, idBookReference, idArticleReference;
 		idAnimal = c.getColumnIndex("animal_name");
 		idCategory = c.getColumnIndex("category_name");
 		idAmount = c.getColumnIndex("dose");
 		idPosology = c.getColumnIndex("posology");
 		idRoute = c.getColumnIndex("route");
-		idReference = c.getColumnIndex("reference");
+		idBookReference = c.getColumnIndex("book_reference");
+		idArticleReference = c.getColumnIndex("art_reference");
 		for(c.moveToFirst();!c.isAfterLast();c.moveToNext()) {
-			Dose_Data data = new Dose_Data(c.getString(idAnimal), c.getString(idCategory), c.getString(idAmount), c.getString(idPosology), c.getString(idRoute), c.getString(idReference));
+			Dose_Data data = new Dose_Data(c.getString(idAnimal), c.getString(idCategory), c.getString(idAmount), c.getString(idPosology), c.getString(idRoute), c.getString(idBookReference), c.getString(idArticleReference));
 			if (result.size() == 0)
 				result.add(data);
 			else {
