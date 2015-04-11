@@ -16,7 +16,7 @@ import android.text.TextUtils;
 
 public class Handler_Sqlite extends SQLiteOpenHelper{
 
-	private static final String nameBD = "DrugsForMarineMammals-DataBase5";
+	private static final String nameBD = "DrugsForMarineMammals-DataBase6";
 
 	Context myContext;
 	public Handler_Sqlite(Context ctx){
@@ -49,7 +49,7 @@ public class Handler_Sqlite extends SQLiteOpenHelper{
 		String query7 = "CREATE TABLE Animal_has_Category (animal_name TEXT, family TEXT, group_name TEXT, drug_name TEXT, category_name TEXT," +
 					"book_reference TEXT, art_reference TEXT, specific_note TEXT, posology TEXT, route TEXT, dose TEXT, FOREIGN KEY (drug_name) REFERENCES Animal(drug_name), FOREIGN KEY (group_name) REFERENCES Animal(group_name)," +
 					"FOREIGN KEY (animal_name) REFERENCES Animal(animal_name), FOREIGN KEY (family) REFERENCES Animal(family), FOREIGN KEY (category_name) REFERENCES Category(category_name), PRIMARY KEY(animal_name, family, group_name, drug_name, category_name," +
-					"reference, specific_note, posology, route))";
+					"book_reference, art_reference, specific_note, posology, route))";
 		
 		String query8 = "CREATE TABLE Therapeutic_Group (name TEXT, PRIMARY KEY (name))";
 		
@@ -146,7 +146,7 @@ public class Handler_Sqlite extends SQLiteOpenHelper{
 		if (!p[0].equals("Choose an Anatomical Target")) {
 			Cursor cc = db.query(table_name, column, where, args, null, null, null);
 			if (cc.moveToFirst())
-				if (!p[1].equals("Choose a Therapeutic Target"))
+				if (!p[1].equals(""))
 					for (cc.moveToFirst();!cc.isAfterLast();cc.moveToNext()) {
 						code = cc.getString(cc.getColumnIndex("code_number"));
 						table_name = "Code_has_Therapeutic_Group"; 
@@ -190,7 +190,7 @@ public class Handler_Sqlite extends SQLiteOpenHelper{
 			cc.close();
 		}
 		else {
-			if (!p[1].equals("Choose a Therapeutic Target")) {
+			if (!p[1].equals("")) {
 				table_name = "Code_has_Therapeutic_Group"; 
 				where = "name=?";
 				String args2[]= {p[1]};
@@ -248,7 +248,7 @@ public class Handler_Sqlite extends SQLiteOpenHelper{
 				}
 			}
 			else 
-				if (p[0].equals("Choose an Anatomical Target") && p[1].equals("Choose a Therapeutic Target")){
+				if (p[0].equals("Choose an Anatomical Target") && p[1].equals("")){
 					table_name = "Drug_aplicated_to_Animal_Type";
 					where = "group_name=?";
 					String column2[] = { "drug_name" };
