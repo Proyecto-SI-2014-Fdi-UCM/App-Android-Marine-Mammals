@@ -24,7 +24,6 @@ import android.widget.AdapterView.OnItemSelectedListener;
 public class General_Info_Drug extends Activity {
 
 	private Handler_Sqlite helper;
-	private String titleBundle;
 	private TextView anatomicalGroup;
 	private TextView therapeuticGroup;
 	private LinearLayout borderTherapeuticGroup;
@@ -32,9 +31,17 @@ public class General_Info_Drug extends Activity {
 	private LinearLayout.LayoutParams params;
 	private LinearLayout layoutAnatomicalGroup;
 	private LinearLayout layoutTherapeuticGroup;
-	private TextView separator;
-	private LinearLayout.LayoutParams paramSeparator;
 	private String userEntryCode;
+	private ArrayList<String> infoBundle;
+	private String drug_name;
+	private String available;
+	private String description;
+	private String license_AEMPS;
+	private String license_EMA;
+	private String license_FDA;
+	private ArrayList<Type_Code> codesInformation;
+	private ArrayList<String> codes;
+	
 	
 	@Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,14 +49,15 @@ public class General_Info_Drug extends Activity {
         setContentView(R.layout.general_info_drug);
         helper=new Handler_Sqlite(this);
         helper.open();
-        
         Bundle extras1= this.getIntent().getExtras();	
         if (extras1!=null){
-			titleBundle=extras1.getString("drugName");
-			       
+        	infoBundle = extras1.getStringArrayList("generalInfoDrug");
+        	initializeGeneralInfoDrug();
+        	initializeCodesInformation();
+        	initializeCodes();
 		    //Title
 			TextView drugTitle=(TextView)findViewById(R.id.drugTitle);       
-			drugTitle.setText(titleBundle);
+			drugTitle.setText(drug_name);
 			drugTitle.setTypeface(Typeface.SANS_SERIF);
 				
 			//Description 
@@ -59,15 +67,14 @@ public class General_Info_Drug extends Activity {
 		    borderDescription.setBackgroundResource(R.drawable.layout_border);
 		        
 		    TextView description=new TextView(this);
-			description.setText(helper.getDescription(titleBundle));
+		    description.setText(this.description);
 			description.setTextSize(18);
 			description.setTypeface(Typeface.SANS_SERIF);
 		       
 			LinearLayout.LayoutParams paramsDescription = new LinearLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
 			paramsDescription.leftMargin = 60;
 			paramsDescription.rightMargin = 60;
-			paramsDescription.topMargin = 20;
-			
+			paramsDescription.topMargin = 20;	
 		        
 			borderDescription.addView(description,borderDescription.getChildCount(),paramsDescription);
 		        
@@ -85,7 +92,7 @@ public class General_Info_Drug extends Activity {
 		
 		    	@Override
 				public void onClick(View v) {
-		    		showDoseInformation(titleBundle, "Cetaceans");	
+		    		showDoseInformation(drug_name, "Cetaceans");	
 				}
 		    });
 		        
@@ -99,11 +106,11 @@ public class General_Info_Drug extends Activity {
 		    		SQLiteDatabase db = helper.open();
 					ArrayList<String> families = new ArrayList<String>();
 					if (db!=null)
-						families = helper.read_animals_family(titleBundle, "Pinnipeds");
+						families = helper.read_animals_family(drug_name, "Pinnipeds");
 					if ((families != null && families.size() == 1 && families.get(0).equals("")) || (families!=null && families.size() == 0))
-						showDoseInformation(titleBundle, "Pinnipeds");
+						showDoseInformation(drug_name, "Pinnipeds");
 					else 
-						showDoseInformationPinnipeds(titleBundle, families);
+						showDoseInformationPinnipeds(drug_name, families);
 				}
 		    });
 		        
@@ -115,17 +122,15 @@ public class General_Info_Drug extends Activity {
 		
 		    	@Override
 				public void onClick(View v) {
-		    		showDoseInformation(titleBundle, "Other MM");
+		    		showDoseInformation(drug_name, "Other MM");
 				}
 		    });
-		        
-		
+		        		
 			
-		  //Codes & therapeutic target & anatomical target
+		    //Codes & therapeutic target & anatomical target
 		    TextView headerATCvetCodes=(TextView)findViewById(R.id.headerATCvetCodes);
 		    headerATCvetCodes.setTypeface(Typeface.SANS_SERIF, Typeface.BOLD);
-		    
-		     
+		    		     
 		    //Action
 		    TextView headerActionAnatomical=(TextView)findViewById(R.id.headerActionAnatomical);
 		    headerActionAnatomical.setTypeface(Typeface.SANS_SERIF, Typeface.BOLD);
@@ -143,49 +148,49 @@ public class General_Info_Drug extends Activity {
 		    params.leftMargin = 60;
 		    params.rightMargin =60;
 		    params.topMargin = 20;         
-		    //params.bottomMargin=20;
 		    
-		    Spinner codesSpinner= (Spinner)findViewById(R.id.codesSpinner);
-			SpinnerAdapter adapterCodes = new SpinnerAdapter(this, R.layout.item_spinner,helper.getCodes(titleBundle));	     
+		    Spinner codesSpinner= (Spinner)findViewById(R.id.codesSpinner);	     
+		    SpinnerAdapter adapterCodes = new SpinnerAdapter(this, R.layout.item_spinner,codes);
 	        adapterCodes.setDropDownViewResource(R.layout.spinner_dropdown_item);
 	    	codesSpinner.setAdapter(adapterCodes);
-		    	
 	    	codesSpinner.setOnItemSelectedListener(new OnItemSelectedListener() {
 	
 		    	public void onItemSelected(AdapterView<?> parent, View arg1,int arg2, long arg3) {
 		    		userEntryCode = parent.getSelectedItem().toString();	
-		    		ArrayList<String> anatomicTargets=helper.getAnatomicTarget(userEntryCode);
-		    		int numAnatomicTarget=anatomicTargets.size();
+		    		int numCodes=codesInformation.size();
 		    		
 		    		layoutAnatomicalGroup.removeView(borderAnatomicalGroup);
 		    		createBorderAnatomicalGroup();
 		    		
-		    		for(int i=0;i<numAnatomicTarget;i++){
-		    			createTextViewAnatomical();
-		    			createSeparator();
-		    			anatomicalGroup.setText(anatomicTargets.get(i)+"\n");
-		    			borderAnatomicalGroup.addView(anatomicalGroup,borderAnatomicalGroup.getChildCount(),params);
-		    			borderAnatomicalGroup.addView(separator,borderAnatomicalGroup.getChildCount());
+		    		boolean founded=false;
+		    		int i=0;
+		    		while(!founded && i<numCodes){
+		    			if(userEntryCode.equals(codesInformation.get(i).getCode())){
+		    				createTextViewAnatomical();
+			    			anatomicalGroup.setText(codesInformation.get(i).getAnatomic_group()+"\n");
+			    			borderAnatomicalGroup.addView(anatomicalGroup,borderAnatomicalGroup.getChildCount(),params);
+			    			founded=true;
+		    			}
+		    			i++;
 		    		}
 		    		
 		    		layoutAnatomicalGroup=(LinearLayout)findViewById(R.id.layoutActionAnatomical);
 		    		layoutAnatomicalGroup.addView(borderAnatomicalGroup,layoutAnatomicalGroup.getChildCount());
-					
-					ArrayList<String> therapeuticTargets=helper.getTherapeuticTarget(userEntryCode);
-		    		int numTherapeuticTarget=therapeuticTargets.size();
-		    		
 		    		layoutTherapeuticGroup.removeView(borderTherapeuticGroup);
 		    		createBorderTherapeuticGroup();
-		    		for(int i=0;i<numTherapeuticTarget;i++){
-		    			createTextViewTherapeutic();
-		    			createSeparator();
-		    			therapeuticGroup.setText(therapeuticTargets.get(i)+"\n");
-		    			borderTherapeuticGroup.addView(therapeuticGroup,borderTherapeuticGroup.getChildCount(),params);
-		    			borderTherapeuticGroup.addView(separator,borderTherapeuticGroup.getChildCount());
+		    		founded=false;
+		    		i=0;
+		    		while(!founded && i<numCodes){
+		    			if(userEntryCode.equals(codesInformation.get(i).getCode())){
+		    				createTextViewTherapeutic();
+		    				therapeuticGroup.setText(codesInformation.get(i).getTherapeutic_group()+"\n");
+			    			borderTherapeuticGroup.addView(therapeuticGroup,borderTherapeuticGroup.getChildCount(),params);
+			    			founded=true;
+		    			}
+		    			i++;
 		    		}
 		    		layoutTherapeuticGroup=(LinearLayout)findViewById(R.id.layoutActionTherapeutic);
 		    		layoutTherapeuticGroup.addView(borderTherapeuticGroup,layoutTherapeuticGroup.getChildCount());
-		    		//layoutTherapeuticGroup.addView(separator,layoutTherapeuticGroup.getChildCount());
 				}
 		
 		    	public void onNothingSelected(AdapterView<?> arg0) {
@@ -208,7 +213,7 @@ public class General_Info_Drug extends Activity {
 		    TextView headerGenericDrug=(TextView)findViewById(R.id.headerGenericDrug);
 			headerGenericDrug.setTypeface(Typeface.SANS_SERIF, Typeface.BOLD);    
 		        
-		    if(helper.isAvalaible(titleBundle)){
+			if(available.equals("Yes")){
 		    	ImageView genericDrug=new ImageView(this);
 		    	genericDrug.setImageResource(R.drawable.tick_verde);
 		    	LinearLayout layoutGenericDrug=(LinearLayout)findViewById(R.id.layoutGenericDrug);
@@ -239,9 +244,8 @@ public class General_Info_Drug extends Activity {
 		        
 		    TextView fdaLicense=(TextView)findViewById(R.id.license1);
 		    Typeface font=Typeface.createFromAsset(getAssets(), "Typoster_demo.otf");
-		    String fda=helper.getLicense_FDA(titleBundle);
 		    fdaLicense.setTypeface(font);
-		    if(fda.equals("Yes")){
+		    if(license_FDA.equals("Yes")){
 		    	fdaLicense.setText("Yes");
 		        fdaLicense.setTextColor(getResources().getColor(R.color.lightGreen));
 		    }
@@ -251,9 +255,8 @@ public class General_Info_Drug extends Activity {
 		    }
 	    
 		    TextView emaLicense=(TextView)findViewById(R.id.license3);
-		    String ema=helper.getLicense_EMA(titleBundle);
 		    emaLicense.setTypeface(font);
-		    if(ema.equals("Yes")){
+		    if(license_EMA.equals("Yes")){
 		    	emaLicense.setText("Yes");
 		        emaLicense.setTextColor(getResources().getColor(R.color.lightGreen));
 		    }
@@ -263,9 +266,8 @@ public class General_Info_Drug extends Activity {
 		    }
 		    
 		    TextView aempsLicense = (TextView) findViewById(R.id.license2);
-			String aemps = helper.getLicense_AEMPS(titleBundle);
 			aempsLicense.setTypeface(font);
-			if (aemps.equals("Yes")) {
+			if (license_AEMPS.equals("Yes")) {
 				aempsLicense.setText("Yes");
 				aempsLicense.setTextColor(getResources().getColor(R.color.lightGreen));
 			} else {
@@ -306,10 +308,10 @@ public class General_Info_Drug extends Activity {
 		   
 
 		        
-		        if (helper.existDrug(titleBundle)) {
-				int drug_priority = helper.getDrugPriority(titleBundle);
+		        if (helper.existDrug(drug_name)) {
+				int drug_priority = helper.getDrugPriority(drug_name);
 				ArrayList<String> sorted_drugs = new ArrayList<String>();
-				sorted_drugs.add(0, titleBundle);
+				sorted_drugs.add(0, drug_name);
 				for (int i=1;i<drug_priority;i++) {
 					String name = helper.getDrugName(i);
 					sorted_drugs.add(i, name);
@@ -331,6 +333,7 @@ public class General_Info_Drug extends Activity {
         
 	}
 
+	
 	public void showDoseInformation(String drugName, String groupName) {
 		Intent i = new Intent(this, Dose_Information.class);
 		i.putExtra("drugName", drugName);
@@ -349,7 +352,6 @@ public class General_Info_Drug extends Activity {
 		anatomicalGroup=new TextView(this);
 	    anatomicalGroup.setTextSize(18);
 	    anatomicalGroup.setTypeface(Typeface.SANS_SERIF);
-	    //anatomicalGroup.setBackgroundColor(getResources().getColor(R.color.lightGray));
 	}
 	
 	public void createTextViewTherapeutic(){
@@ -372,9 +374,50 @@ public class General_Info_Drug extends Activity {
 	    borderTherapeuticGroup.setBackgroundResource(R.drawable.layout_border);
 	}
 	
-	public void createSeparator(){
-		separator=new TextView(this);
-		separator.setText("");
-		separator.setBackgroundColor(getResources().getColor(R.color.lightGray));		
+	
+	public void initializeGeneralInfoDrug(){
+		//{"drug_name":"Furosemide","description":"Loop diuretic to treat fluid retention","available":"Yes","license_AEMPS":"Nd","license_EMA":"Nd","license_FDA":"Yes"}
+		String[] parse;
+		codesInformation=new ArrayList<Type_Code>();
+		parse= infoBundle.get(0).split("\\{\"drug_name\":\"");
+		parse=parse[1].split("\",\"description\":\"");
+		drug_name=parse[0];
+		parse=parse[1].split("\",\"available\":\"");
+		description=parse[0];
+		parse=parse[1].split("\",\"license_AEMPS\":\"");
+		available=parse[0];
+		parse=parse[1].split("\",\"license_EMA\":\"");
+		license_AEMPS=parse[0];
+		parse=parse[1].split("\",\"license_FDA\":\"");
+		license_EMA=parse[0];
+		parse=parse[1].split("\"\\}");
+		license_FDA=parse[0];
+	}
+	
+	public void initializeCodesInformation() {
+		String[] tmp;
+		String[] parse;
+		
+		//QA07AA91","QA Alimentary track and metabolism","Antidiarrheals, intestinal anti-inflammatory"]
+		tmp=infoBundle.get(1).split("\\[\""); 
+		int size=tmp.length;
+		for(int i=1; i<size; i++ ){
+			parse=tmp[i].split("\",\"");
+			Type_Code type=new Type_Code();
+			type.setCode(parse[0]);
+			type.setAnatomic_group(parse[1]);
+			parse = parse[2].split("\"\\]");
+			type.setTherapeutic_group(parse[0]);
+			codesInformation.add(type);
+			
+		}
+	}
+	
+	public void initializeCodes(){
+		codes=new ArrayList<String>();
+		int size=codesInformation.size();
+		for(int i=0; i<size;i++){
+			codes.add(codesInformation.get(i).getCode());
+		}
 	}
 }
