@@ -96,15 +96,11 @@ public class Fragment_Formulary extends Fragment {
 			httppost = new HttpPost(urls[0]);
 			
 			try{
-				JSONObject json = new JSONObject();
-				StringEntity se = new StringEntity(json.toString());
-				se.setContentType(new BasicHeader(HTTP.CONTENT_TYPE, "application/json"));
-		        httppost.setEntity(se);
-		        HttpResponse response = httpclient.execute(httppost);
+				HttpResponse response = httpclient.execute(httppost);
 		        jsonResponse = EntityUtils.toString(response.getEntity());		        
 		
 		  }catch (Exception e) {
-		        Log.v("Error adding article", e.getMessage());
+		        Log.v("Error: ", e.getMessage());
 		  }
 		  return jsonResponse;
 			
@@ -166,19 +162,6 @@ public class Fragment_Formulary extends Fragment {
 			httppost2 = new HttpPost(urls[1]+userEntry);
 			
 			try {
-			
-			        JSONObject json1 = new JSONObject();
-			        JSONObject json2 = new JSONObject();
-			        //add serialised JSON object into POST request
-			        StringEntity se1 = new StringEntity(json1.toString());
-			        StringEntity se2 = new StringEntity(json2.toString());
-			        //set request content type
-			        se1.setContentType(new BasicHeader(HTTP.CONTENT_TYPE, "application/json"));
-			        httppost1.setEntity(se1);
-			        se2.setContentType(new BasicHeader(HTTP.CONTENT_TYPE, "application/json"));
-			        httppost2.setEntity(se2);
-			
-			
 			        //send the POST request
 			        HttpResponse response1 = httpclient.execute(httppost1);
 			        HttpResponse response2 = httpclient.execute(httppost2);
@@ -188,8 +171,7 @@ public class Fragment_Formulary extends Fragment {
 			        String jsonResponse2 = EntityUtils.toString(response2.getEntity());
 			        if (!jsonResponse1.equals("")){
 			        	jsonResponse.add(jsonResponse1);
-			        	jsonResponse.add(jsonResponse2);
-			        	
+			        	jsonResponse.add(jsonResponse2);        	
 			        }
 			        
 			        return jsonResponse;
