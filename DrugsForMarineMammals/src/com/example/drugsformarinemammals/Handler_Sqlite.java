@@ -16,11 +16,11 @@ import android.text.TextUtils;
 
 public class Handler_Sqlite extends SQLiteOpenHelper{
 
-	private static final String nameBD = "DrugsForMarineMammals-DataBase6";
+	private static final String nameBD = "DrugsForMarineMammals-DataBase7";
 
 	Context myContext;
 	public Handler_Sqlite(Context ctx){
-		super(ctx,nameBD, null,2);
+		super(ctx,nameBD, null,1);
 		myContext = ctx;
 	}
 	
@@ -34,7 +34,7 @@ public class Handler_Sqlite extends SQLiteOpenHelper{
 	public void onCreate(SQLiteDatabase db){
 		String query1 = "CREATE TABLE Drug (drug_name TEXT, description TEXT, available TEXT, license_AEMPS TEXT, license_EMA TEXT, license_FDA TEXT, priority INTEGER, PRIMARY KEY (drug_name))";
 
-		String query2 = "CREATE TABLE Code(code_number TEXT, drug_name TEXT, FOREIGN KEY (drug_name) REFERENCES Drug(drug_name), PRIMARY KEY (code_number))";
+		String query2 = "CREATE TABLE Code(code_number TEXT, anatomic_group_name TEXT, therapeutic_group_name TEXT, drug_name TEXT, FOREIGN KEY (drug_name) REFERENCES Drug(drug_name), PRIMARY KEY (code_number))";
 		
 		String query3 = "CREATE TABLE Animal_Type (group_name TEXT, PRIMARY KEY (group_name))";
 		

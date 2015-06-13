@@ -37,7 +37,6 @@ public class Combined_Search extends Activity {
 	private String userEntryAnatomicalTarget;
 	private String userEntryTherapeuticTarget;
 	private String userEntryAnimalTarget;
-	private Handler_Sqlite helper;
 	private AutoCompleteTextView actv;
 	
 	@Override
@@ -47,8 +46,6 @@ public class Combined_Search extends Activity {
         userEntryAnatomicalTarget = "";
     	userEntryTherapeuticTarget = "";
     	userEntryAnimalTarget = "";
-    	helper=new Handler_Sqlite(this);
-    	helper.open();
     	TextView title = (TextView)findViewById(R.id.CombinedSearch);
     	title.setTypeface(Typeface.SANS_SERIF);
         Button go=(Button)findViewById(R.id.goButton);
@@ -96,7 +93,6 @@ public class Combined_Search extends Activity {
 		    }
 		    });
 		
-		helper.close();
     }	
 	
 	private class GetDrugsByCombinedSearch extends AsyncTask<String, Void, String>{
