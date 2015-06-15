@@ -47,6 +47,7 @@ public class ViewPager_MainMenu extends FragmentActivity {
 	}
 
 
+
 	public static class MyPagerAdapter extends FragmentStatePagerAdapter {
 		private static int NUM_ITEMS = 4;
 

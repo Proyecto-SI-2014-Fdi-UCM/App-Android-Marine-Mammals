@@ -1,17 +1,32 @@
 package com.example.drugsformarinemammals;
 
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+
+import org.apache.http.HttpResponse;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.util.EntityUtils;
+
+import com.itextpdf.text.Document;
+import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.pdf.PdfWriter;
 
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.AssetManager;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -39,7 +54,12 @@ public class Fragment_About extends Fragment {
 		expandableAbout.setOnChildClickListener(new OnChildClickListener() {
 			@Override
 			public boolean onChildClick(ExpandableListView arg0, View arg1, int positionGroup, int positionChild, long arg4) {
-				openPdf(positionGroup,positionChild );
+				if(positionGroup==1 && positionChild ==6){
+					String[] urls={"http://formmulary.tk/Android/getDrugNames.php"};
+					new GetDrugNamesAndCreatePdf(rootView.getContext()).execute(urls);
+				}
+				else 
+					openPdf(positionGroup,positionChild );
 				
 				return true;
 			}
@@ -71,8 +91,8 @@ public class Fragment_About extends Fragment {
 						break;
 				case 5: fileName="bibliography.pdf";
 						break;
-				case 6: fileName="druglist.pdf";
-					break;
+				//case 6: fileName="druglist.pdf";
+				
 				
 			}
 		}
@@ -137,5 +157,72 @@ public class Fragment_About extends Fragment {
 		headers.add(2);
 
 	}		
+	
+	public class GetDrugNamesAndCreatePdf extends AsyncTask<String, Void, String>{
+		String jsonResponse;
+		Context context;
+		ArrayList<String> drugNames=new ArrayList<String>();
+		public GetDrugNamesAndCreatePdf(Context c){
+			context=c;
+		}
+		@Override
+		protected String doInBackground(String... urls) {
+			HttpPost httppost;
+			HttpClient httpclient = new DefaultHttpClient();
+			httppost = new HttpPost(urls[0]);
+			
+			try{
+				HttpResponse response = httpclient.execute(httppost);
+		        jsonResponse = EntityUtils.toString(response.getEntity());		        
+		
+		  }catch (Exception e) {
+		        Log.v("Error: ", e.getMessage());
+		  }
+		  return jsonResponse;
+		}
+		
+		protected void onPostExecute(String result) {
+			Calendar c=Calendar.getInstance();
+			String day=Integer.toString(c.get(Calendar.DAY_OF_MONTH));
+			String month = Integer.toString(c.get(Calendar.MONTH)+1);
+			String year = Integer.toString(c.get(Calendar.YEAR));
+			initializeDrugNames(result);
+			String filename = "drugList.pdf";
+			try {
+				//Creamos el fichero en la memoria interna del teléfono
+				FileOutputStream outputStream;
+				outputStream = context.openFileOutput(filename, Context.MODE_WORLD_READABLE);
+				//Librería itextg para crear un doumento pdf
+				//Creamos un fichero tipo Document
+				Document document = new Document();
+				//Asociamos el Document a nuestro fichero pdf
+	            PdfWriter.getInstance(document,outputStream);
+	            //Abrimos el Document
+	            document.open();
+	            //Escribimos el contenido del fichero
+	            document.add(new Paragraph("DRUG LIST IN THE FORMMULARY® (by alphabetical order) updated on "+day+"/"+month+"/"+year));
+	            int size=drugNames.size();
+		        for(int i=0;i<size;i++){
+		        	document.add(new Paragraph(drugNames.get(i)));
+		        }
+				document.close();
+				outputStream.close();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			Intent intent = new Intent(Intent.ACTION_VIEW);
+			intent.setDataAndType(Uri.parse("file://"+context.getFilesDir()+ "/"+"drugList.pdf"), "application/pdf");
+			startActivity(intent);
+		}
+		public void initializeDrugNames(String result){			
+			String []parse= result.split("\\[\"");
+			int size=parse.length;
+			for(int i=1;i<size;i++){
+				String[] tmp=parse[i].split("\"\\]");
+				drugNames.add(tmp[0]);
+			}
+		}
+	}
+
 	
 }

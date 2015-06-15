@@ -1,0 +1,11 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.example.drugsformarinemammals.ViewPager_Main" >
+
+    <item
+        android:id="@+id/sync"
+        android:showAsAction="ifRoom"
+        android:icon="@drawable/sync"
+        android:title="@string/sync"/>
+
+</menu>
