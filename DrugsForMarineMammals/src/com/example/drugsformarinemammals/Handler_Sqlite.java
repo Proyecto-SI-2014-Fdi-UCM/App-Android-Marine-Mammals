@@ -1,9 +1,5 @@
 package com.example.drugsformarinemammals;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.HashMap;
@@ -12,11 +8,10 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.text.TextUtils;
 
 public class Handler_Sqlite extends SQLiteOpenHelper{
 
-	private static final String nameBD = "DrugsForMarineMammals-DataBase7";
+	private static final String nameBD = "DrugsForMarineMammals-DataBase10";
 
 	Context myContext;
 	public Handler_Sqlite(Context ctx){
@@ -72,32 +67,7 @@ public class Handler_Sqlite extends SQLiteOpenHelper{
 		db.execSQL(query9);
 		db.execSQL(query10);
 		db.execSQL(query11);
-		
-		 InputStream is = null;
-		    try {
-		         is = myContext.getAssets().open("BBDD_DrugsForMarineMammals.sql");
-		         if (is != null) {
-		             db.beginTransaction();
-		             BufferedReader reader = new BufferedReader(new InputStreamReader(is));
-		             String line = reader.readLine();
-		             while (!TextUtils.isEmpty(line)) {
-		                 db.execSQL(line);
-		                 line = reader.readLine();
-		             }
-		             db.setTransactionSuccessful();
-		         }
-		    } catch (Exception ex) {
-		        // Muestra log             
-		    } finally {
-		        db.endTransaction();
-		        if (is != null) {
-		            try {
-		                is.close();
-		            } catch (IOException e) {
-		                // Muestra log
-		            }                
-		        }
-		    }			
+					
 	}
 
 	@Override
@@ -354,7 +324,6 @@ public class Handler_Sqlite extends SQLiteOpenHelper{
 	}
 
 	public boolean isAvalaible(String drug_name) {
-		// TODO Auto-generated method stub
 		SQLiteDatabase db=this.getReadableDatabase();
 		String args[]={drug_name};
 		String columns[]={"available"};
@@ -382,7 +351,6 @@ public class Handler_Sqlite extends SQLiteOpenHelper{
 	}
 
 	public ArrayList<String>  getAnatomicTarget(String code_number) {
-		// TODO Auto-generated method stub
 		ArrayList<String> solution= new ArrayList<String>();
 		SQLiteDatabase db=this.getReadableDatabase();
 		String args[]={code_number};
@@ -399,7 +367,6 @@ public class Handler_Sqlite extends SQLiteOpenHelper{
 	}
 	
 	public ArrayList<String>  getTherapeuticTarget(String code_number) {
-		// TODO Auto-generated method stub
 		ArrayList<String> solution= new ArrayList<String>();
 		SQLiteDatabase db=this.getReadableDatabase();
 		String args[]={code_number};
@@ -642,6 +609,55 @@ public class Handler_Sqlite extends SQLiteOpenHelper{
 		
 		return result;
 	}
+	//Save the general information drug in local database
+	public void saveGeneralInfoDrug(ArrayList<String> generalInfo){
+		String query="INSERT INTO Drug (drug_name, description, available, license_AEMPS, license_EMA, license_FDA, priority) VALUES ('"+generalInfo.get(0)+"','"+generalInfo.get(1)+"','"+generalInfo.get(2)+"','"+ generalInfo.get(3)+"','"+ generalInfo.get(4)+"','"+generalInfo.get(5)+"',"+1+");";
+		this.open().execSQL(query);
+		this.close();
+	}
 
+	public void saveCodeInformation(ArrayList<Type_Code> info, String drugName){
+		int size=info.size();
+		for(int i=0;i<size;i++){
+			String query="INSERT INTO Code (code_number,anatomic_group_name,therapeutic_group_name,drug_name) VALUES('"+info.get(i).getCode()+"','"+info.get(i).getAnatomic_group()+"','"+info.get(i).getTherapeutic_group()+"','"+drugName+"');";
+			this.open().execSQL(query);
+		}
+		this.close();
+	}
+	public ArrayList<Type_Code> getCodesInformation(String name){
+		ArrayList<Type_Code> solution= new ArrayList<Type_Code>();
+		
+		SQLiteDatabase db=this.getReadableDatabase();
+		String args[]={name};
+		String columns[]={"code_number","anatomic_group_name","therapeutic_group_name"};
+		Cursor c=db.query("Code", columns, "drug_name=?", args, null, null, null);
+		int indexCode=c.getColumnIndex("code_number");
+		int indexAnatomical=c.getColumnIndex("anatomic_group_name");
+		int indexTherapeutic=c.getColumnIndex("therapeutic_group_name");
+		for(c.moveToFirst();!c.isAfterLast();c.moveToNext()){
+			Type_Code type=new Type_Code();
+			type.setCode(c.getString(indexCode));
+			type.setAnatomic_group(c.getString(indexAnatomical));
+			type.setTherapeutic_group(c.getString(indexTherapeutic));
+			solution.add(type);
+		}
+		c.close();
+		return solution;
+		
+	}
 
+	public void updateGeneralInfroDrug(ArrayList<String> generalInfo) {
+		String query="UPDATE Drug SET description='"+generalInfo.get(1)+ "',available='"+generalInfo.get(2)+"',license_AEMPS='"+generalInfo.get(3)+"',license_FDA='"+generalInfo.get(4)+"'WHERE drug_name='"+ generalInfo.get(0)+"'";
+		this.open().execSQL(query);
+		this.close();
+	}
+
+	public void updateCodeInformation(ArrayList<Type_Code> info, String drugName) {
+		int size=info.size();
+		for(int i=0;i<size;i++){
+			String query="UPDATE Code SET anatomic_group_name='"+info.get(i).getAnatomic_group()+ "',therapeutic_group_name='"+info.get(i).getTherapeutic_group()+"',drug_name='"+drugName+"'WHERE code_number='"+ info.get(i).getCode()+"'";
+			this.open().execSQL(query);
+		}
+		this.close();
+	}
 }
