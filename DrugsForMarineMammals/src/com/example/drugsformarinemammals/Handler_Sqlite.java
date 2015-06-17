@@ -710,7 +710,7 @@ public class Handler_Sqlite extends SQLiteOpenHelper{
 		this.close();
 	}
 	
-<<<<<<< HEAD
+
 	public int  getTotalDrugs() {
 		
 		int result = 0;
@@ -741,7 +741,7 @@ public class Handler_Sqlite extends SQLiteOpenHelper{
 		db.execSQL(query4);
 		db.execSQL(query5);
 		db.close();
-=======
+
 	public void deleteDose(String drug_name) {
 		SQLiteDatabase db = getWritableDatabase();
 	    db.delete("Animal_has_Category", "drug_name="+"'"+drug_name+"'", null);
@@ -750,7 +750,6 @@ public class Handler_Sqlite extends SQLiteOpenHelper{
 	public void deleteNotes(String drug_name) {
 		SQLiteDatabase db = getWritableDatabase();
 	    db.delete("Drug_aplicated_to_Animal_Type", "drug_name="+"'"+drug_name+"'", null);
->>>>>>> 6f5919455dc714f7ffab5342982ef3ce9e9e6bcb
 	}
 }
 
