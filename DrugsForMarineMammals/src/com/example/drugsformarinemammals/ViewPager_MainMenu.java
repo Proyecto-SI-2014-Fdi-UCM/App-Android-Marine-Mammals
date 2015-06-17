@@ -1,6 +1,8 @@
 package com.example.drugsformarinemammals;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import org.apache.http.HttpResponse;
@@ -130,12 +132,12 @@ public class ViewPager_MainMenu extends FragmentActivity {
 			case R.id.sync:
 				orderDrugsByPriority();
 				if(drugList.size()>0){
-					String[] urls={"http://formmulary.tk/Android/getGeneralInfoDrug.php?drug_name=","http://formmulary.tk/Android/getInfoCodes.php?drug_name="};
+					
 					String[] urlsDrugInfo={"http://formmulary.tk/Android/getGeneralInfoDrug.php?drug_name=","http://formmulary.tk/Android/getInfoCodes.php?drug_name="};
 					String[] urlsDoseInfo={"http://formmulary.tk/Android/getDoseInformation.php?drug_name=","http://formmulary.tk/Android/getGeneralNotesInformation.php?drug_name="};
 					int size=drugList.size();
 					for(int i=0;i<size;i++) {
-						new GetGeneralInfoDrug(i).execute(urls);
+						
 						new GetGeneralInfoDrug(i).execute(urlsDrugInfo);
 						new GetDoseInformation(i).execute(urlsDoseInfo);
 					}

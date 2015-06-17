@@ -11,7 +11,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 public class Handler_Sqlite extends SQLiteOpenHelper{
 
-	private static final String nameBD = "DrugsForMarineMammals-DataBase11";
+	private static final String nameBD = "DrugsForMarineMammals-DataBase12";
 
 	Context myContext;
 	public Handler_Sqlite(Context ctx){
@@ -741,6 +741,7 @@ public class Handler_Sqlite extends SQLiteOpenHelper{
 		db.execSQL(query4);
 		db.execSQL(query5);
 		db.close();
+	}
 
 	public void deleteDose(String drug_name) {
 		SQLiteDatabase db = getWritableDatabase();

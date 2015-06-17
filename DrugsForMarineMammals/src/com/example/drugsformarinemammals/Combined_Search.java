@@ -123,26 +123,26 @@ public class Combined_Search extends Activity {
 			case R.id.sync:
 				orderDrugsByPriority();
 				if(drugList.size()>0){
-					String[] urls={"http://formmulary.tk/Android/getGeneralInfoDrug.php?drug_name=","http://formmulary.tk/Android/getInfoCodes.php?drug_name="};
+					
 					String[] urlsDrugInfo={"http://formmulary.tk/Android/getGeneralInfoDrug.php?drug_name=","http://formmulary.tk/Android/getInfoCodes.php?drug_name="};
 					String[] urlsDoseInfo={"http://formmulary.tk/Android/getDoseInformation.php?drug_name=","http://formmulary.tk/Android/getGeneralNotesInformation.php?drug_name="};
 					int size=drugList.size();
 					for(int i=0;i<size;i++) {
-						new GetGeneralInfoDrug(i).execute(urls);
+						
 						new GetGeneralInfoDrug(i).execute(urlsDrugInfo);
 						new GetDoseInformation(i).execute(urlsDoseInfo);
 					}
-					displayMessage("Drugs of your last searches have been updated");
+					displayMessage("Synchronization","Drugs of your last searches have been updated");
 				}
 				else
-					displayMessage("No drug has been updated, please do any search and try again");
+					displayMessage("Synchronization","No drug has been updated, please do any search and try again");
 				return true;
 			default:
 				return super.onOptionsItemSelected(item);
 		}
 	}
 
-	private void displayMessage(String message) {
+	private void displayMessage(String messageTitle,String message) {
 		AlertDialog.Builder myalert = new AlertDialog.Builder(this);
 		
 		TextView title = new TextView(this);
@@ -150,7 +150,7 @@ public class Combined_Search extends Activity {
 		title.setTextSize(20);
 		title.setTextColor(getResources().getColor(R.color.blue));
 		title.setPadding(8, 8, 8, 8);
-		title.setText("Synchronization");
+		title.setText(messageTitle);
 		title.setGravity(Gravity.CENTER_VERTICAL);
 		
 		LinearLayout layout = new LinearLayout(this);

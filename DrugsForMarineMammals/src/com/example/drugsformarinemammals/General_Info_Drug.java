@@ -401,12 +401,12 @@ public class General_Info_Drug extends Activity {
 			case R.id.sync:
 				orderDrugsByPriority();
 				if(drugList.size()>0){
-					String[] urls={"http://formmulary.tk/Android/getGeneralInfoDrug.php?drug_name=","http://formmulary.tk/Android/getInfoCodes.php?drug_name="};
+					
 					String[] urlsDrugInfo={"http://formmulary.tk/Android/getGeneralInfoDrug.php?drug_name=","http://formmulary.tk/Android/getInfoCodes.php?drug_name="};
 					String[] urlsUpdateDoseInfo={"http://formmulary.tk/Android/getDoseInformation.php?drug_name=","http://formmulary.tk/Android/getGeneralNotesInformation.php?drug_name="};
 					int size=drugList.size();
 					for(int i=0;i<size;i++){
-						new GetGeneralInfoDrug(i).execute(urls);
+						
 						new GetGeneralInfoDrug(i).execute(urlsDrugInfo);
 						new GetUpdatedDoseInformation(i).execute(urlsUpdateDoseInfo);
 					}
@@ -671,6 +671,7 @@ public class General_Info_Drug extends Activity {
 		}
 		else
 			super.onBackPressed();
+	}
 
 	private class GetUpdatedDoseInformation extends AsyncTask<String, Integer, ArrayList<String>>{
 		ArrayList<String> jsonResponse = new ArrayList<String>();

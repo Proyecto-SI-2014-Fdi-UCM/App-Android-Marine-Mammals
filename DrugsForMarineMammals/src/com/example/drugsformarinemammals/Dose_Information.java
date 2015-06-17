@@ -598,16 +598,16 @@ public class Dose_Information extends Activity {
 						new GetGeneralInfoDrug(i).execute(urlsDrugInfo);
 						new GetDoseInformation(i).execute(urlsDoseInfo);
 					}
-					displayMessage("Drugs of your last searches have been updated");
+					displayMessage("Synchronization","Drugs of your last searches have been updated");
 				}
 				else
-					displayMessage("No drug has been updated, please do any search and try again");
+					displayMessage("Synchronization","No drug has been updated, please do any search and try again");
 				return true;
 			default:
 				return super.onOptionsItemSelected(item);
 		}
 	}
-	private void displayMessage(String message) {
+	private void displayMessage(String messageTitle,String message) {
 		AlertDialog.Builder myalert = new AlertDialog.Builder(this);
 		
 		TextView title = new TextView(this);
