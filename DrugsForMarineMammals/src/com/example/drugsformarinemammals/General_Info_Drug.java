@@ -401,16 +401,20 @@ public class General_Info_Drug extends Activity {
 			case R.id.sync:
 				orderDrugsByPriority();
 				if(drugList.size()>0){
-					String[] urls={"http://formmulary.tk/Android/getGeneralInfoDrug.php?drug_name=","http://formmulary.tk/Android/getInfoCodes.php?drug_name="};
 					String[] urlsDrugInfo={"http://formmulary.tk/Android/getGeneralInfoDrug.php?drug_name=","http://formmulary.tk/Android/getInfoCodes.php?drug_name="};
 					String[] urlsUpdateDoseInfo={"http://formmulary.tk/Android/getDoseInformation.php?drug_name=","http://formmulary.tk/Android/getGeneralNotesInformation.php?drug_name="};
 					int size=drugList.size();
-					for(int i=0;i<size;i++){
+<<<<<<< HEAD
+					for(int i=0;i<size;i++)
 						new GetGeneralInfoDrug(i).execute(urls);
+					displayMessage("Synchronization","Drugs of your last searches have been updated");
+=======
+					for(int i=0;i<size;i++) {
 						new GetGeneralInfoDrug(i).execute(urlsDrugInfo);
 						new GetUpdatedDoseInformation(i).execute(urlsUpdateDoseInfo);
 					}
-					displayMessage("Synchronization","Drugs of your last searches have been updated");
+					displayMessage("Drugs of your last searches have been updated");
+>>>>>>> 6f5919455dc714f7ffab5342982ef3ce9e9e6bcb
 				}
 				else
 					displayMessage("Synchronization","No drug has been updated, please do any search and try again");
@@ -662,6 +666,7 @@ public class General_Info_Drug extends Activity {
 		}
 	}
 	
+<<<<<<< HEAD
 	public void onBackPressed(){
 		if(fiveLastScreen){
 			Intent intent = new Intent(this,Listview_DrugResults.class);
@@ -671,7 +676,7 @@ public class General_Info_Drug extends Activity {
 		}
 		else
 			super.onBackPressed();
-
+=======
 	private class GetUpdatedDoseInformation extends AsyncTask<String, Integer, ArrayList<String>>{
 		ArrayList<String> jsonResponse = new ArrayList<String>();
 		HttpPost httppost1;
@@ -865,6 +870,7 @@ public class General_Info_Drug extends Activity {
 			helper.insertGeneralNote(drug_name, group_name, general_note);
 			helper.close();
 		}
+>>>>>>> 6f5919455dc714f7ffab5342982ef3ce9e9e6bcb
 	}
 
 }

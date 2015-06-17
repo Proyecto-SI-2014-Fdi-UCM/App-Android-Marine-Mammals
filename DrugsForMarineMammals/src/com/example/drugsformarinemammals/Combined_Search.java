@@ -121,14 +121,18 @@ public class Combined_Search extends Activity {
 		// as you specify a parent activity in AndroidManifest.xml.
 		switch (item.getItemId()) {
 			case R.id.sync:
+<<<<<<< HEAD
 				orderDrugsByPriority();
 				if(drugList.size()>0){
 					String[] urls={"http://formmulary.tk/Android/getGeneralInfoDrug.php?drug_name=","http://formmulary.tk/Android/getInfoCodes.php?drug_name="};
+=======
+				getDrugNamesLocalDB();
+				if(drugList.size()>0){
 					String[] urlsDrugInfo={"http://formmulary.tk/Android/getGeneralInfoDrug.php?drug_name=","http://formmulary.tk/Android/getInfoCodes.php?drug_name="};
 					String[] urlsDoseInfo={"http://formmulary.tk/Android/getDoseInformation.php?drug_name=","http://formmulary.tk/Android/getGeneralNotesInformation.php?drug_name="};
+>>>>>>> 6f5919455dc714f7ffab5342982ef3ce9e9e6bcb
 					int size=drugList.size();
 					for(int i=0;i<size;i++) {
-						new GetGeneralInfoDrug(i).execute(urls);
 						new GetGeneralInfoDrug(i).execute(urlsDrugInfo);
 						new GetDoseInformation(i).execute(urlsDoseInfo);
 					}
@@ -307,7 +311,11 @@ public class Combined_Search extends Activity {
 			initializeArrayWithTherapeuticGroups(result);
 			actv = (AutoCompleteTextView)findViewById(R.id.autoCompleteTextView1);
 			actv.setTypeface(Typeface.SANS_SERIF);
+<<<<<<< HEAD
 			actv.setHint("Enter a Therapeutic Target");
+=======
+			actv.setHint("Enter a therapeutic target");
+>>>>>>> 6f5919455dc714f7ffab5342982ef3ce9e9e6bcb
 			actv.setAdapter(adapterTherapeuticGroup);
 		}
 		

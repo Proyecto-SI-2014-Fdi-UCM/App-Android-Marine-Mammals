@@ -53,7 +53,32 @@ public class Listview_DrugResults extends Activity {
 		else {
 			fiveLastScreen=(Boolean) extra.get("fiveLastScreen");
 			//option Five Last Searched
+<<<<<<< HEAD
 			orderDrugsByPriority();				
+=======
+			List<Drug_Information> drugs_with_priority = new ArrayList<Drug_Information>();
+			SQLiteDatabase tmp = helper.open();
+			if (tmp!=null) {
+				drugs_with_priority = helper.read_drugs_database();
+				helper.close();
+			}
+			
+			//sort drugs by priority
+			Collections.sort(drugs_with_priority,new Comparator<Drug_Information>() {
+
+				@Override
+				public int compare(Drug_Information drug1, Drug_Information drug2) {
+					// TODO Auto-generated method stub
+					return drug1.getPriority().compareTo(drug2.getPriority());
+				}
+				
+			});
+			
+			drugList = new ArrayList<String>();
+			for (int i=0;i<drugs_with_priority.size();i++) {
+				drugList.add(drugs_with_priority.get(i).getName());
+			}
+>>>>>>> 6f5919455dc714f7ffab5342982ef3ce9e9e6bcb
 		}
 		ListAdapter adapter = new ItemAdapterDrugResults(this, drugList);
 		ListView listview = (ListView) findViewById(R.id.drugsresult);
@@ -125,16 +150,20 @@ public class Listview_DrugResults extends Activity {
 			case R.id.sync:
 				orderDrugsByPriority();
 				if(drugList.size()>0){
-					String[] urls={"http://formmulary.tk/Android/getGeneralInfoDrug.php?drug_name=","http://formmulary.tk/Android/getInfoCodes.php?drug_name="};
 					String[] urlsDrugInfo={"http://formmulary.tk/Android/getGeneralInfoDrug.php?drug_name=","http://formmulary.tk/Android/getInfoCodes.php?drug_name="};
 					String[] urlsDoseInfo={"http://formmulary.tk/Android/getDoseInformation.php?drug_name=","http://formmulary.tk/Android/getGeneralNotesInformation.php?drug_name="};
 					int size=drugList.size();
-					for(int i=0;i<size;i++){
+<<<<<<< HEAD
+					for(int i=0;i<size;i++)
 						new GetGeneralInfoDrug(drugList.get(i),true).execute(urls);
+					displayMessage("Synchronization","Drugs of your last searches have been updated");
+=======
+					for(int i=0;i<size;i++) {
 						new GetGeneralInfoDrug(drugList.get(i),true).execute(urlsDrugInfo);
 						new GetDoseInformation(i).execute(urlsDoseInfo);
 					}
-					displayMessage("Synchronization","Drugs of your last searches have been updated");
+					displayMessage("Drugs of your last searches have been updated");
+>>>>>>> 6f5919455dc714f7ffab5342982ef3ce9e9e6bcb
 				}
 				else
 					displayMessage("Synchronization","No drug has been updated, please do any search and try again");
@@ -170,6 +199,31 @@ public class Listview_DrugResults extends Activity {
 		
 	}
 
+<<<<<<< HEAD
+=======
+	public void getDrugNamesLocalDB(){
+		List<Drug_Information> drugs_with_priority = new ArrayList<Drug_Information>();
+		SQLiteDatabase tmp = helper.open();
+		if (tmp!=null) {
+			drugs_with_priority = helper.read_drugs_database();
+			helper.close();
+		}
+		int size=drugs_with_priority.size();
+		drugList = new ArrayList<String>();
+		for (int i=0;i<size;i++) {
+			drugList.add(drugs_with_priority.get(i).getName());
+		}
+		
+	}
+
+	
+	public void startGralInfo(String drugName) {
+		Intent i = new Intent(this, General_Info_Drug.class);
+		i.putExtra("drugName", drugName);
+		startActivity(i);
+	}
+
+>>>>>>> 6f5919455dc714f7ffab5342982ef3ce9e9e6bcb
 	private class GetGeneralInfoDrug extends AsyncTask<String, Integer, ArrayList<String>>{
 		ArrayList<String> jsonResponse=new ArrayList<String>();
 		ArrayList<String> generalInfo=new ArrayList<String>();
@@ -294,6 +348,8 @@ public class Listview_DrugResults extends Activity {
 		}
 	}
 	
+<<<<<<< HEAD
+=======
 	private class GetDoseInformation extends AsyncTask<String, Integer, ArrayList<String>>{
 		ArrayList<String> jsonResponse = new ArrayList<String>();
 		HttpPost httppost1;
@@ -393,4 +449,5 @@ public class Listview_DrugResults extends Activity {
 		}
 		
 	}
+>>>>>>> 6f5919455dc714f7ffab5342982ef3ce9e9e6bcb
 }

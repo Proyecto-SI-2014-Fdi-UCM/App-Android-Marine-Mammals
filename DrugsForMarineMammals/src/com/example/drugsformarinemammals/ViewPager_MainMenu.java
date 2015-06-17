@@ -130,16 +130,20 @@ public class ViewPager_MainMenu extends FragmentActivity {
 			case R.id.sync:
 				orderDrugsByPriority();
 				if(drugList.size()>0){
-					String[] urls={"http://formmulary.tk/Android/getGeneralInfoDrug.php?drug_name=","http://formmulary.tk/Android/getInfoCodes.php?drug_name="};
 					String[] urlsDrugInfo={"http://formmulary.tk/Android/getGeneralInfoDrug.php?drug_name=","http://formmulary.tk/Android/getInfoCodes.php?drug_name="};
 					String[] urlsDoseInfo={"http://formmulary.tk/Android/getDoseInformation.php?drug_name=","http://formmulary.tk/Android/getGeneralNotesInformation.php?drug_name="};
 					int size=drugList.size();
-					for(int i=0;i<size;i++) {
+<<<<<<< HEAD
+					for(int i=0;i<size;i++)
 						new GetGeneralInfoDrug(i).execute(urls);
+					displayMessage("Synchronization","Drugs of your last searches have been updated");
+=======
+					for(int i=0;i<size;i++) {
 						new GetGeneralInfoDrug(i).execute(urlsDrugInfo);
 						new GetDoseInformation(i).execute(urlsDoseInfo);
 					}
-					displayMessage("Synchronization","Drugs of your last searches have been updated");
+					displayMessage("Drugs of your last searches have been updated");
+>>>>>>> 6f5919455dc714f7ffab5342982ef3ce9e9e6bcb
 				}
 				else
 					displayMessage("Synchronization","No drug has been updated, please do any search and try again");

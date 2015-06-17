@@ -193,10 +193,16 @@ public class ViewPager_Pinnipeds extends FragmentActivity {
         	startActivity(r);
         	return true;
         case R.id.sync:
-
+<<<<<<< HEAD
         	orderDrugsByPriority();
 			if(drugList.size()>0){
 				String[] urls={"http://formmulary.tk/Android/getGeneralInfoDrug.php?drug_name=","http://formmulary.tk/Android/getInfoCodes.php?drug_name="};
+=======
+			getDrugNamesLocalDB();
+			if(drugList.size()>0){
+				String[] urlsDrugInfo={"http://formmulary.tk/Android/getGeneralInfoDrug.php?drug_name=","http://formmulary.tk/Android/getInfoCodes.php?drug_name="};
+				String[] urlsDoseInfo={"http://formmulary.tk/Android/getDoseInformation.php?drug_name=","http://formmulary.tk/Android/getGeneralNotesInformation.php?drug_name="};
+>>>>>>> 6f5919455dc714f7ffab5342982ef3ce9e9e6bcb
 				int size=drugList.size();
 				for(int i=0;i<size;i++) {
 					new GetGeneralInfoDrug(i).execute(urlsDrugInfo);
@@ -246,9 +252,14 @@ public class ViewPager_Pinnipeds extends FragmentActivity {
 			helper.close();
 		}
 		
+<<<<<<< HEAD
 		//sort drugs by priority
 		Collections.sort(drugs_with_priority,new Comparator<Drug_Information>() {
+=======
 
+	}
+>>>>>>> 6f5919455dc714f7ffab5342982ef3ce9e9e6bcb
+	
 			@Override
 			public int compare(Drug_Information drug1, Drug_Information drug2) {
 			
