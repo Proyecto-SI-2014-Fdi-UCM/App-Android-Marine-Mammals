@@ -5,12 +5,9 @@ import java.util.ArrayList;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpPost;
-import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.message.BasicHeader;
-import org.apache.http.protocol.HTTP;
 import org.apache.http.util.EntityUtils;
-import org.json.JSONObject;
+
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -36,12 +33,14 @@ public class Fragment_Formulary extends Fragment {
 	private View rootView;
 	private String userEntry;
 	private AutoCompleteTextView actv;
+	private Handler_Sqlite helper;
 	
 	
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		
 		rootView = inflater.inflate(R.layout.fragment_formulary, container, false);	
 		initializeArrayListSearchs();
+		helper = new Handler_Sqlite(rootView.getContext());
 		list = (ListView)rootView.findViewById(R.id.listViewTypeSearch);
 		ItemAdapterWithImageFormulary adapter;
 		// Inicializamos el adapter.
@@ -81,8 +80,9 @@ public class Fragment_Formulary extends Fragment {
 	}
 	
 	public void open_dialog() {
-		String[] urls={"http://formmulary.tk/Android/getDrugNames.php"};
-        new GetDrugNames().execute(urls);
+		String[] urls = { "http://formmulary.tk/Android/getDrugNames.php" };
+		new GetDrugNames().execute(urls);
+		
 	}
 		
 	private class GetDrugNames extends AsyncTask<String, Void, String>{
@@ -121,8 +121,15 @@ public class Fragment_Formulary extends Fragment {
 			alertDialogBuilder.setCancelable(false).setPositiveButton("Search",new DialogInterface.OnClickListener() {
 						    public void onClick(DialogInterface dialog,int id) {
 						    	userEntry=actv.getText().toString();
-						    	String[] urls={"http://formmulary.tk/Android/getGeneralInfoDrug.php?drug_name=","http://formmulary.tk/Android/getInfoCodes.php?drug_name="};
-						    	new GetGeneralInfoDrug().execute(urls);
+						    	if (!helper.existDrug(userEntry)){
+							    	String[] urls={"http://formmulary.tk/Android/getGeneralInfoDrug.php?drug_name=","http://formmulary.tk/Android/getInfoCodes.php?drug_name="};
+							    	new GetGeneralInfoDrug().execute(urls);
+						    	}
+						    	else{
+						    		Intent intent = new Intent(rootView.getContext(), General_Info_Drug.class);
+									intent.putExtra("drugName", userEntry);
+									startActivity(intent);
+						    	}
 						    }
 			})
 				.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
@@ -152,6 +159,14 @@ public class Fragment_Formulary extends Fragment {
 	
 	private class GetGeneralInfoDrug extends AsyncTask<String, Integer, ArrayList<String>>{
 		ArrayList<String> jsonResponse=new ArrayList<String>();
+		ArrayList<String> generalInfo=new ArrayList<String>();
+		ArrayList<Type_Code> codesInformation=new ArrayList<Type_Code>();
+		String drug_name;
+		String available;
+		String description;
+		String license_AEMPS;
+		String license_EMA;
+		String license_FDA;
 		HttpPost httppost1;
 		HttpPost httppost2;
 		@Override
@@ -186,9 +201,59 @@ public class Fragment_Formulary extends Fragment {
 		
 		@Override
 		protected void onPostExecute(ArrayList<String> result) {
-			Intent intent = new Intent(rootView.getContext(), General_Info_Drug.class);
-			intent.putStringArrayListExtra("generalInfoDrug", result);
-			startActivity(intent);
+				//Si se ejecuta la consulta al servidor => medicamento nuevo => hay que guardar en ddbb local
+				initializeGeneralInfoDrug(result);
+				helper.saveGeneralInfoDrug(generalInfo);
+				initializeCodesInformation(result);
+				helper.saveCodeInformation(codesInformation, drug_name);
+				Intent intent = new Intent(rootView.getContext(), General_Info_Drug.class);
+				intent.putStringArrayListExtra("generalInfoDrug", result);
+				startActivity(intent);
 		}
+
+		public void initializeGeneralInfoDrug(ArrayList<String> result) {
+			// {"drug_name":"Furosemide","description":"Loop diuretic to treat fluid retention","available":"Yes","license_AEMPS":"Nd","license_EMA":"Nd","license_FDA":"Yes"}
+			String[] parse;
+			// codesInformation=new ArrayList<Type_Code>();
+			parse = result.get(0).split("\\{\"drug_name\":\"");
+			parse = parse[1].split("\",\"description\":\"");
+			drug_name = parse[0];
+			generalInfo.add(drug_name);
+			parse = parse[1].split("\",\"available\":\"");
+			description = parse[0];
+			generalInfo.add(description);
+			parse = parse[1].split("\",\"license_AEMPS\":\"");
+			available = parse[0];
+			generalInfo.add(available);
+			parse = parse[1].split("\",\"license_EMA\":\"");
+			license_AEMPS = parse[0];
+			generalInfo.add(license_AEMPS);
+			parse = parse[1].split("\",\"license_FDA\":\"");
+			license_EMA = parse[0];
+			generalInfo.add(license_EMA);
+			parse = parse[1].split("\"\\}");
+			license_FDA = parse[0];
+			generalInfo.add(license_FDA);
+		}		
+		
+		public void initializeCodesInformation(ArrayList<String> result) {
+			String[] tmp;
+			String[] parse;
+
+			// QA07AA91","QA Alimentary track and metabolism","Antidiarrheals,
+			// intestinal anti-inflammatory"]
+			tmp = result.get(1).split("\\[\"");
+			int size = tmp.length;
+			for (int i = 1; i < size; i++) {
+				parse = tmp[i].split("\",\"");
+				Type_Code type = new Type_Code();
+				type.setCode(parse[0]);
+				type.setAnatomic_group(parse[1]);
+				parse = parse[2].split("\"\\]");
+				type.setTherapeutic_group(parse[0]);
+				codesInformation.add(type);
+			}
+		}
+
 	}
 }

@@ -99,13 +99,14 @@ public final class R {
         public static final int routes=0x7f020022;
         public static final int single_search=0x7f020023;
         public static final int support=0x7f020024;
-        public static final int tick_verde=0x7f020025;
-        public static final int transitionscreen=0x7f020026;
-        public static final int transitionscreen2=0x7f020027;
-        public static final int treatments=0x7f020028;
-        public static final int user_guide=0x7f020029;
-        public static final int yesgreen=0x7f02002a;
-        public static final int yeswhite=0x7f02002b;
+        public static final int sync=0x7f020025;
+        public static final int tick_verde=0x7f020026;
+        public static final int transitionscreen=0x7f020027;
+        public static final int transitionscreen2=0x7f020028;
+        public static final int treatments=0x7f020029;
+        public static final int user_guide=0x7f02002a;
+        public static final int yesgreen=0x7f02002b;
+        public static final int yeswhite=0x7f02002c;
     }
     public static final class id {
         public static final int CombinedSearch=0x7f0a0001;
@@ -162,6 +163,7 @@ public final class R {
         public static final int reportIcon=0x7f0a0044;
         public static final int spinner_item=0x7f0a003c;
         public static final int subtitle=0x7f0a003f;
+        public static final int sync=0x7f0a0045;
         public static final int tabs=0x7f0a0041;
         public static final int textSearch=0x7f0a0039;
         public static final int textView=0x7f0a0007;
@@ -204,6 +206,7 @@ public final class R {
     public static final class menu {
         public static final int combined_search=0x7f090000;
         public static final int dose_information=0x7f090001;
+        public static final int viewpager_mainmenu=0x7f090002;
     }
     public static final class string {
         public static final int Enter_Therapeutic_Class=0x7f070006;
@@ -237,6 +240,7 @@ public final class R {
         public static final int ok=0x7f07000e;
         public static final int pinnipeds=0x7f070010;
         public static final int report=0x7f070023;
+        public static final int sync=0x7f070024;
         public static final int titleAnatomicalTarget=0x7f070003;
         public static final int titleCombinedSearch=0x7f070002;
         public static final int urlAtcVet=0x7f070005;

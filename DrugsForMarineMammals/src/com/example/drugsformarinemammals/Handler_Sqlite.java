@@ -1,9 +1,5 @@
 package com.example.drugsformarinemammals;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.HashMap;
@@ -12,15 +8,14 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.text.TextUtils;
 
 public class Handler_Sqlite extends SQLiteOpenHelper{
 
-	private static final String nameBD = "DrugsForMarineMammals-DataBase6";
+	private static final String nameBD = "DrugsForMarineMammals-DataBase11";
 
 	Context myContext;
 	public Handler_Sqlite(Context ctx){
-		super(ctx,nameBD, null,2);
+		super(ctx,nameBD, null,1);
 		myContext = ctx;
 	}
 	
@@ -34,7 +29,7 @@ public class Handler_Sqlite extends SQLiteOpenHelper{
 	public void onCreate(SQLiteDatabase db){
 		String query1 = "CREATE TABLE Drug (drug_name TEXT, description TEXT, available TEXT, license_AEMPS TEXT, license_EMA TEXT, license_FDA TEXT, priority INTEGER, PRIMARY KEY (drug_name))";
 
-		String query2 = "CREATE TABLE Code(code_number TEXT, drug_name TEXT, FOREIGN KEY (drug_name) REFERENCES Drug(drug_name), PRIMARY KEY (code_number))";
+		String query2 = "CREATE TABLE Code(code_number TEXT, anatomic_group_name TEXT, therapeutic_group_name TEXT, drug_name TEXT, FOREIGN KEY (drug_name) REFERENCES Drug(drug_name), PRIMARY KEY (code_number))";
 		
 		String query3 = "CREATE TABLE Animal_Type (group_name TEXT, PRIMARY KEY (group_name))";
 		
@@ -72,32 +67,7 @@ public class Handler_Sqlite extends SQLiteOpenHelper{
 		db.execSQL(query9);
 		db.execSQL(query10);
 		db.execSQL(query11);
-		
-		 InputStream is = null;
-		    try {
-		         is = myContext.getAssets().open("BBDD_DrugsForMarineMammals.sql");
-		         if (is != null) {
-		             db.beginTransaction();
-		             BufferedReader reader = new BufferedReader(new InputStreamReader(is));
-		             String line = reader.readLine();
-		             while (!TextUtils.isEmpty(line)) {
-		                 db.execSQL(line);
-		                 line = reader.readLine();
-		             }
-		             db.setTransactionSuccessful();
-		         }
-		    } catch (Exception ex) {
-		        // Muestra log             
-		    } finally {
-		        db.endTransaction();
-		        if (is != null) {
-		            try {
-		                is.close();
-		            } catch (IOException e) {
-		                // Muestra log
-		            }                
-		        }
-		    }			
+					
 	}
 
 	@Override
@@ -354,7 +324,6 @@ public class Handler_Sqlite extends SQLiteOpenHelper{
 	}
 
 	public boolean isAvalaible(String drug_name) {
-		// TODO Auto-generated method stub
 		SQLiteDatabase db=this.getReadableDatabase();
 		String args[]={drug_name};
 		String columns[]={"available"};
@@ -382,7 +351,6 @@ public class Handler_Sqlite extends SQLiteOpenHelper{
 	}
 
 	public ArrayList<String>  getAnatomicTarget(String code_number) {
-		// TODO Auto-generated method stub
 		ArrayList<String> solution= new ArrayList<String>();
 		SQLiteDatabase db=this.getReadableDatabase();
 		String args[]={code_number};
@@ -399,7 +367,6 @@ public class Handler_Sqlite extends SQLiteOpenHelper{
 	}
 	
 	public ArrayList<String>  getTherapeuticTarget(String code_number) {
-		// TODO Auto-generated method stub
 		ArrayList<String> solution= new ArrayList<String>();
 		SQLiteDatabase db=this.getReadableDatabase();
 		String args[]={code_number};
@@ -642,6 +609,114 @@ public class Handler_Sqlite extends SQLiteOpenHelper{
 		
 		return result;
 	}
+	//Save the general information drug in local database
+	public void saveGeneralInfoDrug(ArrayList<String> generalInfo){
+		String query="INSERT INTO Drug (drug_name, description, available, license_AEMPS, license_EMA, license_FDA, priority) VALUES ('"+generalInfo.get(0)+"','"+generalInfo.get(1)+"','"+generalInfo.get(2)+"','"+ generalInfo.get(3)+"','"+ generalInfo.get(4)+"','"+generalInfo.get(5)+"',"+1+");";
+		this.open().execSQL(query);
+		this.close();
+	}
 
+	public void saveCodeInformation(ArrayList<Type_Code> info, String drugName){
+		int size=info.size();
+		for(int i=0;i<size;i++){
+			String query="INSERT INTO Code (code_number,anatomic_group_name,therapeutic_group_name,drug_name) VALUES('"+info.get(i).getCode()+"','"+info.get(i).getAnatomic_group()+"','"+info.get(i).getTherapeutic_group()+"','"+drugName+"');";
+			this.open().execSQL(query);
+		}
+		this.close();
+	}
+	public ArrayList<Type_Code> getCodesInformation(String name){
+		ArrayList<Type_Code> solution= new ArrayList<Type_Code>();
+		
+		SQLiteDatabase db=this.getReadableDatabase();
+		String args[]={name};
+		String columns[]={"code_number","anatomic_group_name","therapeutic_group_name"};
+		Cursor c=db.query("Code", columns, "drug_name=?", args, null, null, null);
+		int indexCode=c.getColumnIndex("code_number");
+		int indexAnatomical=c.getColumnIndex("anatomic_group_name");
+		int indexTherapeutic=c.getColumnIndex("therapeutic_group_name");
+		for(c.moveToFirst();!c.isAfterLast();c.moveToNext()){
+			Type_Code type=new Type_Code();
+			type.setCode(c.getString(indexCode));
+			type.setAnatomic_group(c.getString(indexAnatomical));
+			type.setTherapeutic_group(c.getString(indexTherapeutic));
+			solution.add(type);
+		}
+		c.close();
+		return solution;
+		
+	}
+	
+	public void insertAnimal(String animal_name, String family, String group_name, String drug_name) {
+		ContentValues animal=new ContentValues();
+		animal.put("animal_name", animal_name);
+		animal.put("family", family);
+		animal.put("group_name", group_name);
+		animal.put("drug_name", drug_name);
+		this.getWritableDatabase().insert("Animal", null, animal);
+		
+	}
+	
+	public void insertCategory(String category_name) {
+		ContentValues category=new ContentValues();
+		category.put("category_name", category_name);
+		this.getWritableDatabase().insert("Category", null, category);
+		
+	}
+	
+	public void insertDose(String animal_name, String drug_name, String family, String group_name, String category_name, String book_reference, String article_reference, String specific_note, String posology, String route, String dose) {
+		ContentValues dosage=new ContentValues();
+		dosage.put("animal_name", animal_name);
+		dosage.put("family", family);
+		dosage.put("group_name", group_name);
+		dosage.put("drug_name", drug_name);
+		dosage.put("category_name", category_name);
+		dosage.put("book_reference", book_reference);
+		dosage.put("art_reference", article_reference);
+		dosage.put("specific_note", specific_note);
+		dosage.put("posology", posology);
+		dosage.put("route", route);
+		dosage.put("dose", dose);
+		this.getWritableDatabase().insert("Animal_has_Category", null, dosage);
+		
+	}
+	
+	public void insertGroup(String group_name) {
+		ContentValues group=new ContentValues();
+		group.put("group_name", group_name);
+		this.getWritableDatabase().insert("Animal_Type", null, group);
+		
+	}
+	
+	public void insertGeneralNote(String drug_name, String group_name, String general_note) {
+		ContentValues note=new ContentValues();
+		note.put("drug_name", drug_name);
+		note.put("group_name", group_name);
+		note.put("general_note", general_note);
+		this.getWritableDatabase().insert("Drug_aplicated_to_Animal_Type", null, note);
+	}
 
+	public void updateGeneralInfroDrug(ArrayList<String> generalInfo) {
+		String query="UPDATE Drug SET description='"+generalInfo.get(1)+ "',available='"+generalInfo.get(2)+"',license_AEMPS='"+generalInfo.get(3)+"',license_FDA='"+generalInfo.get(4)+"'WHERE drug_name='"+ generalInfo.get(0)+"'";
+		this.open().execSQL(query);
+		this.close();
+	}
+
+	public void updateCodeInformation(ArrayList<Type_Code> info, String drugName) {
+		int size=info.size();
+		for(int i=0;i<size;i++){
+			String query="UPDATE Code SET anatomic_group_name='"+info.get(i).getAnatomic_group()+ "',therapeutic_group_name='"+info.get(i).getTherapeutic_group()+"',drug_name='"+drugName+"'WHERE code_number='"+ info.get(i).getCode()+"'";
+			this.open().execSQL(query);
+		}
+		this.close();
+	}
+	
+	public void deleteDose(String drug_name) {
+		SQLiteDatabase db = getWritableDatabase();
+	    db.delete("Animal_has_Category", "drug_name="+"'"+drug_name+"'", null);
+	}
+	
+	public void deleteNotes(String drug_name) {
+		SQLiteDatabase db = getWritableDatabase();
+	    db.delete("Drug_aplicated_to_Animal_Type", "drug_name="+"'"+drug_name+"'", null);
+	}
 }
