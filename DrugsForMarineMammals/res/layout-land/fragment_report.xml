@@ -15,14 +15,23 @@
         android:orientation="vertical" 
      	android:background="@drawable/construction" >
     </LinearLayout>
-
+    
     <Button
-        android:id="@+id/button1"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:background="@drawable/fb_icon"
-        android:layout_marginBottom="15dp" />
-
+	        android:id="@+id/button1"
+	        android:layout_width="40dp"
+	        android:layout_height="40dp"
+	        android:background="@drawable/fb_icon"
+	        android:layout_alignParentBottom="true"
+	 		android:layout_marginLeft="200dp"
+	        android:layout_marginBottom="15dp" />
+	    <Button
+	        android:id="@+id/button2"
+	        android:layout_width="40dp"
+	        android:layout_height="40dp"
+	        android:background="@drawable/twitter"
+	        android:layout_alignParentBottom="true"
+	        android:layout_marginLeft="50dp"
+	        android:layout_toRightOf="@+id/button1"
+	        android:layout_marginBottom="15dp" />
+	
 </RelativeLayout>

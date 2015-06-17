@@ -24,6 +24,16 @@ public class Fragment_Report extends Fragment {
 				Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://www.facebook.com"));
 				startActivity(browserIntent);
 			}});
+		
+		Button goTwitter = (Button)rootView.findViewById(R.id.button2);
+		goTwitter.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://twitter.com"));
+				startActivity(browserIntent);
+			}});
+
 		return rootView;
 	} 
 }
