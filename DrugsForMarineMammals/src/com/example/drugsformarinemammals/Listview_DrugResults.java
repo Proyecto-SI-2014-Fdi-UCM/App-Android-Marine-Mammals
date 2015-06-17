@@ -10,7 +10,6 @@ import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.util.EntityUtils;
-
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Typeface;
 import android.app.Activity;
@@ -166,7 +165,6 @@ public class Listview_DrugResults extends Activity {
 			drugList.add(drugs_with_priority.get(i).getName());
 		}
 		
-
 	}
 
 	

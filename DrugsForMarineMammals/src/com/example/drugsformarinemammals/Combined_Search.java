@@ -507,6 +507,5 @@ public class Combined_Search extends Activity {
 		}
 		
 	}
-	
 
 }
