@@ -11,7 +11,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 public class Handler_Sqlite extends SQLiteOpenHelper{
 
-	private static final String nameBD = "DrugsForMarineMammals-DataBase10";
+	private static final String nameBD = "DrugsForMarineMammals-DataBase11";
 
 	Context myContext;
 	public Handler_Sqlite(Context ctx){
@@ -610,8 +610,8 @@ public class Handler_Sqlite extends SQLiteOpenHelper{
 		return result;
 	}
 	//Save the general information drug in local database
-	public void saveGeneralInfoDrug(ArrayList<String> generalInfo){
-		String query="INSERT INTO Drug (drug_name, description, available, license_AEMPS, license_EMA, license_FDA, priority) VALUES ('"+generalInfo.get(0)+"','"+generalInfo.get(1)+"','"+generalInfo.get(2)+"','"+ generalInfo.get(3)+"','"+ generalInfo.get(4)+"','"+generalInfo.get(5)+"',"+1+");";
+	public void saveGeneralInfoDrug(ArrayList<String> generalInfo, int index){
+		String query="INSERT INTO Drug (drug_name, description, available, license_AEMPS, license_EMA, license_FDA, priority) VALUES ('"+generalInfo.get(0)+"','"+generalInfo.get(1)+"','"+generalInfo.get(2)+"','"+ generalInfo.get(3)+"','"+ generalInfo.get(4)+"','"+generalInfo.get(5)+"',"+index+");";
 		this.open().execSQL(query);
 		this.close();
 	}
@@ -660,4 +660,37 @@ public class Handler_Sqlite extends SQLiteOpenHelper{
 		}
 		this.close();
 	}
+	
+	public int  getTotalDrugs() {
+		
+		int result = 0;
+		SQLiteDatabase db = this.getReadableDatabase();
+		String columns[]={"drug_name"};
+		Cursor c=db.query("Drug", columns, null, null, null, null, null);		
+		for(c.moveToFirst();!c.isAfterLast();c.moveToNext()){
+			result++;
+		}
+		
+		c.close();
+		
+		return result;
+	}
+
+	public void deleteLastDrug(int lastIndex) {
+		String drug_name=getDrugName(lastIndex);
+		String query1="DELETE FROM Code WHERE drug_name='"+drug_name+"'";
+		String query2="DELETE FROM Animal_has_Category WHERE drug_name='"+drug_name+"'";
+		String query3="DELETE FROM Drug_aplicated_to_Animal_Type WHERE drug_name='"+drug_name+"'";
+		String query4="DELETE FROM Animal WHERE drug_name='"+drug_name+"'";
+		String query5="DELETE FROM Drug WHERE drug_name='"+drug_name+"'";
+		
+		SQLiteDatabase db=this.open();
+		db.execSQL(query1);
+		db.execSQL(query2);
+		db.execSQL(query3);
+		db.execSQL(query4);
+		db.execSQL(query5);
+		db.close();
+	}
 }
+

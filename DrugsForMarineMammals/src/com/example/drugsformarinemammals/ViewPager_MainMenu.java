@@ -12,7 +12,6 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.util.EntityUtils;
 
 import android.app.AlertDialog;
-import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Typeface;
 import android.os.AsyncTask;
@@ -131,23 +130,23 @@ public class ViewPager_MainMenu extends FragmentActivity {
 		// as you specify a parent activity in AndroidManifest.xml.
 		switch (item.getItemId()) {
 			case R.id.sync:
-				getDrugNamesLocalDB();
+				orderDrugsByPriority();
 				if(drugList.size()>0){
 					String[] urls={"http://formmulary.tk/Android/getGeneralInfoDrug.php?drug_name=","http://formmulary.tk/Android/getInfoCodes.php?drug_name="};
 					int size=drugList.size();
 					for(int i=0;i<size;i++)
 						new GetGeneralInfoDrug(i).execute(urls);
-					displayMessage("Drugs of your last searches have been updated");
+					displayMessage("Synchronization","Drugs of your last searches have been updated");
 				}
 				else
-					displayMessage("No drug has been updated, please do any search and try again");
+					displayMessage("Synchronization","No drug has been updated, please do any search and try again");
 				return true;
 			default:
 				return super.onOptionsItemSelected(item);
 		}
 	}
 
-	private void displayMessage(String message) {
+	private void displayMessage(String messageTitle,String message) {
 		AlertDialog.Builder myalert = new AlertDialog.Builder(this);
 		
 		TextView title = new TextView(this);
@@ -155,7 +154,7 @@ public class ViewPager_MainMenu extends FragmentActivity {
 		title.setTextSize(20);
 		title.setTextColor(getResources().getColor(R.color.blue));
 		title.setPadding(8, 8, 8, 8);
-		title.setText("Synchronization");
+		title.setText(messageTitle);
 		title.setGravity(Gravity.CENTER_VERTICAL);
 		
 		LinearLayout layout = new LinearLayout(this);
@@ -173,20 +172,32 @@ public class ViewPager_MainMenu extends FragmentActivity {
 		
 	}
 
-	public void getDrugNamesLocalDB(){
+	public void orderDrugsByPriority(){
 		List<Drug_Information> drugs_with_priority = new ArrayList<Drug_Information>();
 		SQLiteDatabase tmp = helper.open();
 		if (tmp!=null) {
 			drugs_with_priority = helper.read_drugs_database();
 			helper.close();
 		}
-		int size=drugs_with_priority.size();
-		drugList = new ArrayList<String>();
-		for (int i=0;i<size;i++) {
-			drugList.add(drugs_with_priority.get(i).getName());
-		}
 		
-
+		//sort drugs by priority
+		Collections.sort(drugs_with_priority,new Comparator<Drug_Information>() {
+	
+			@Override
+			public int compare(Drug_Information drug1, Drug_Information drug2) {
+				
+				return drug1.getPriority().compareTo(drug2.getPriority());
+			}
+			
+		});
+		
+		drugList = new ArrayList<String>();
+		int numDrugs=drugs_with_priority.size();
+		if(numDrugs>0){
+			for (int i=0;i<numDrugs;i++) {
+				drugList.add(drugs_with_priority.get(i).getName());
+			}
+		}
 	}
 	private class GetGeneralInfoDrug extends AsyncTask<String, Integer, ArrayList<String>>{
 		ArrayList<String> jsonResponse=new ArrayList<String>();

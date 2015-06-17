@@ -1,6 +1,8 @@
 package com.example.drugsformarinemammals;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import org.apache.http.HttpResponse;
@@ -56,17 +58,20 @@ public class General_Info_Drug extends Activity {
 	private ArrayList<String> codes;
 	private boolean isStoredInLocal;
 	private ArrayList<String> drugList;
+	private boolean fiveLastScreen;
 	
 	@Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.general_info_drug);
         isStoredInLocal=false;
+        fiveLastScreen=false;
         helper=new Handler_Sqlite(this);
         helper.open();
         Bundle extras1= this.getIntent().getExtras();	
         if (extras1!=null){
         	infoBundle = extras1.getStringArrayList("generalInfoDrug");
+        	fiveLastScreen=extras1.getBoolean("fiveLastScreen");
         	if(infoBundle==null)
         		isStoredInLocal=true;
         	if(!isStoredInLocal){
@@ -394,22 +399,23 @@ public class General_Info_Drug extends Activity {
 		// as you specify a parent activity in AndroidManifest.xml.
 		switch (item.getItemId()) {
 			case R.id.sync:
-				getDrugNamesLocalDB();
+				orderDrugsByPriority();
 				if(drugList.size()>0){
 					String[] urls={"http://formmulary.tk/Android/getGeneralInfoDrug.php?drug_name=","http://formmulary.tk/Android/getInfoCodes.php?drug_name="};
 					int size=drugList.size();
 					for(int i=0;i<size;i++)
 						new GetGeneralInfoDrug(i).execute(urls);
+					displayMessage("Synchronization","Drugs of your last searches have been updated");
 				}
 				else
-					displayMessage("No drug has been updated, please do any search and try again");
+					displayMessage("Synchronization","No drug has been updated, please do any search and try again");
 				return true;
 			default:
 				return super.onOptionsItemSelected(item);
 		}
 	}
 
-	private void displayMessage(String message) {
+	private void displayMessage(String messageTitle,String message) {
 		AlertDialog.Builder myalert = new AlertDialog.Builder(this);
 		
 		TextView title = new TextView(this);
@@ -417,7 +423,7 @@ public class General_Info_Drug extends Activity {
 		title.setTextSize(20);
 		title.setTextColor(getResources().getColor(R.color.blue));
 		title.setPadding(8, 8, 8, 8);
-		title.setText("Synchronization");
+		title.setText(messageTitle);
 		title.setGravity(Gravity.CENTER_VERTICAL);
 		
 		LinearLayout layout = new LinearLayout(this);
@@ -435,22 +441,34 @@ public class General_Info_Drug extends Activity {
 		
 	}
 
-	public void getDrugNamesLocalDB(){
+	
+	public void orderDrugsByPriority(){
 		List<Drug_Information> drugs_with_priority = new ArrayList<Drug_Information>();
 		SQLiteDatabase tmp = helper.open();
 		if (tmp!=null) {
 			drugs_with_priority = helper.read_drugs_database();
 			helper.close();
 		}
-		int size=drugs_with_priority.size();
-		drugList = new ArrayList<String>();
-		for (int i=0;i<size;i++) {
-			drugList.add(drugs_with_priority.get(i).getName());
-		}
 		
-
-	}
+		//sort drugs by priority
+		Collections.sort(drugs_with_priority,new Comparator<Drug_Information>() {
 	
+			@Override
+			public int compare(Drug_Information drug1, Drug_Information drug2) {
+			
+				return drug1.getPriority().compareTo(drug2.getPriority());
+			}
+			
+		});
+		
+		drugList = new ArrayList<String>();
+		int numDrugs=drugs_with_priority.size();
+		if(numDrugs>0){
+			for (int i=0;i<numDrugs;i++) {
+				drugList.add(drugs_with_priority.get(i).getName());
+			}
+		}
+	}
 	public void showDoseInformation(String drugName, String groupName) {
 		Intent i = new Intent(this, Dose_Information.class);
 		i.putExtra("drugName", drugName);
@@ -592,7 +610,6 @@ public class General_Info_Drug extends Activity {
 			helper.updateGeneralInfroDrug(generalInfo);
 			initializeCodesInformationForLocalDB(result);
 			helper.updateCodeInformation(codesInformation, drug_name);
-			displayMessage("Drugs of your last searches have been updated");
 			
 		}
 
@@ -638,6 +655,17 @@ public class General_Info_Drug extends Activity {
 				codesInformation.add(type);			
 			}
 		}
+	}
+	
+	public void onBackPressed(){
+		if(fiveLastScreen){
+			Intent intent = new Intent(this,Listview_DrugResults.class);
+			intent.putExtra("fiveLastScreen", fiveLastScreen);
+	 		startActivity(intent);
+	 		finish();
+		}
+		else
+			super.onBackPressed();
 	}
 
 }

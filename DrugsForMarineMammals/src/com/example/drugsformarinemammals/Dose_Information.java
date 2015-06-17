@@ -1,6 +1,8 @@
 package com.example.drugsformarinemammals;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 
@@ -587,7 +589,7 @@ public class Dose_Information extends Activity {
 				startActivity(r);
 				return true;
 			case R.id.sync:
-				getDrugNamesLocalDB();
+				orderDrugsByPriority();
 				if(drugList.size()>0){
 					String[] urls={"http://formmulary.tk/Android/getGeneralInfoDrug.php?drug_name=","http://formmulary.tk/Android/getInfoCodes.php?drug_name="};
 					int size=drugList.size();
@@ -628,22 +630,33 @@ public class Dose_Information extends Activity {
 		
 	}
 
-	public void getDrugNamesLocalDB(){
+	public void orderDrugsByPriority(){
 		List<Drug_Information> drugs_with_priority = new ArrayList<Drug_Information>();
 		SQLiteDatabase tmp = helper.open();
 		if (tmp!=null) {
 			drugs_with_priority = helper.read_drugs_database();
 			helper.close();
 		}
-		int size=drugs_with_priority.size();
-		drugList = new ArrayList<String>();
-		for (int i=0;i<size;i++) {
-			drugList.add(drugs_with_priority.get(i).getName());
-		}
 		
-
-	}
+		//sort drugs by priority
+		Collections.sort(drugs_with_priority,new Comparator<Drug_Information>() {
 	
+			@Override
+			public int compare(Drug_Information drug1, Drug_Information drug2) {
+				
+				return drug1.getPriority().compareTo(drug2.getPriority());
+			}
+			
+		});
+		
+		drugList = new ArrayList<String>();
+		int numDrugs=drugs_with_priority.size();
+		if(numDrugs>0){
+			for (int i=0;i<numDrugs;i++) {
+				drugList.add(drugs_with_priority.get(i).getName());
+			}
+		}
+	}	
 	private class GetGeneralInfoDrug extends AsyncTask<String, Integer, ArrayList<String>>{
 		ArrayList<String> jsonResponse=new ArrayList<String>();
 		ArrayList<String> generalInfo=new ArrayList<String>();

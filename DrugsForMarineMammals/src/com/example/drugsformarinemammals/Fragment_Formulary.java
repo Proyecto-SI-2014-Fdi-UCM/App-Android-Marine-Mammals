@@ -34,7 +34,7 @@ public class Fragment_Formulary extends Fragment {
 	private String userEntry;
 	private AutoCompleteTextView actv;
 	private Handler_Sqlite helper;
-	
+	static final int N = 5;
 	
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		
@@ -61,7 +61,9 @@ public class Fragment_Formulary extends Fragment {
         					break;
         			// Five Last Searched    	
 		    		case 2: Intent intentResults = new Intent(getActivity(),Listview_DrugResults.class);
+		    				intentResults.putExtra("fiveLastScreen", true);
 		        			startActivity(intentResults);
+		        			
 		        			break;
 		    		default:
 		        			break;
@@ -203,12 +205,25 @@ public class Fragment_Formulary extends Fragment {
 		protected void onPostExecute(ArrayList<String> result) {
 				//Si se ejecuta la consulta al servidor => medicamento nuevo => hay que guardar en ddbb local
 				initializeGeneralInfoDrug(result);
-				helper.saveGeneralInfoDrug(generalInfo);
+				helper.saveGeneralInfoDrug(generalInfo,generateNewIndex());
 				initializeCodesInformation(result);
 				helper.saveCodeInformation(codesInformation, drug_name);
 				Intent intent = new Intent(rootView.getContext(), General_Info_Drug.class);
 				intent.putStringArrayListExtra("generalInfoDrug", result);
 				startActivity(intent);
+		}
+
+		public int generateNewIndex() {
+			
+			int numDrugs=helper.getTotalDrugs();
+			if(numDrugs<N){
+				numDrugs++;
+				return numDrugs;
+			}
+			else{
+				helper.deleteLastDrug(N);
+				return N;
+			}
 		}
 
 		public void initializeGeneralInfoDrug(ArrayList<String> result) {

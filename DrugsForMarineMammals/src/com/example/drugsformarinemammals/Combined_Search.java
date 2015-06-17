@@ -2,6 +2,8 @@ package com.example.drugsformarinemammals;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import org.apache.http.HttpResponse;
@@ -119,7 +121,7 @@ public class Combined_Search extends Activity {
 		// as you specify a parent activity in AndroidManifest.xml.
 		switch (item.getItemId()) {
 			case R.id.sync:
-				getDrugNamesLocalDB();
+				orderDrugsByPriority();
 				if(drugList.size()>0){
 					String[] urls={"http://formmulary.tk/Android/getGeneralInfoDrug.php?drug_name=","http://formmulary.tk/Android/getInfoCodes.php?drug_name="};
 					int size=drugList.size();
@@ -160,23 +162,33 @@ public class Combined_Search extends Activity {
 		myalert.show();
 		
 	}
-
-	public void getDrugNamesLocalDB(){
+	
+	public void orderDrugsByPriority(){
 		List<Drug_Information> drugs_with_priority = new ArrayList<Drug_Information>();
 		SQLiteDatabase tmp = helper.open();
 		if (tmp!=null) {
 			drugs_with_priority = helper.read_drugs_database();
 			helper.close();
 		}
-		int size=drugs_with_priority.size();
-		drugList = new ArrayList<String>();
-		for (int i=0;i<size;i++) {
-			drugList.add(drugs_with_priority.get(i).getName());
-		}
 		
-
-	}
+		//sort drugs by priority
+		Collections.sort(drugs_with_priority,new Comparator<Drug_Information>() {
 	
+			@Override
+			public int compare(Drug_Information drug1, Drug_Information drug2) {
+				return drug1.getPriority().compareTo(drug2.getPriority());
+			}
+			
+		});
+		
+		drugList = new ArrayList<String>();
+		int numDrugs=drugs_with_priority.size();
+		if(numDrugs>0){
+			for (int i=0;i<numDrugs;i++) {
+				drugList.add(drugs_with_priority.get(i).getName());
+			}
+		}
+	}
 	private class GetDrugsByCombinedSearch extends AsyncTask<String, Void, String>{
 
 		String jsonResponse;
@@ -213,7 +225,9 @@ public class Combined_Search extends Activity {
 			if (drugList != null && !drugList.isEmpty()) {
 				Intent i = new Intent(context, Listview_DrugResults.class);
 				i.putExtra("drugList", drugList);
+				i.putExtra("fiveLastScreen", false);
 				startActivity(i);
+				finish();
 			}
 			else {
 				AlertDialog.Builder myalert = new AlertDialog.Builder(context);
@@ -288,7 +302,7 @@ public class Combined_Search extends Activity {
 			initializeArrayWithTherapeuticGroups(result);
 			actv = (AutoCompleteTextView)findViewById(R.id.autoCompleteTextView1);
 			actv.setTypeface(Typeface.SANS_SERIF);
-			actv.setHint("Enter name of drug");
+			actv.setHint("Enter a Therapeutic Target");
 			actv.setAdapter(adapterTherapeuticGroup);
 		}
 		
