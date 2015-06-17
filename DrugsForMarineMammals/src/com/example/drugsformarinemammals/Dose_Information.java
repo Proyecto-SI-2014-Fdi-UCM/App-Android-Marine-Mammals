@@ -591,10 +591,13 @@ public class Dose_Information extends Activity {
 			case R.id.sync:
 				orderDrugsByPriority();
 				if(drugList.size()>0){
-					String[] urls={"http://formmulary.tk/Android/getGeneralInfoDrug.php?drug_name=","http://formmulary.tk/Android/getInfoCodes.php?drug_name="};
+					String[] urlsDrugInfo={"http://formmulary.tk/Android/getGeneralInfoDrug.php?drug_name=","http://formmulary.tk/Android/getInfoCodes.php?drug_name="};
+					String[] urlsDoseInfo={"http://formmulary.tk/Android/getDoseInformation.php?drug_name=","http://formmulary.tk/Android/getGeneralNotesInformation.php?drug_name="};
 					int size=drugList.size();
-					for(int i=0;i<size;i++)
-						new GetGeneralInfoDrug(i).execute(urls);
+					for(int i=0;i<size;i++) {
+						new GetGeneralInfoDrug(i).execute(urlsDrugInfo);
+						new GetDoseInformation(i).execute(urlsDoseInfo);
+					}
 					displayMessage("Drugs of your last searches have been updated");
 				}
 				else
@@ -757,6 +760,106 @@ public class Dose_Information extends Activity {
 				codesInformation.add(type);			
 			}
 		}
+	}
+	
+	private class GetDoseInformation extends AsyncTask<String, Integer, ArrayList<String>>{
+		ArrayList<String> jsonResponse = new ArrayList<String>();
+		HttpPost httppost1;
+		HttpPost httppost2;
+		int i;
+		
+		public GetDoseInformation(int index){
+			this.i=index;
+		}
+		
+		@Override
+	    protected ArrayList<String> doInBackground(String... urls) {
+		    	
+			HttpClient httpclient = new DefaultHttpClient();    
+			httppost1 = new HttpPost(urls[0]+drugList.get(i));
+			httppost2 = new HttpPost(urls[1]+drugList.get(i));
+			
+			try {
+			        //send the POST request
+			        HttpResponse response1 = httpclient.execute(httppost1);
+			        HttpResponse response2 = httpclient.execute(httppost2);
+			
+			        //read the response from Services endpoint
+			        String jsonResponse1 = EntityUtils.toString(response1.getEntity());   
+			        String jsonResponse2 = EntityUtils.toString(response2.getEntity());
+			        
+			        jsonResponse.add(jsonResponse1);
+			        jsonResponse.add(jsonResponse2);        	
+			
+			  }catch (Exception e) {
+			        Log.v("Error: ", e.getMessage());
+			  }
+			
+			  return jsonResponse;
+		}
+		
+		@Override
+		protected void onPostExecute(ArrayList<String> result) {
+			helper.open();
+			//delete old dose in local database
+			helper.deleteDose(drugList.get(i));
+			//delete old notes in local database
+			helper.deleteNotes(drugList.get(i));
+			helper.close();
+			parseAndInsertDose(result.get(0));
+			parseAndInsertGeneralNote(result.get(1));
+		}
+		
+		public void parseAndInsertDose(String result) {
+			String [] parse= result.split("\\[\"");
+			int size=parse.length;
+			for(int j=1;j<size;j++) {
+				//parse result
+				String [] oneDose = parse[j].split("\",\"");
+				String animal_name=oneDose[0];
+				String family=oneDose[1];
+				String group_name=oneDose[2];
+				String category_name=oneDose[3];
+				String book_reference=oneDose[4];
+				String article_reference=oneDose[5];
+				String specific_note=oneDose[6];
+				String posology=oneDose[7];
+				String route=oneDose[8];
+				String [] parseDose = oneDose[9].split("\"\\]");
+				String [] dose = parseDose[0].split("/");
+				String final_dose=dose[0].substring(0,dose[0].length()-1) + "/" + dose[1];
+				
+				helper.open();
+				//insert new dose in local database
+				helper.insertGroup(group_name);
+				helper.insertAnimal(animal_name, family, group_name, drugList.get(i));
+				helper.insertCategory(category_name);
+				helper.insertDose(animal_name, drugList.get(i), family, group_name, category_name, book_reference, article_reference, specific_note, posology, route, final_dose);
+				helper.close();
+			}
+			
+		}
+		
+		
+		public void parseAndInsertGeneralNote(String result) {
+			String [] parse= result.split("\\[\"");
+			int size=parse.length;
+			for(int j=1;j<size;j++) {
+				//parse result
+				String [] oneNote = parse[j].split("\",\"");
+				//String drug_name=oneNote[0];
+				String group_name=oneNote[0];
+				String [] parseGeneralNote = oneNote[1].split("\"\\]");
+				String general_note=parseGeneralNote[0];
+				
+				//insert in local database
+				helper.open();
+				helper.insertGroup(group_name);
+				helper.insertGeneralNote(drugList.get(i), group_name, general_note);
+				helper.close();
+			}
+		}
+		
 	}
 
 

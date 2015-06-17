@@ -645,6 +645,55 @@ public class Handler_Sqlite extends SQLiteOpenHelper{
 		return solution;
 		
 	}
+	
+	public void insertAnimal(String animal_name, String family, String group_name, String drug_name) {
+		ContentValues animal=new ContentValues();
+		animal.put("animal_name", animal_name);
+		animal.put("family", family);
+		animal.put("group_name", group_name);
+		animal.put("drug_name", drug_name);
+		this.getWritableDatabase().insert("Animal", null, animal);
+		
+	}
+	
+	public void insertCategory(String category_name) {
+		ContentValues category=new ContentValues();
+		category.put("category_name", category_name);
+		this.getWritableDatabase().insert("Category", null, category);
+		
+	}
+	
+	public void insertDose(String animal_name, String drug_name, String family, String group_name, String category_name, String book_reference, String article_reference, String specific_note, String posology, String route, String dose) {
+		ContentValues dosage=new ContentValues();
+		dosage.put("animal_name", animal_name);
+		dosage.put("family", family);
+		dosage.put("group_name", group_name);
+		dosage.put("drug_name", drug_name);
+		dosage.put("category_name", category_name);
+		dosage.put("book_reference", book_reference);
+		dosage.put("art_reference", article_reference);
+		dosage.put("specific_note", specific_note);
+		dosage.put("posology", posology);
+		dosage.put("route", route);
+		dosage.put("dose", dose);
+		this.getWritableDatabase().insert("Animal_has_Category", null, dosage);
+		
+	}
+	
+	public void insertGroup(String group_name) {
+		ContentValues group=new ContentValues();
+		group.put("group_name", group_name);
+		this.getWritableDatabase().insert("Animal_Type", null, group);
+		
+	}
+	
+	public void insertGeneralNote(String drug_name, String group_name, String general_note) {
+		ContentValues note=new ContentValues();
+		note.put("drug_name", drug_name);
+		note.put("group_name", group_name);
+		note.put("general_note", general_note);
+		this.getWritableDatabase().insert("Drug_aplicated_to_Animal_Type", null, note);
+	}
 
 	public void updateGeneralInfroDrug(ArrayList<String> generalInfo) {
 		String query="UPDATE Drug SET description='"+generalInfo.get(1)+ "',available='"+generalInfo.get(2)+"',license_AEMPS='"+generalInfo.get(3)+"',license_FDA='"+generalInfo.get(4)+"'WHERE drug_name='"+ generalInfo.get(0)+"'";
@@ -661,6 +710,7 @@ public class Handler_Sqlite extends SQLiteOpenHelper{
 		this.close();
 	}
 	
+<<<<<<< HEAD
 	public int  getTotalDrugs() {
 		
 		int result = 0;
@@ -691,6 +741,16 @@ public class Handler_Sqlite extends SQLiteOpenHelper{
 		db.execSQL(query4);
 		db.execSQL(query5);
 		db.close();
+=======
+	public void deleteDose(String drug_name) {
+		SQLiteDatabase db = getWritableDatabase();
+	    db.delete("Animal_has_Category", "drug_name="+"'"+drug_name+"'", null);
+	}
+	
+	public void deleteNotes(String drug_name) {
+		SQLiteDatabase db = getWritableDatabase();
+	    db.delete("Drug_aplicated_to_Animal_Type", "drug_name="+"'"+drug_name+"'", null);
+>>>>>>> 6f5919455dc714f7ffab5342982ef3ce9e9e6bcb
 	}
 }
 
